@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>منصة تعليمية</title>
+<title>منصة حافظ التعليمية</title>
 
 <style>
 :root {
@@ -146,7 +146,7 @@ html, body {
   box-shadow: 0 10px 40px rgba(0,0,0,0.2);
 }
 
-.splash-title { font-size: 28px; font-weight: bold; margin-bottom: 8px; }
+.splash-title { font-size: 26px; font-weight: bold; margin-bottom: 8px; }
 .splash-subtitle { font-size: 15px; opacity: 0.9; margin-bottom: 32px; }
 
 .loader {
@@ -287,7 +287,655 @@ html, body {
 <div id="splashScreen" class="screen active">
   <div class="splash-content">
     <div class="splash-logo">🎓</div>
-    <div class="splash-title">منصة تعليمية</div>
+    <div class="splash-title">منصة حافظ التعليمية</div>
+    <div class="splash-subtitle">للتعليم العام والأزهر الشريف</div>
+    <div class="loader"></div>
+  </div>
+</div>
+
+<div id="loginScreen" class="screen">
+  <div class="login-logo">🎓</div>
+  <div class="login-title">مرحباً بك</div>
+  <div class="login-sub">سجّل دخولك للمتابعة</div>
+
+  <div class="role-selector">
+    <button class="role-btn active" onclick="selectRole(this, 'student')">🎒 طالب</button>
+    <button class="role-btn" onclick="selectRole(this, 'teacher')">👨‍🏫 معلم</button>
+    <button class="role-btn" onclick="selectRole(this, 'owner')">👑 مالك</button>
+  </div>
+
+  <div class="form-group">
+    <input type="text" id="emailInput" class="form-input" placeholder="👤 اسم المستخدم">
+  </div>
+
+  <div class="form-group">
+    <input type="password" id="passwordInput" class="form-input" placeholder="🔒 كلمة المرور">
+  </div>
+
+  <div class="form-group" id="ownerCodeGroup" style="display:none;">
+    <input type="password" id="ownerCodeInput" class="form-input" placeholder="🔐 كود المالك">
+  </div>
+
+  <button class="btn-primary" onclick="login()">تسجيل الدخول</button>
+  <button class="link-btn" onclick="showToast('قريباً')">ليس لديك حساب؟ سجّل الآن</button>
+  <button class="link-btn" onclick="showToast('قريباً')">دخول كزائر</button>
+</div>
+
+<div id="toast" class="toast"></div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>منصة حافظ التعليمية</title>
+
+<style>
+:root {
+  --primary: #2E7D32;
+  --primary-light: #4CAF50;
+  --primary-soft: #A5D6A7;
+  --primary-pale: #E8F5E9;
+  --azhar: #C9A227;
+  --white: #FFFFFF;
+  --light-gray: #F5F5F5;
+  --gray: #9E9E9E;
+  --dark-gray: #424242;
+  --black: #212121;
+  --error: #E53935;
+  --success: #43A047;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+  background: var(--light-gray);
+  color: var(--black);
+  direction: rtl;
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.screen {
+  display: none;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.screen.active {
+  display: flex;
+}
+
+.top-bar {
+  background: var(--primary);
+  color: var(--white);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0 0 24px 24px;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.top-bar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.icon-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: var(--white);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 4px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+  border-top: 1px solid #eee;
+  z-index: 100;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px;
+  background: none;
+  border: none;
+  color: var(--gray);
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.nav-item .icon { font-size: 22px; }
+.nav-item.active { color: var(--primary); }
+
+.content {
+  flex: 1;
+  padding: 16px;
+  padding-bottom: 90px;
+  overflow-y: auto;
+}
+
+#splashScreen {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-content { text-align: center; color: var(--white); }
+
+.splash-logo {
+  width: 120px;
+  height: 120px;
+  background: var(--white);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 70px;
+  margin: 0 auto 24px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.splash-title { font-size: 26px; font-weight: bold; margin-bottom: 8px; }
+.splash-subtitle { font-size: 15px; opacity: 0.9; margin-bottom: 32px; }
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255,255,255,0.3);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+#loginScreen {
+  background: var(--white);
+  padding: 24px;
+  justify-content: center;
+}
+
+.login-logo {
+  width: 100px;
+  height: 100px;
+  background: var(--primary-pale);
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 55px;
+  margin: 0 auto 20px;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.login-sub {
+  text-align: center;
+  color: var(--gray);
+  margin-bottom: 32px;
+}
+
+.role-selector { display: flex; gap: 8px; margin-bottom: 20px; }
+
+.role-btn {
+  flex: 1;
+  padding: 12px;
+  background: var(--light-gray);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark-gray);
+  cursor: pointer;
+}
+
+.role-btn.active {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.form-group { margin-bottom: 16px; }
+
+.form-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--light-gray);
+  border: 2px solid transparent;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--black);
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  background: var(--white);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 16px;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 12px;
+  cursor: pointer;
+  display: block;
+  margin: 12px auto;
+}
+
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--black);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+  max-width: 85%;
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body>
+
+<div id="splashScreen" class="screen active">
+  <div class="splash-content">
+    <div class="splash-logo">🎓</div>
+    <div class="splash-title">منصة حافظ التعليمية</div>
+    <div class="splash-subtitle">للتعليم العام والأزهر الشريف</div>
+    <div class="loader"></div>
+  </div>
+</div>
+
+<div id="loginScreen" class="screen">
+  <div class="login-logo">🎓</div>
+  <div class="login-title">مرحباً بك</div>
+  <div class="login-sub">سجّل دخولك للمتابعة</div>
+
+  <div class="role-selector">
+    <button class="role-btn active" onclick="selectRole(this, 'student')">🎒 طالب</button>
+    <button class="role-btn" onclick="selectRole(this, 'teacher')">👨‍🏫 معلم</button>
+    <button class="role-btn" onclick="selectRole(this, 'owner')">👑 مالك</button>
+  </div>
+
+  <div class="form-group">
+    <input type="text" id="emailInput" class="form-input" placeholder="👤 اسم المستخدم">
+  </div>
+
+  <div class="form-group">
+    <input type="password" id="passwordInput" class="form-input" placeholder="🔒 كلمة المرور">
+  </div>
+
+  <div class="form-group" id="ownerCodeGroup" style="display:none;">
+    <input type="password" id="ownerCodeInput" class="form-input" placeholder="🔐 كود المالك">
+  </div>
+
+  <button class="btn-primary" onclick="login()">تسجيل الدخول</button>
+  <button class="link-btn" onclick="showToast('قريباً')">ليس لديك حساب؟ سجّل الآن</button>
+  <button class="link-btn" onclick="showToast('قريباً')">دخول كزائر</button>
+</div>
+
+<div id="toast" class="toast"></div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>منصة حافظ التعليمية</title>
+
+<style>
+:root {
+  --primary: #2E7D32;
+  --primary-light: #4CAF50;
+  --primary-soft: #A5D6A7;
+  --primary-pale: #E8F5E9;
+  --azhar: #C9A227;
+  --white: #FFFFFF;
+  --light-gray: #F5F5F5;
+  --gray: #9E9E9E;
+  --dark-gray: #424242;
+  --black: #212121;
+  --error: #E53935;
+  --success: #43A047;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+  background: var(--light-gray);
+  color: var(--black);
+  direction: rtl;
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.screen {
+  display: none;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.screen.active {
+  display: flex;
+}
+
+.top-bar {
+  background: var(--primary);
+  color: var(--white);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0 0 24px 24px;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.top-bar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.icon-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: var(--white);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 4px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+  border-top: 1px solid #eee;
+  z-index: 100;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px;
+  background: none;
+  border: none;
+  color: var(--gray);
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.nav-item .icon { font-size: 22px; }
+.nav-item.active { color: var(--primary); }
+
+.content {
+  flex: 1;
+  padding: 16px;
+  padding-bottom: 90px;
+  overflow-y: auto;
+}
+
+#splashScreen {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-content { text-align: center; color: var(--white); }
+
+.splash-logo {
+  width: 120px;
+  height: 120px;
+  background: var(--white);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 70px;
+  margin: 0 auto 24px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.splash-title { font-size: 26px; font-weight: bold; margin-bottom: 8px; }
+.splash-subtitle { font-size: 15px; opacity: 0.9; margin-bottom: 32px; }
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255,255,255,0.3);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+#loginScreen {
+  background: var(--white);
+  padding: 24px;
+  justify-content: center;
+}
+
+.login-logo {
+  width: 100px;
+  height: 100px;
+  background: var(--primary-pale);
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 55px;
+  margin: 0 auto 20px;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.login-sub {
+  text-align: center;
+  color: var(--gray);
+  margin-bottom: 32px;
+}
+
+.role-selector { display: flex; gap: 8px; margin-bottom: 20px; }
+
+.role-btn {
+  flex: 1;
+  padding: 12px;
+  background: var(--light-gray);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark-gray);
+  cursor: pointer;
+}
+
+.role-btn.active {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.form-group { margin-bottom: 16px; }
+
+.form-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--light-gray);
+  border: 2px solid transparent;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--black);
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  background: var(--white);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 16px;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 12px;
+  cursor: pointer;
+  display: block;
+  margin: 12px auto;
+}
+
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--black);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+  max-width: 85%;
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body>
+
+<div id="splashScreen" class="screen active">
+  <div class="splash-content">
+    <div class="splash-logo">🎓</div>
+    <div class="splash-title">منصة حافظ التعليمية</div>
     <div class="splash-subtitle">للتعليم العام والأزهر الشريف</div>
     <div class="loader"></div>
   </div>
@@ -329,6 +977,7 @@ let currentScreen = 'splashScreen';
 let screenHistory = [];
 
 const OWNER_CODE = '135790';
+const SHEETDB_API = 'https://sheetdb.io/api/v1/5l1j0bvzaz6st';
 
 function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -409,1082 +1058,45 @@ function goBack() {
   }
 }
 
+/* ============================================
+   SheetDB Integration - تحميل البيانات
+   ============================================ */
+async function loadLessonsFromSheet() {
+  try {
+    showToast('⏳ جاري التحميل من الشيت...');
+    const response = await fetch(SHEETDB_API);
+    
+    if (!response.ok) {
+      throw new Error('خطأ في الاتصال');
+    }
+    
+    const data = await response.json();
+    console.log('📚 البيانات من الشيت:', data);
+    showToast(`✅ تم تحميل ${data.length} درس`);
+    return data;
+  } catch (error) {
+    console.error('❌ خطأ:', error);
+    showToast('⚠️ فشل التحميل من الشيت');
+    return [];
+  }
+}
+
 window.addEventListener('load', () => {
   setTimeout(() => {
     showScreen('loginScreen');
   }, 2500);
 });
 </script>
-<!-- ============================================ -->
-<!-- الشاشة الرئيسية -->
-<!-- ============================================ -->
-<div id="homeScreen" class="screen">
-  <div class="top-bar">
-    <div class="logo">
-      <span style="font-size:24px;">🎓</span>
-      <span>منصة تعليمية</span>
-    </div>
-    <button class="icon-btn" onclick="goToProfile()">👤</button>
-  </div>
-
-  <div class="content">
-    <div class="search-box">
-      <span>🔍</span>
-      <input type="text" placeholder="ابحث..." oninput="showToast('🔍 بحث')">
-    </div>
-
-    <div class="ad-banner" onclick="showToast('📢 إعلان')">
-      <div style="font-size:36px;">📢</div>
-      <div>
-        <div style="font-weight:bold;">إعلان رئيسي</div>
-        <div style="font-size:12px;opacity:0.9;">اضغط للمشاهدة</div>
-      </div>
-    </div>
-
-    <div class="section-title">📚 التعليم العام</div>
-    <div class="cards-row">
-      <div class="big-card" style="background:linear-gradient(135deg,#66BB6A,#4CAF50);" onclick="openStage('primary')">
-        <div style="font-size:32px;">🎒</div>
-        <div>ابتدائي</div>
-      </div>
-      <div class="big-card" style="background:linear-gradient(135deg,#43A047,#2E7D32);" onclick="openStage('prep')">
-        <div style="font-size:32px;">📗</div>
-        <div>إعدادي</div>
-      </div>
-      <div class="big-card" style="background:linear-gradient(135deg,#2E7D32,#1B5E20);" onclick="openStage('sec')">
-        <div style="font-size:32px;">📕</div>
-        <div>ثانوي</div>
-      </div>
-    </div>
-
-    <div class="section-title">🕌 الأزهر الشريف</div>
-    <div class="azhar-card" onclick="openAzhar()">
-      <div style="font-size:40px;">🕌</div>
-      <div style="flex:1;">
-        <div style="font-weight:bold;">المواد الشرعية</div>
-        <div style="font-size:12px;opacity:0.9;">تفسير • حديث • فقه • عقيدة</div>
-      </div>
-      <div style="font-size:28px;">‹</div>
-    </div>
-
-    <div class="section-title">📖 القرآن الكريم</div>
-    <div class="quran-card" onclick="openQuran()">
-      <div style="font-size:40px;">📖</div>
-      <div style="flex:1;">
-        <div style="font-weight:bold;">اقرأ • ترديد • حفظ</div>
-        <div style="font-size:12px;opacity:0.9;">المصحف كامل بالصوت</div>
-      </div>
-      <div style="font-size:28px;">‹</div>
-    </div>
-
-    <div class="section-title">🧰 أدوات سريعة</div>
-    <div class="tools-grid">
-      <div class="tool-btn" onclick="openCalculator()">
-        <div class="tool-icon" style="background:#E3F2FD;color:#1976D2;">🧮</div>
-        <div class="tool-label">حاسبة</div>
-      </div>
-      <div class="tool-btn" onclick="openDrawing()">
-        <div class="tool-icon" style="background:#FFF3E0;color:#F57C00;">✏️</div>
-        <div class="tool-label">رسم</div>
-      </div>
-      <div class="tool-btn" onclick="openWisdom()">
-        <div class="tool-icon" style="background:#F3E5F5;color:#7B1FA2;">💡</div>
-        <div class="tool-label">حكم</div>
-      </div>
-      <div class="tool-btn" onclick="openMessages()">
-        <div class="tool-icon" style="background:#E8F5E9;color:#2E7D32;">💬</div>
-        <div class="tool-label">رسائل</div>
-      </div>
-    </div>
-
-    <div class="section-title">💡 حكمة اليوم</div>
-    <div class="wisdom-card">
-      <div style="font-size:50px;color:#7B1FA2;opacity:0.2;">"</div>
-      <div style="font-size:16px;font-weight:600;color:#4A148C;">العلم نور والجهل ظلام</div>
-      <div style="font-size:13px;color:#7B1FA2;text-align:left;">— الإمام علي</div>
-    </div>
-
-    <div class="section-title">📊 إحصائياتي</div>
-    <div class="stats-card">
-      <div class="stat-item">
-        <div class="stat-value">45</div>
-        <div class="stat-label">درس</div>
-      </div>
-      <div style="width:1px;height:40px;background:#eee;"></div>
-      <div class="stat-item">
-        <div class="stat-value">1250</div>
-        <div class="stat-label">نقطة</div>
-      </div>
-      <div style="width:1px;height:40px;background:#eee;"></div>
-      <div class="stat-item">
-        <div class="stat-value">12</div>
-        <div class="stat-label">امتحان</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="bottom-nav">
-    <button class="nav-item active" onclick="navTo('home')">
-      <span class="icon">🏠</span>
-      <span>الرئيسية</span>
-    </button>
-    <button class="nav-item" onclick="navTo('education')">
-      <span class="icon">📚</span>
-      <span>المناهج</span>
-    </button>
-    <button class="nav-item" onclick="navTo('quran')">
-      <span class="icon">📖</span>
-      <span>القرآن</span>
-    </button>
-    <button class="nav-item" onclick="navTo('tools')">
-      <span class="icon">🧰</span>
-      <span>أدوات</span>
-    </button>
-    <button class="nav-item" onclick="navTo('profile')">
-      <span class="icon">👤</span>
-      <span>حسابي</span>
-    </button>
-  </div>
-</div>
-
-<!-- شاشة المناهج -->
-<div id="educationScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>📚 التعليم العام</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div class="section-title">اختر المرحلة</div>
-    <div id="stagesList"></div>
-  </div>
-</div>
-
-<!-- شاشة الصفوف -->
-<div id="gradesScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span id="gradesTitle">الصفوف</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div id="gradesList"></div>
-  </div>
-</div>
-
-<!-- شاشة المواد -->
-<div id="subjectsScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span id="subjectsTitle">المواد</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div id="subjectsList" class="subjects-grid"></div>
-  </div>
-</div>
-
-<!-- شاشة الأزهر -->
-<div id="azharScreen" class="screen">
-  <div class="top-bar" style="background:linear-gradient(135deg,#C9A227,#E6C75E);">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>🕌 الأزهر الشريف</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div class="section-title">المواد الشرعية</div>
-    <div id="azharList"></div>
-  </div>
-</div>
-
-<script>
-const stagesData = {
-  primary: {
-    name: 'المرحلة الابتدائية',
-    icon: '🎒',
-    grades: ['الأول','الثاني','الثالث','الرابع','الخامس','السادس']
-  },
-  prep: {
-    name: 'المرحلة الإعدادية',
-    icon: '📗',
-    grades: ['الأول','الثاني','الثالث']
-  },
-  sec: {
-    name: 'المرحلة الثانوية',
-    icon: '📕',
-    grades: ['الأول','الثاني','الثالث']
-  }
-};
-
-const generalSubjects = [
-  { id: 'math', name: 'رياضيات', icon: '🔢', color: '#1976D2' },
-  { id: 'geometry', name: 'هندسة', icon: '📐', color: '#388E3C' },
-  { id: 'chem', name: 'كيمياء', icon: '⚗️', color: '#D32F2F' },
-  { id: 'physics', name: 'فيزياء', icon: '⚛️', color: '#7B1FA2' },
-  { id: 'bio', name: 'أحياء', icon: '🧬', color: '#00796B' },
-  { id: 'arabic', name: 'لغة عربية', icon: '📖', color: '#C2185B' },
-  { id: 'english', name: 'إنجليزي', icon: '🇬🇧', color: '#303F9F' },
-  { id: 'history', name: 'تاريخ', icon: '📜', color: '#5D4037' },
-  { id: 'geo', name: 'جغرافيا', icon: '🌍', color: '#0097A7' },
-  { id: 'cs', name: 'حاسب آلي', icon: '💻', color: '#455A64' }
-];
-
-const azharSubjects = [
-  { id: 'quran_t', name: 'القرآن والتفسير', icon: '📖' },
-  { id: 'hadith', name: 'الحديث الشريف', icon: '📜' },
-  { id: 'fiqh', name: 'الفقه', icon: '⚖️' },
-  { id: 'aqeeda', name: 'العقيدة', icon: '🕌' },
-  { id: 'seera', name: 'السيرة النبوية', icon: '🌟' },
-  { id: 'nahw', name: 'النحو', icon: '📝' },
-  { id: 'sarf', name: 'الصرف والبلاغة', icon: '📚' }
-];
-
-function navTo(dest) {
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  if (event && event.target) event.target.closest('.nav-item')?.classList.add('active');
-
-  if (dest === 'home') showScreen('homeScreen');
-  else if (dest === 'education') openEducation();
-  else if (dest === 'quran') openQuran();
-  else if (dest === 'tools') showToast('🧰 قريباً');
-  else if (dest === 'profile') goToProfile();
+justify-content: center;
+  font-size: 24px;
 }
-
-function openEducation() {
-  const list = document.getElementById('stagesList');
-  list.innerHTML = Object.keys(stagesData).map(key => {
-    const s = stagesData[key];
-    return `
-      <div class="stage-item" onclick="openStage('${key}')">
-        <div class="stage-icon">${s.icon}</div>
-        <div class="stage-info">
-          <div class="stage-name">${s.name}</div>
-          <div class="stage-sub">${s.grades.length} صفوف</div>
-        </div>
-        <div class="stage-arrow">‹</div>
-      </div>
-    `;
-  }).join('');
-
-  screenHistory.push(currentScreen);
-  showScreen('educationScreen');
-}
-
-function openStage(stageId) {
-  const stage = stagesData[stageId];
-  document.getElementById('gradesTitle').textContent = stage.name;
-
-  const list = document.getElementById('gradesList');
-  list.innerHTML = stage.grades.map((g, i) => `
-    <div class="stage-item" onclick="openGrade('${stageId}', ${i+1}, '${g}')">
-      <div class="stage-icon" style="background:#E8F5E9;">🎓</div>
-      <div class="stage-info">
-        <div class="stage-name">الصف ${g}</div>
-        <div class="stage-sub">اضغط لعرض المواد</div>
-      </div>
-      <div class="stage-arrow">‹</div>
-    </div>
-  `).join('');
-
-  screenHistory.push(currentScreen);
-  showScreen('gradesScreen');
-}
-
-function openGrade(stageId, num, gradeName) {
-  document.getElementById('subjectsTitle').textContent = 'الصف ' + gradeName;
-
-  const list = document.getElementById('subjectsList');
-  list.innerHTML = generalSubjects.map(s => `
-    <div class="subject-card" onclick="openSubject('${s.id}', '${s.name}')">
-      <div class="subject-icon" style="background:${s.color}20;color:${s.color};">${s.icon}</div>
-      <div class="subject-name">${s.name}</div>
-    </div>
-  `).join('');
-
-  screenHistory.push(currentScreen);
-  showScreen('subjectsScreen');
-}
-
-function openSubject(id, name) {
-  showToast('📚 ' + name + ' — قريباً');
-}
-
-function openAzhar() {
-  const list = document.getElementById('azharList');
-  list.innerHTML = azharSubjects.map(s => `
-    <div class="azhar-subject-item" onclick="showToast('🕌 ${s.name}')">
-      <div style="font-size:30px;">${s.icon}</div>
-      <div class="stage-info">
-        <div class="stage-name">${s.name}</div>
-      </div>
-      <div class="stage-arrow" style="color:#C9A227;">‹</div>
-    </div>
-  `).join('');
-
-  screenHistory.push(currentScreen);
-  showScreen('azharScreen');
-}
-</script>
-
-<style>
-.search-box {
-  background: var(--white);
-  border-radius: 14px;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: var(--shadow);
-  margin-bottom: 16px;
-}
-
-.search-box input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-family: inherit;
-  font-size: 15px;
-  background: transparent;
-}
-
-.section-title {
-  font-size: 17px;
+.message-badge {
+  background: var(--error);
+  color: var(--white);
+  font-size: 11px;
   font-weight: bold;
-  margin: 20px 0 12px;
-}
-
-.ad-banner {
-  background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-  border-radius: 16px;
-  padding: 18px;
-  color: var(--white);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  box-shadow: var(--shadow);
-}
-
-.cards-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.big-card {
-  padding: 20px 10px;
-  border-radius: 16px;
-  text-align: center;
-  color: var(--white);
-  cursor: pointer;
-  box-shadow: var(--shadow);
-}
-
-.azhar-card, .quran-card {
-  border-radius: 16px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  color: var(--white);
-  cursor: pointer;
-  box-shadow: var(--shadow);
-}
-
-.azhar-card { background: linear-gradient(135deg,#C9A227,#E6C75E); }
-.quran-card { background: linear-gradient(135deg,#00695C,#26A69A); }
-
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-
-.tool-btn {
-  background: var(--white);
-  border-radius: 14px;
-  padding: 14px 6px;
-  text-align: center;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-}
-
-.tool-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  margin: 0 auto 8px;
-}
-
-.tool-label { font-size: 12px; font-weight: 600; }
-
-.wisdom-card {
-  background: linear-gradient(135deg,#F3E5F5,#EDE7F6);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: var(--shadow);
-}
-
-.stats-card {
-  background: var(--white);
-  border-radius: 16px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  box-shadow: var(--shadow);
-}
-
-.stat-item { flex: 1; text-align: center; }
-.stat-value { font-size: 24px; font-weight: bold; color: var(--primary); }
-.stat-label { font-size: 12px; color: var(--gray); }
-
-.stage-item, .azhar-subject-item {
-  background: var(--white);
-  border-radius: 16px;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-  margin-bottom: 12px;
-}
-
-.azhar-subject-item { border-right: 4px solid #C9A227; }
-
-.stage-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  background: #E8F5E9;
-}
-
-.stage-info { flex: 1; }
-.stage-name { font-size: 15px; font-weight: bold; }
-.stage-sub { font-size: 12px; color: var(--gray); }
-.stage-arrow { font-size: 26px; color: var(--gray); }
-
-.subjects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.subject-card {
-  background: var(--white);
-  border-radius: 16px;
-  padding: 20px 12px;
-  text-align: center;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-}
-
-.subject-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  margin: 0 auto 10px;
-}
-
-.subject-name { font-size: 14px; font-weight: 600; }
-</style>
-<!-- شاشة الوحدات -->
-<div id="unitsScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span id="unitsTitle">الوحدات</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div id="unitsList"></div>
-  </div>
-</div>
-
-<!-- شاشة الدرس -->
-<div id="lessonScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span id="lessonTitle">الدرس</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div class="tabs-row">
-      <button class="tab-btn active" onclick="switchTab(this,'content')">📖 شرح</button>
-      <button class="tab-btn" onclick="switchTab(this,'exercise')">✏️ تدريبات</button>
-      <button class="tab-btn" onclick="switchTab(this,'exam')">📝 امتحان</button>
-    </div>
-
-    <div id="tabContent" class="tab-content">
-      <div class="lesson-body" id="lessonBody"></div>
-
-      <div class="section-title" style="margin-top:24px;">✏️ ارسم هنا</div>
-      <div class="drawing-board">
-        <canvas id="drawingCanvas"></canvas>
-        <div class="drawing-tools">
-          <button class="draw-btn" onclick="changeDrawColor('#2E7D32')" style="background:#2E7D32;"></button>
-          <button class="draw-btn" onclick="changeDrawColor('#1976D2')" style="background:#1976D2;"></button>
-          <button class="draw-btn" onclick="changeDrawColor('#E53935')" style="background:#E53935;"></button>
-          <button class="draw-btn" onclick="changeDrawColor('#FB8C00')" style="background:#FB8C00;"></button>
-          <button class="draw-action" onclick="clearDrawing()">🗑️ مسح</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="tabExercise" class="tab-content" style="display:none;">
-      <div class="exercise-item">
-        <div class="exercise-q">1. ما هو ناتج 2 + 2؟</div>
-        <div class="exercise-options">
-          <button class="exercise-opt" onclick="checkAnswer(this,false)">3</button>
-          <button class="exercise-opt" onclick="checkAnswer(this,true)">4</button>
-          <button class="exercise-opt" onclick="checkAnswer(this,false)">5</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="tabExam" class="tab-content" style="display:none;">
-      <div class="exam-card">
-        <div class="exam-title">امتحان تجريبي</div>
-        <div class="exam-info">20 سؤال | 60 دقيقة</div>
-        <button class="btn-primary" onclick="showToast('📝 قريباً')">ابدأ الامتحان</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- شاشة القرآن -->
-<div id="quranScreen" class="screen">
-  <div class="top-bar" style="background:linear-gradient(135deg,#00695C,#26A69A);">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>📖 القرآن الكريم</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div class="search-box">
-      <span>🔍</span>
-      <input type="text" placeholder="ابحث عن سورة..." oninput="filterSurahs(this.value)">
-    </div>
-    <div id="surahsList"></div>
-  </div>
-</div>
-
-<!-- شاشة السورة -->
-<div id="surahScreen" class="screen">
-  <div class="top-bar" style="background:linear-gradient(135deg,#00695C,#26A69A);">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span id="surahTitle">سورة</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div style="text-align:center;color:#999;font-size:13px;margin-bottom:12px;">🔊 اضغط على أي آية لتسمعها</div>
-    <div class="verses-box" id="versesBox"></div>
-
-    <div class="audio-controls">
-      <button class="audio-btn" onclick="showToast('⏮️ السابق')">⏮️</button>
-      <button class="audio-btn play" onclick="togglePlay()" id="playBtn">▶️</button>
-      <button class="audio-btn" onclick="showToast('⏭️ التالي')">⏭️</button>
-      <button class="audio-btn" onclick="toggleRepeat()">🔁</button>
-    </div>
-  </div>
-</div>
-
-<!-- شاشة الحاسبة -->
-<div id="calculatorScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>🧮 الحاسبة</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div class="calc-display">
-      <div class="calc-history" id="calcHistory"></div>
-      <div class="calc-screen" id="calcScreen">0</div>
-    </div>
-    <div class="calc-buttons">
-      <button class="calc-btn func" onclick="calcFunc('sin')">sin</button>
-      <button class="calc-btn func" onclick="calcFunc('cos')">cos</button>
-      <button class="calc-btn func" onclick="calcFunc('tan')">tan</button>
-      <button class="calc-btn func" onclick="calcFunc('√')">√</button>
-
-      <button class="calc-btn func" onclick="calcFunc('log')">log</button>
-      <button class="calc-btn func" onclick="calcFunc('ln')">ln</button>
-      <button class="calc-btn func" onclick="calcInput('^')">^</button>
-      <button class="calc-btn func" onclick="calcInput('π')">π</button>
-
-      <button class="calc-btn" onclick="calcInput('7')">7</button>
-      <button class="calc-btn" onclick="calcInput('8')">8</button>
-      <button class="calc-btn" onclick="calcInput('9')">9</button>
-      <button class="calc-btn op" onclick="calcInput('÷')">÷</button>
-
-      <button class="calc-btn" onclick="calcInput('4')">4</button>
-      <button class="calc-btn" onclick="calcInput('5')">5</button>
-      <button class="calc-btn" onclick="calcInput('6')">6</button>
-      <button class="calc-btn op" onclick="calcInput('×')">×</button>
-
-      <button class="calc-btn" onclick="calcInput('1')">1</button>
-      <button class="calc-btn" onclick="calcInput('2')">2</button>
-      <button class="calc-btn" onclick="calcInput('3')">3</button>
-      <button class="calc-btn op" onclick="calcInput('-')">−</button>
-
-      <button class="calc-btn" onclick="calcInput('0')">0</button>
-      <button class="calc-btn" onclick="calcInput('.')">.</button>
-      <button class="calc-btn op" onclick="calcInput('+')">+</button>
-      <button class="calc-btn eq" onclick="calcResult()">=</button>
-
-      <button class="calc-btn clear" onclick="calcClear()">C</button>
-      <button class="calc-btn clear" onclick="calcDelete()">⌫</button>
-      <button class="calc-btn func" onclick="calcInput('%')">%</button>
-      <button class="calc-btn func" onclick="calcInput('(')">(</button>
-    </div>
-  </div>
-</div>
-
-<!-- شاشة الرسم -->
-<div id="drawingScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>✏️ لوحة الرسم</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content" style="padding:8px;">
-    <div class="drawing-canvas-full">
-      <canvas id="fullDrawingCanvas"></canvas>
-    </div>
-    <div class="drawing-palette">
-      <button class="color-dot" style="background:#000;" onclick="fullChangeColor('#000')"></button>
-      <button class="color-dot" style="background:#2E7D32;" onclick="fullChangeColor('#2E7D32')"></button>
-      <button class="color-dot" style="background:#1976D2;" onclick="fullChangeColor('#1976D2')"></button>
-      <button class="color-dot" style="background:#E53935;" onclick="fullChangeColor('#E53935')"></button>
-      <button class="color-dot" style="background:#FB8C00;" onclick="fullChangeColor('#FB8C00')"></button>
-      <button class="clear-btn" onclick="fullClear()">🗑️</button>
-    </div>
-  </div>
-</div>
-
-<!-- شاشة الحكم -->
-<div id="wisdomScreen" class="screen">
-  <div class="top-bar" style="background:linear-gradient(135deg,#7B1FA2,#9C27B0);">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>💡 حكم وأقاويل</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div id="wisdomList"></div>
-  </div>
-</div>
-
-<!-- شاشة الرسائل -->
-<div id="messagesScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>💬 رسائلي</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div id="messagesList"></div>
-  </div>
-</div>
-
-<script>
-const surahsData = [
-  {id:1,name:'الفاتحة',verses:7,type:'مكية'},{id:2,name:'البقرة',verses:286,type:'مدنية'},
-  {id:3,name:'آل عمران',verses:200,type:'مدنية'},{id:4,name:'النساء',verses:176,type:'مدنية'},
-  {id:5,name:'المائدة',verses:120,type:'مدنية'},{id:6,name:'الأنعام',verses:165,type:'مكية'},
-  {id:7,name:'الأعراف',verses:206,type:'مكية'},{id:8,name:'الأنفال',verses:75,type:'مدنية'},
-  {id:9,name:'التوبة',verses:129,type:'مدنية'},{id:10,name:'يونس',verses:109,type:'مكية'},
-  {id:11,name:'هود',verses:123,type:'مكية'},{id:12,name:'يوسف',verses:111,type:'مكية'},
-  {id:13,name:'الرعد',verses:43,type:'مدنية'},{id:14,name:'إبراهيم',verses:52,type:'مكية'},
-  {id:15,name:'الحجر',verses:99,type:'مكية'},{id:16,name:'النحل',verses:128,type:'مكية'},
-  {id:17,name:'الإسراء',verses:111,type:'مكية'},{id:18,name:'الكهف',verses:110,type:'مكية'},
-  {id:19,name:'مريم',verses:98,type:'مكية'},{id:20,name:'طه',verses:135,type:'مكية'},
-  {id:36,name:'يس',verses:83,type:'مكية'},{id:55,name:'الرحمن',verses:78,type:'مدنية'},
-  {id:67,name:'الملك',verses:30,type:'مكية'},{id:78,name:'النبأ',verses:40,type:'مكية'},
-  {id:112,name:'الإخلاص',verses:4,type:'مكية'},{id:113,name:'الفلق',verses:5,type:'مكية'},
-  {id:114,name:'الناس',verses:6,type:'مكية'}
-];
-
-const fatihaVerses = [
-  'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
-  'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',
-  'الرَّحْمَٰنِ الرَّحِيمِ',
-  'مَالِكِ يَوْمِ الدِّينِ',
-  'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ',
-  'اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ',
-  'صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ'
-];
-
-const wisdomData = [
-  {text:'العلم نور والجهل ظلام',author:'الإمام علي'},
-  {text:'من جد وجد ومن زرع حصد',author:'مثل عربي'},
-  {text:'اطلبوا العلم من المهد إلى اللحد',author:'حديث شريف'},
-  {text:'الرياضيات ملكة العلوم',author:'غاوس'},
-  {text:'الفيزياء فلسفة الطبيعة',author:'نيوتن'}
-];
-
-const messagesData = [
-  {name:'أ. محمد - رياضيات',last:'كيف حالك؟',unread:2,icon:'👨‍🏫'},
-  {name:'أ. أحمد - فيزياء',last:'الدرس القادم',unread:0,icon:'👨‍🏫'},
-  {name:'إدارة المنصة',last:'مرحبًا بك',unread:1,icon:'👑'}
-];
-
-function openSubject(id, name) {
-  document.getElementById('unitsTitle').textContent = name;
-  const units = [
-    {id:'u1',name:'الوحدة الأولى',lessons:5},
-    {id:'u2',name:'الوحدة الثانية',lessons:4}
-  ];
-  const list = document.getElementById('unitsList');
-  list.innerHTML = units.map(u => `
-    <div class="unit-item">
-      <div class="unit-header" onclick="toggleUnit(this)">
-        <span>📂</span>
-        <span style="flex:1;font-weight:bold;">${u.name}</span>
-        <span>▼</span>
-      </div>
-      <div class="unit-lessons">
-        ${Array.from({length:u.lessons},(_,i)=>`
-          <div class="lesson-item" onclick="openLesson('الدرس ${i+1}')">
-            <span>📄</span>
-            <span style="flex:1;">الدرس ${i+1}</span>
-            <span>${i<2?'✅':'🔒'}</span>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-  `).join('');
-  screenHistory.push(currentScreen);
-  showScreen('unitsScreen');
-}
-
-function toggleUnit(h) {
-  h.classList.toggle('open');
-  const l = h.nextElementSibling;
-  l.style.maxHeight = l.style.maxHeight ? null : l.scrollHeight + 'px';
-}
-
-function openLesson(name) {
-  document.getElementById('lessonTitle').textContent = name;
-  document.getElementById('lessonBody').innerHTML = `
-    <h3 style="color:#2E7D32;margin-bottom:12px;">${name}</h3>
-    <p style="line-height:1.9;font-size:15px;">
-      نص تجريبي. اضغط على
-      <span class="tts-word" onclick="speakWord('مثال')">مثال</span>
-      لسماع النطق.
-    </p>
-  `;
-  screenHistory.push(currentScreen);
-  showScreen('lessonScreen');
-  setTimeout(initDrawingCanvas, 100);
-}
-
-function switchTab(btn, tab) {
-  document.querySelectorAll('#lessonScreen .tab-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.tab-content').forEach(c=>c.style.display='none');
-  document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).style.display = 'block';
-}
-
-function speakWord(word) {
-  if ('speechSynthesis' in window) {
-    const u = new SpeechSynthesisUtterance(word);
-    u.lang = 'ar-SA';
-    speechSynthesis.cancel();
-    speechSynthesis.speak(u);
-  }
-}
-
-function checkAnswer(btn, ok) {
-  btn.classList.add(ok ? 'correct' : 'wrong');
-  showToast(ok ? '✅ صحيح' : '❌ خطأ');
-  btn.parentElement.querySelectorAll('.exercise-opt').forEach(b=>b.disabled=true);
-}
-
-let canvas, ctx, drawing=false, currentColor='#2E7D32';
-
-function initDrawingCanvas() {
-  canvas = document.getElementById('drawingCanvas');
-  if (!canvas) return;
-  const r = canvas.getBoundingClientRect();
-  canvas.width = r.width || 300;
-  canvas.height = 200;
-  ctx = canvas.getContext('2d');
-  ctx.lineCap='round'; ctx.lineJoin='round'; ctx.lineWidth=3;
-  canvas.addEventListener('touchstart', startDraw, {passive:false});
-  canvas.addEventListener('touchmove', draw, {passive:false});
-  canvas.addEventListener('touchend', ()=>drawing=false);
-}
-
-function startDraw(e) {
-  e.preventDefault(); drawing=true;
-  const r=canvas.getBoundingClientRect(); const t=e.touches[0];
-  ctx.beginPath(); ctx.moveTo(t.clientX-r.left, t.clientY-r.top);
-}
-
-function draw(e) {
-  e.preventDefault(); if(!drawing) return;
-  const r=canvas.getBoundingClientRect(); const t=e.touches[0];
-  ctx.strokeStyle=currentColor;
-  ctx.lineTo(t.clientX-r.left, t.clientY-r.top);
-  ctx.stroke();
-}
-
-function changeDrawColor(c) { currentColor=c; showToast('🎨 لون'); }
-function clearDrawing() { if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height); }
-
-let fullCanvas, fullCtx, fullDrawing=false, fullColor='#000';
-
-function initFullCanvas() {
-  fullCanvas = document.getElementById('fullDrawingCanvas');
-  if (!fullCanvas) return;
-  const r = fullCanvas.getBoundingClientRect();
-  fullCanvas.width = r.width || 300;
-  fullCanvas.height = r.height || 400;
-  fullCtx = fullCanvas.getContext('2d');
-  fullCtx.lineCap='round'; fullCtx.lineJoin='round'; fullCtx.lineWidth=4;
-  fullCanvas.addEventListener('touchstart', fs, {passive:false});
-  fullCanvas.addEventListener('touchmove', fm, {passive:false});
-  fullCanvas.addEventListener('touchend', ()=>fullDrawing=false);
-}
-
-function fs(e) {
-  e.preventDefault(); fullDrawing=true;
-  const r=fullCanvas.getBoundingClientRect(); const t=e.touches[0];
-  fullCtx.beginPath(); fullCtx.moveTo(t.clientX-r.left, t.clientY-r.top);
-}
-
-function fm(e) {
-  e.preventDefault(); if(!fullDrawing) return;
-  const r=fullCanvas.getBoundingClientRect(); const t=e.touches[0];
-  fullCtx.strokeStyle=fullColor;
-  fullCtx.lineTo(t.clientX-r.left, t.clientY-r.top);
-  fullCtx.stroke();
-}
-
-function fullChangeColor(c) { fullColor=c; showToast('🎨 لون'); }
-function fullClear() { if(fullCtx) fullCtx.clearRect(0,0,fullCanvas.width,fullCanvas.height); }
-
-function loadSurahs() {
-  const list = document.getElementById('surahsList');
-  if (!list) return;
-  list.innerHTML = surahsData.map(s=>`
-    <div class="surah-item" onclick="openSurah(${s.id},'${s.name}')">
-      <div class="surah-num">${s.id}</div>
-      <div style="flex:1;">
-        <div style="font-weight:bold;">${s.name}</div>
-        <div style="font-size:12px;color:#999;">${s.verses} آية • ${s.type}</div>
-      </div>
-      <div style="font-size:22px;color:#999;">‹</div>
-    </div>
-  `).join('');
-}
-
-function filterSurahs(q) {
-  const list = document.getElementById('surahsList');
-  const f = surahsData.filter(s=>s.name.includes(q));
-  list.innerHTML = f.map(s=>`
-    <div class="surah-item" onclick="openSurah(${s.id},'${s.name}')">
-      <div class="surah-num">${s.id}</div>
-      <div style="flex:1;">
-        <div style="font-weight:bold;">${s.name}</div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function openSurah(id, name) {
-  document.getElementById('surahTitle').textContent = 'سورة ' + name;
-  const box = document.getElementById('versesBox');
-  if (id === 1) {
-    box.innerHTML = fatihaVerses.map((v,i)=>`
-      <div class="verse" onclick="speakVerse('${v}')">
-        <span class="verse-num">${i+1}</span> ${v}
-      </div>
-    `).join('');
-  } else {
-    box.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">📖 جاري التحميل...</div>';
-  }
-  screenHistory.push(currentScreen);
-  showScreen('surahScreen');
-}
-
-function speakVerse(t) {
-  if ('speechSynthesis' in window) {
-    const u = new SpeechSynthesisUtterance(t);
-    u.lang = 'ar-SA'; u.rate = 0.75;
-    speechSynthesis.cancel(); speechSynthesis.speak(u);
-  }
-}
-
-let qp = false;
-function togglePlay() {
-  qp = !qp;
-  document.getElementById('playBtn').textContent = qp ? '⏸️' : '▶️';
-}
-function toggleRepeat() { showToast('🔁 تكرار'); }
-
-let calcCurrent = '';
-function calcInput(v) {
-  calcCurrent += v;
-  document.getElementById('calcScreen').textContent = calcCurrent || '0';
-}
-function calcClear() {
-  calcCurrent = '';
-  document.getElementById('calcScreen').textContent = '0';
-  document.getElementById('calcHistory').textContent = '';
-}
-function calcDelete() {
-  calcCurrent = calcCurrent.slice(0,-1);
-  document.getElementById('calcScreen').textContent = calcCurrent || '0';
-}
-function calcResult() {
-  try {
-    let e = calcCurrent.replace(/×/g,'*').replace(/÷/g,'/').replace(/π/g,Math.PI).replace(/\^/g,'**');
-    const r = eval(e);
-    document.getElementById('calcHistory').textContent = calcCurrent + ' =';
-    document.getElementById('calcScreen').textContent = r;
-    calcCurrent = String(r);
-  } catch { showToast('⚠️ خطأ'); }
-}
-function calcFunc(fn) {
-  const c = parseFloat(calcCurrent) || 0;
-  let r = 0;
-  if (fn==='sin') r = Math.sin(c);
-  else if (fn==='cos') r = Math.cos(c);
-  else if (fn==='tan') r = Math.tan(c);
-  else if (fn==='√') r = Math.sqrt(c);
-  else if (fn==='log') r = Math.log10(c);
-  else if (fn==='ln') r = Math.log(c);
-  document.getElementById('calcHistory').textContent = fn + '(' + c + ')';
-  document.getElementById('calcScreen').textContent = r.toFixed(4);
-  calcCurrent = String(r);
-}
-
-function loadWisdom() {
-  const list = document.getElementById('wisdomList');
-  if (!list) return;
-  list.innerHTML = wisdomData.map(w=>`
-    <div class="wisdom-item">
-      <div style="font-size:50px;color:#7B1FA2;opacity:0.2;">"</div>
-      <div style="font-size:16px;font-weight:600;color:#4A148C;margin:8px 0;">${w.text}</div>
-      <div style="font-size:13px;color:#7B1FA2;">— ${w.author}</div>
-    </div>
-  `).join('');
-}
-
-function loadMessages() {
-  const list = document.getElementById('messagesList');
-  if (!list) return;
-  list.innerHTML = messagesData.map(m=>`
-    <div class="message-item">
-      <div class="message-avatar">${m.icon}</div>
-      <div style="flex:1;">
-        <div style="font-weight:bold;font-size:14px;">${m.name}</div>
-        <div style="font-size:12px;color:#999;">${m.last}</div>
-      </div>
-      ${m.unread>0?`<div class="message-badge">${m.unread}</div>`:''}
-    </div>
-  `).join('');
-}
-
-function openQuran() {
-  loadSurahs();
-  screenHistory.push(currentScreen);
-  showScreen('quranScreen');
-}
-function openCalculator() {
-  screenHistory.push(currentScreen);
-  showScreen('calculatorScreen');
-}
-function openDrawing() {
-  screenHistory.push(currentScreen);
-  showScreen('drawingScreen');
-  setTimeout(initFullCanvas, 200);
-}
-function openWisdom() {
-  loadWisdom();
-  screenHistory.push(currentScreen);
-  showScreen('wisdomScreen');
-}
-function openMessages() {
-  loadMessages();
-  screenHistory.push(currentScreen);
-  showScreen('messagesScreen');
-}
-</script>
-
-<style>
-.tabs-row { display: flex; gap: 8px; margin-bottom: 16px; }
-.tab-btn {
-  flex: 1; padding: 10px; background: var(--white);
-  border: 2px solid transparent; border-radius: 12px;
-  font-family: inherit; font-size: 13px; font-weight: 600;
-  color: var(--gray); cursor: pointer;
-}
-.tab-btn.active { background: var(--primary); color: var(--white); }
-.lesson-body {
-  background: var(--white); border-radius: 16px;
-  padding: 20px; line-height: 1.9; box-shadow: var(--shadow);
-}
-.tts-word {
-  background: #E8F5E9; color: var(--primary);
-  padding: 2px 8px; border-radius: 8px;
-  cursor: pointer; font-weight: 600;
-}
-.drawing-board { background: var(--white); border-radius: 16px; padding: 8px; box-shadow: var(--shadow); }
-#drawingCanvas { width: 100%; height: 200px; background: #FAFAFA; border-radius: 12px; touch-action: none; display: block; }
-.drawing-tools { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
-.draw-btn { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.15); cursor: pointer; }
-.draw-action { margin-right: auto; padding: 6px 12px; background: var(--light-gray); border: none; border-radius: 10px; font-family: inherit; font-size: 13px; }
-.exercise-item { background: var(--white); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
-.exercise-q { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
-.exercise-options { display: flex; flex-direction: column; gap: 10px; }
-.exercise-opt { padding: 14px; background: var(--light-gray); border: 2px solid transparent; border-radius: 12px; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; text-align: right; }
-.exercise-opt.correct { background: #E8F5E9; border-color: var(--success); color: var(--success); }
-.exercise-opt.wrong { background: #FFEBEE; border-color: var(--error); color: var(--error); }
-.exam-card { background: var(--white); border-radius: 16px; padding: 24px; text-align: center; box-shadow: var(--shadow); }
-.exam-title { font-size: 18px; font-weight: bold; color: var(--primary); margin-bottom: 8px; }
-.exam-info { color: var(--gray); margin-bottom: 20px; }
-.unit-item { background: var(--white); border-radius: 16px; margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow); }
-.unit-header { padding: 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; }
-.unit-lessons { max-height: 0; overflow: hidden; transition: max-height 0.3s; }
-.lesson-item { padding: 12px 20px; display: flex; align-items: center; gap: 12px; border-top: 1px solid #eee; cursor: pointer; font-size: 14px; }
-.surah-item { background: var(--white); border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px; cursor: pointer; box-shadow: var(--shadow); border-right: 3px solid #26A69A; margin-bottom: 10px; }
-.surah-num { width: 40px; height: 40px; background: linear-gradient(135deg,#00695C,#26A69A); color: var(--white); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; }
-.verses-box { background: #FFFEF7; border: 2px solid #26A69A; border-radius: 16px; padding: 20px; line-height: 2.2; font-size: 20px; text-align: center; }
-.verse { padding: 10px 6px; border-radius: 10px; cursor: pointer; }
-.verse-num { display: inline-block; width: 28px; height: 28px; background: #26A69A; color: var(--white); border-radius: 50%; font-size: 12px; line-height: 28px; text-align: center; margin-left: 8px; }
-.audio-controls { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
-.audio-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--white); border: none; font-size: 20px; cursor: pointer; box-shadow: var(--shadow); }
-.audio-btn.play { background: linear-gradient(135deg,#00695C,#26A69A); color: var(--white); width: 64px; height: 64px; }
-.calc-display { background: var(--white); border-radius: 20px; padding: 24px; text-align: left; margin-bottom: 16px; box-shadow: var(--shadow); direction: ltr; }
-.calc-history { color: var(--gray); font-size: 14px; min-height: 20px; }
-.calc-screen { font-size: 36px; font-weight: bold; word-break: break-all; }
-.calc-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-.calc-btn { padding: 18px 8px; background: var(--white); border: none; border-radius: 14px; font-family: inherit; font-size: 18px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow); }
-.calc-btn.func { background: #E3F2FD; color: #1976D2; font-size: 15px; }
-.calc-btn.op { background: #FFF3E0; color: #F57C00; }
-.calc-btn.eq { background: linear-gradient(135deg,#1976D2,#42A5F5); color: var(--white); }
-.calc-btn.clear { background: #FFEBEE; color: var(--error); }
-.drawing-canvas-full { background: var(--white); border-radius: 16px; height: calc(100vh - 220px); overflow: hidden; box-shadow: var(--shadow); }
-#fullDrawingCanvas { width: 100%; height: 100%; touch-action: none; display: block; }
-.drawing-palette { display: flex; gap: 10px; padding: 16px; background: var(--white); border-radius: 16px; margin-top: 12px; align-items: center; box-shadow: var(--shadow); }
-.color-dot { width: 36px; height: 36px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); cursor: pointer; }
-.clear-btn { width: 42px; height: 42px; border-radius: 50%; background: #FFEBEE; border: none; font-size: 18px; margin-right: auto; }
-.wisdom-item { background: linear-gradient(135deg,#F3E5F5,#EDE7F6); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 14px; }
-.message-item { background: var(--white); border-radius: 16px; padding: 14px; display: flex; align-items: center; gap: 12px; margin-bottom: 10px; box-shadow: var(--shadow); }
-.message-avatar { width: 50px; height: 50px; background: var(--primary-pale); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
-.message-badge { background: var(--error); color: var(--white); font-size: 11px; font-weight: bold; min-width: 22px; height: 22
+  min-width: 22px;
+  height: 22px;
   border-radius: 11px;
   display: flex;
   align-items: center;
@@ -1492,8 +1104,7 @@ function openMessages() {
   padding: 0 6px;
 }
 </style>
-
-<!-- شاشة الحساب -->
+  <!-- شاشة الحساب -->
 <div id="profileScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1627,12 +1238,6 @@ function openMessages() {
     <div class="menu-item" onclick="showToast('👥 قريباً')">
       <span style="font-size:24px;">👥</span>
       <span style="flex:1;font-weight:600;">إدارة المستخدمين</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="showToast('💬 قريباً')">
-      <span style="font-size:24px;">💬</span>
-      <span style="flex:1;font-weight:600;">إدارة المراسلات</span>
       <span style="color:#999;font-size:22px;">‹</span>
     </div>
   </div>
@@ -1806,5 +1411,6 @@ body.dark-mode .audio-btn {
 
 body.dark-mode .section-title { color: #fff; }
 </style>
+
 </body>
 </html>
