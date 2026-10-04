@@ -1411,6 +1411,792 @@ body.dark-mode .audio-btn {
 
 body.dark-mode .section-title { color: #fff; }
 </style>
+homeScreen
+  <!-- ============================================ -->
+<!-- الجزء الناقص 1 : الشاشة الرئيسية + المناهج -->
+<!-- ============================================ -->
 
+<div id="homeScreen" class="screen">
+  <div class="top-bar">
+    <div class="logo">
+      <span style="font-size:24px;">🎓</span>
+      <span>منصة حافظ التعليمية</span>
+    </div>
+    <button class="icon-btn" onclick="goToProfile()">👤</button>
+  </div>
+
+  <div class="content">
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" placeholder="ابحث..." oninput="showToast('🔍 بحث')">
+    </div>
+
+    <div class="ad-banner" onclick="showToast('📢 إعلان')">
+      <div style="font-size:36px;">📢</div>
+      <div>
+        <div style="font-weight:bold;">إعلان رئيسي</div>
+        <div style="font-size:12px;opacity:0.9;">اضغط للمشاهدة</div>
+      </div>
+    </div>
+
+    <div class="section-title">📚 التعليم العام</div>
+    <div class="cards-row">
+      <div class="big-card" style="background:linear-gradient(135deg,#66BB6A,#4CAF50);" onclick="openStage('primary')">
+        <div style="font-size:32px;">🎒</div>
+        <div>ابتدائي</div>
+      </div>
+      <div class="big-card" style="background:linear-gradient(135deg,#43A047,#2E7D32);" onclick="openStage('prep')">
+        <div style="font-size:32px;">📗</div>
+        <div>إعدادي</div>
+      </div>
+      <div class="big-card" style="background:linear-gradient(135deg,#2E7D32,#1B5E20);" onclick="openStage('sec')">
+        <div style="font-size:32px;">📕</div>
+        <div>ثانوي</div>
+      </div>
+    </div>
+
+    <div class="section-title">🕌 الأزهر الشريف</div>
+    <div class="azhar-card" onclick="openAzhar()">
+      <div style="font-size:40px;">🕌</div>
+      <div style="flex:1;">
+        <div style="font-weight:bold;">المواد الشرعية</div>
+        <div style="font-size:12px;opacity:0.9;">تفسير • حديث • فقه • عقيدة</div>
+      </div>
+      <div style="font-size:28px;">‹</div>
+    </div>
+
+    <div class="section-title">📖 القرآن الكريم</div>
+    <div class="quran-card" onclick="openQuran()">
+      <div style="font-size:40px;">📖</div>
+      <div style="flex:1;">
+        <div style="font-weight:bold;">اقرأ • ترديد • حفظ</div>
+        <div style="font-size:12px;opacity:0.9;">المصحف كامل بالصوت</div>
+      </div>
+      <div style="font-size:28px;">‹</div>
+    </div>
+
+    <div class="section-title">🧰 أدوات سريعة</div>
+    <div class="tools-grid">
+      <div class="tool-btn" onclick="openCalculator()">
+        <div class="tool-icon" style="background:#E3F2FD;color:#1976D2;">🧮</div>
+        <div class="tool-label">حاسبة</div>
+      </div>
+      <div class="tool-btn" onclick="openDrawing()">
+        <div class="tool-icon" style="background:#FFF3E0;color:#F57C00;">✏️</div>
+        <div class="tool-label">رسم</div>
+      </div>
+      <div class="tool-btn" onclick="openWisdom()">
+        <div class="tool-icon" style="background:#F3E5F5;color:#7B1FA2;">💡</div>
+        <div class="tool-label">حكم</div>
+      </div>
+      <div class="tool-btn" onclick="openMessages()">
+        <div class="tool-icon" style="background:#E8F5E9;color:#2E7D32;">💬</div>
+        <div class="tool-label">رسائل</div>
+      </div>
+    </div>
+
+    <div class="section-title">💡 حكمة اليوم</div>
+    <div class="wisdom-card">
+      <div style="font-size:50px;color:#7B1FA2;opacity:0.2;">"</div>
+      <div style="font-size:16px;font-weight:600;color:#4A148C;">العلم نور والجهل ظلام</div>
+      <div style="font-size:13px;color:#7B1FA2;text-align:left;">— الإمام علي</div>
+    </div>
+
+    <div class="section-title">📊 إحصائياتي</div>
+    <div class="stats-card">
+      <div class="stat-item">
+        <div class="stat-value">45</div>
+        <div class="stat-label">درس</div>
+      </div>
+      <div style="width:1px;height:40px;background:#eee;"></div>
+      <div class="stat-item">
+        <div class="stat-value">1250</div>
+        <div class="stat-label">نقطة</div>
+      </div>
+      <div style="width:1px;height:40px;background:#eee;"></div>
+      <div class="stat-item">
+        <div class="stat-value">12</div>
+        <div class="stat-label">امتحان</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="nav-item active" onclick="navTo('home')">
+      <span class="icon">🏠</span>
+      <span>الرئيسية</span>
+    </button>
+    <button class="nav-item" onclick="navTo('education')">
+      <span class="icon">📚</span>
+      <span>المناهج</span>
+    </button>
+    <button class="nav-item" onclick="navTo('quran')">
+      <span class="icon">📖</span>
+      <span>القرآن</span>
+    </button>
+    <button class="nav-item" onclick="navTo('tools')">
+      <span class="icon">🧰</span>
+      <span>أدوات</span>
+    </button>
+    <button class="nav-item" onclick="navTo('profile')">
+      <span class="icon">👤</span>
+      <span>حسابي</span>
+    </button>
+  </div>
+</div>
+
+<div id="educationScreen" class="screen">
+  <div class="top-bar">
+    <button class="icon-btn" onclick="goBack()">→</button>
+    <div class="logo"><span>📚 التعليم العام</span></div>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="content">
+    <div class="section-title">اختر المرحلة</div>
+    <div id="stagesList"></div>
+  </div>
+</div>
+
+<div id="gradesScreen" class="screen">
+  <div class="top-bar">
+    <button class="icon-btn" onclick="goBack()">→</button>
+    <div class="logo"><span id="gradesTitle">الصفوف</span></div>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="content">
+    <div id="gradesList"></div>
+  </div>
+</div>
+
+<div id="subjectsScreen" class="screen">
+  <div class="top-bar">
+    <button class="icon-btn" onclick="goBack()">→</button>
+    <div class="logo"><span id="subjectsTitle">المواد</span></div>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="content">
+    <div id="subjectsList" class="subjects-grid"></div>
+  </div>
+</div>
+
+<div id="azharScreen" class="screen">
+  <div class="top-bar" style="background:linear-gradient(135deg,#C9A227,#E6C75E);">
+    <button class="icon-btn" onclick="goBack()">→</button>
+    <div class="logo"><span>🕌 الأزهر الشريف</span></div>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="content">
+    <div class="section-title">المواد الشرعية</div>
+    <div id="azharList"></div>
+  </div>
+</div>
+
+<script>
+const stagesData = {
+  primary: {
+    name: 'المرحلة الابتدائية',
+    icon: '🎒',
+    grades: ['الأول','الثاني','الثالث','الرابع','الخامس','السادس']
+  },
+  prep: {
+    name: 'المرحلة الإعدادية',
+    icon: '📗',
+    grades: ['الأول','الثاني','الثالث']
+  },
+  sec: {
+    name: 'المرحلة الثانوية',
+    icon: '📕',
+    grades: ['الأول','الثاني','الثالث']
+  }
+};
+
+const generalSubjects = [
+  { id: 'math', name: 'رياضيات', icon: '🔢', color: '#1976D2' },
+  { id: 'geometry', name: 'هندسة', icon: '📐', color: '#388E3C' },
+  { id: 'chem', name: 'كيمياء', icon: '⚗️', color: '#D32F2F' },
+  { id: 'physics', name: 'فيزياء', icon: '⚛️', color: '#7B1FA2' },
+  { id: 'bio', name: 'أحياء', icon: '🧬', color: '#00796B' },
+  { id: 'arabic', name: 'لغة عربية', icon: '📖', color: '#C2185B' },
+  { id: 'english', name: 'إنجليزي', icon: '🇬🇧', color: '#303F9F' },
+  { id: 'history', name: 'تاريخ', icon: '📜', color: '#5D4037' },
+  { id: 'geo', name: 'جغرافيا', icon: '🌍', color: '#0097A7' },
+  { id: 'cs', name: 'حاسب آلي', icon: '💻', color: '#455A64' }
+];
+
+const azharSubjects = [
+  { id: 'quran_t', name: 'القرآن والتفسير', icon: '📖' },
+  { id: 'hadith', name: 'الحديث الشريف', icon: '📜' },
+  { id: 'fiqh', name: 'الفقه', icon: '⚖️' },
+  { id: 'aqeeda', name: 'العقيدة', icon: '🕌' },
+  { id: 'seera', name: 'السيرة النبوية', icon: '🌟' },
+  { id: 'nahw', name: 'النحو', icon: '📝' },
+  { id: 'sarf', name: 'الصرف والبلاغة', icon: '📚' }
+];
+
+function navTo(dest) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (event && event.target) event.target.closest('.nav-item')?.classList.add('active');
+
+  if (dest === 'home') showScreen('homeScreen');
+  else if (dest === 'education') openEducation();
+  else if (dest === 'quran') openQuran();
+  else if (dest === 'tools') showToast('🧰 قريباً');
+  else if (dest === 'profile') goToProfile();
+}
+
+function openEducation() {
+  const list = document.getElementById('stagesList');
+  list.innerHTML = Object.keys(stagesData).map(key => {
+    const s = stagesData[key];
+    return `
+      <div class="stage-item" onclick="openStage('${key}')">
+        <div class="stage-icon">${s.icon}</div>
+        <div class="stage-info">
+          <div class="stage-name">${s.name}</div>
+          <div class="stage-sub">${s.grades.length} صفوف</div>
+        </div>
+        <div class="stage-arrow">‹</div>
+      </div>
+    `;
+  }).join('');
+
+  screenHistory.push(currentScreen);
+  showScreen('educationScreen');
+}
+
+function openStage(stageId) {
+  const stage = stagesData[stageId];
+  document.getElementById('gradesTitle').textContent = stage.name;
+
+  const list = document.getElementById('gradesList');
+  list.innerHTML = stage.grades.map((g, i) => `
+    <div class="stage-item" onclick="openGrade('${stageId}', ${i+1}, '${g}')">
+      <div class="stage-icon" style="background:#E8F5E9;">🎓</div>
+      <div class="stage-info">
+        <div class="stage-name">الصف ${g}</div>
+        <div class="stage-sub">اضغط لعرض المواد</div>
+      </div>
+      <div class="stage-arrow">‹</div>
+    </div>
+  `).join('');
+
+  screenHistory.push(currentScreen);
+  showScreen('gradesScreen');
+}
+
+function openGrade(stageId, num, gradeName) {
+  document.getElementById('subjectsTitle').textContent = 'الصف ' + gradeName;
+
+  const list = document.getElementById('subjectsList');
+  list.innerHTML = generalSubjects.map(s => `
+    <div class="subject-card" onclick="openSubject('${s.id}', '${s.name}')">
+      <div class="subject-icon" style="background:${s.color}20;color:${s.color};">${s.icon}</div>
+      <div class="subject-name">${s.name}</div>
+    </div>
+  `).join('');
+
+  screenHistory.push(currentScreen);
+  showScreen('subjectsScreen');
+}
+
+function openAzhar() {
+  const list = document.getElementById('azharList');
+  list.innerHTML = azharSubjects.map(s => `
+    <div class="azhar-subject-item" onclick="showToast('🕌 ${s.name}')">
+      <div style="font-size:30px;">${s.icon}</div>
+      <div class="stage-info">
+        <div class="stage-name">${s.name}</div>
+      </div>
+      <div class="stage-arrow" style="color:#C9A227;">‹</div>
+    </div>
+  `).join('');
+
+  screenHistory.push(currentScreen);
+  showScreen('azharScreen');
+}
+</script>
+
+<style>
+.search-box {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 15px;
+  background: transparent;
+}
+
+.section-title {
+  font-size: 17px;
+  font-weight: bold;
+  margin: 20px 0 12px;
+}
+
+.ad-banner {
+  background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+  border-radius: 16px;
+  padding: 18px;
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow);
+}
+
+.cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.big-card {
+  padding: 20px 10px;
+  border-radius: 16px;
+  text-align: center;
+  color: var(--white);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.azhar-card, .quran-card {
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--white);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.azhar-card { background: linear-gradient(135deg,#C9A227,#E6C75E); }
+.quran-card { background: linear-gradient(135deg,#00695C,#26A69A); }
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.tool-btn {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 14px 6px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.tool-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin: 0 auto 8px;
+}
+
+.tool-label { font-size: 12px; font-weight: 600; }
+
+.wisdom-card {
+  background: linear-gradient(135deg,#F3E5F5,#EDE7F6);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.stats-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+
+.stat-item { flex: 1; text-align: center; }
+.stat-value { font-size: 24px; font-weight: bold; color: var(--primary); }
+.stat-label { font-size: 12px; color: var(--gray); }
+
+.stage-item, .azhar-subject-item {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+}
+
+.azhar-subject-item { border-right: 4px solid #C9A227; }
+
+.stage-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  background: #E8F5E9;
+}
+
+.stage-info { flex: 1; }
+.stage-name { font-size: 15px; font-weight: bold; }
+.stage-sub { font-size: 12px; color: var(--gray); }
+.stage-arrow { font-size: 26px; color: var(--gray); }
+
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.subject-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 20px 12px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.subject-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 10px;
+}
+
+.subject-name { font-size: 14px; font-weight: 600; }
+</style>
+
+  <!-- ============================================ -->
+<!-- الجزء الناقص 3 : الحساب + لوحة المالك -->
+<!-- ============================================ -->
+
+<div id="profileScreen" class="screen">
+  <div class="top-bar">
+    <button class="icon-btn" onclick="goBack()">→</button>
+    <div class="logo"><span>👤 حسابي</span></div>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="content">
+    <div style="background:linear-gradient(135deg,#2E7D32,#4CAF50);border-radius:20px;padding:24px;text-align:center;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,0.12);margin-bottom:20px;">
+      <div style="width:90px;height:90px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 12px;">👤</div>
+      <div id="profileName" style="font-size:20px;font-weight:bold;">أحمد محمد</div>
+      <div id="profileRole" style="font-size:13px;opacity:0.9;margin-top:4px;">طالب</div>
+      <button onclick="openQR()" style="margin-top:14px;padding:10px 20px;background:#fff;color:#2E7D32;border:none;border-radius:20px;font-family:inherit;font-weight:bold;cursor:pointer;">📱 عرض QR Code</button>
+    </div>
+
+    <div class="section-title">📊 إحصائياتي</div>
+    <div class="stats-card">
+      <div class="stat-item">
+        <div class="stat-value">45</div>
+        <div class="stat-label">درس</div>
+      </div>
+      <div style="width:1px;height:40px;background:#eee;"></div>
+      <div class="stat-item">
+        <div class="stat-value" id="profilePoints">1250</div>
+        <div class="stat-label">نقطة</div>
+      </div>
+      <div style="width:1px;height:40px;background:#eee;"></div>
+      <div class="stat-item">
+        <div class="stat-value">12</div>
+        <div class="stat-label">امتحان</div>
+      </div>
+    </div>
+
+    <div class="section-title">🏆 إنجازاتي</div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <div style="width:60px;height:60px;background:#FFF8E1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;">🥇</div>
+      <div style="width:60px;height:60px;background:#F5F5F5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;">🥈</div>
+      <div style="width:60px;height:60px;background:#FFF3E0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;">🥉</div>
+      <div style="width:60px;height:60px;background:#E3F2FD;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;">🎖️</div>
+    </div>
+
+    <div class="section-title">⚙️ الإعدادات</div>
+
+    <div class="menu-item" onclick="showToast('👨‍🏫 قريباً')">
+      <span style="font-size:24px;">👨‍🏫</span>
+      <span style="flex:1;font-weight:600;">تواصل مع معلم</span>
+      <span style="color:#999;font-size:22px;">‹</span>
+    </div>
+
+    <div class="menu-item" onclick="toggleDark()">
+      <span style="font-size:24px;">🌙</span>
+      <span style="flex:1;font-weight:600;">الوضع الليلي</span>
+      <span style="color:#999;font-size:22px;">‹</span>
+    </div>
+
+    <div class="menu-item" onclick="openAdmin()" id="adminMenu" style="display:none;">
+      <span style="font-size:24px;">🛡️</span>
+      <span style="flex:1;font-weight:600;color:#E53935;">لوحة المالك</span>
+      <span style="color:#999;font-size:22px;">‹</span>
+    </div>
+
+    <div class="menu-item" onclick="logout()" style="background:#FFEBEE;">
+      <span style="font-size:24px;">🚪</span>
+      <span style="flex:1;font-weight:600;color:#E53935;">تسجيل الخروج</span>
+      <span style="color:#E53935;font-size:22px;">‹</span>
+    </div>
+  </div>
+</div>
+
+<div id="qrScreen" class="screen">
+  <div class="top-bar">
+    <button class="icon-btn" onclick="goBack()">→</button>
+    <div class="logo"><span>📱 QR Code</span></div>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="content" style="text-align:center;">
+    <div style="background:#fff;border-radius:24px;padding:30px;box-shadow:0 4px 16px rgba(0,0,0,0.12);max-width:340px;margin:0 auto;">
+      <div id="qrCode" style="width:220px;height:220px;background:repeating-linear-gradient(45deg,#000 0 10px,#fff 10px 20px);margin:0 auto 20px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:80px;color:#fff;">▦</div>
+      <div id="qrLabel" style="font-size:20px;font-weight:bold;color:#212121;">أحمد محمد</div>
+      <div id="qrRole" style="font-size:14px;color:#999;margin-top:4px;">طالب</div>
+      <div style="font-size:12px;color:#999;margin-top:12px;">امسح الكود لمشاركة حسابك</div>
+    </div>
+    <button class="btn-primary" style="margin-top:20px;" onclick="showToast('📥 جاري التحميل...')">تحميل QR</button>
+  </div>
+</div>
+
+<div id="adminScreen" class="screen">
+  <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
+    <button class="icon-btn" onclick="goBack()">→</button>
+    <div class="logo"><span>🛡️ لوحة المالك</span></div>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="content">
+    <div class="section-title">📊 الإحصائيات</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <div style="font-size:20px;font-weight:bold;color:#E53935;">15K</div>
+        <div style="font-size:11px;color:#999;margin-top:4px;">👥 الزوار</div>
+      </div>
+      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <div style="font-size:20px;font-weight:bold;color:#E53935;">1,250</div>
+        <div style="font-size:11px;color:#999;margin-top:4px;">📱 اليوم</div>
+      </div>
+      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <div style="font-size:20px;font-weight:bold;color:#E53935;">45</div>
+        <div style="font-size:11px;color:#999;margin-top:4px;">🟢 الآن</div>
+      </div>
+    </div>
+
+    <div class="section-title">⚙️ التحكم</div>
+
+    <div class="menu-item" onclick="openAdsManager()">
+      <span style="font-size:24px;">📢</span>
+      <span style="flex:1;font-weight:600;">إدارة الإعلانات</span>
+      <span style="color:#999;font-size:22px;">‹</span>
+    </div>
+
+    <div class="menu-item" onclick="showToast('📚 قريباً')">
+      <span style="font-size:24px;">📚</span>
+      <span style="flex:1;font-weight:600;">إدارة المحتوى</span>
+      <span style="color:#999;font-size:22px;">‹</span>
+    </div>
+
+    <div class="menu-item" onclick="showToast('💡 قريباً')">
+      <span style="font-size:24px;">💡</span>
+      <span style="flex:1;font-weight:600;">إدارة الحكم</span>
+      <span style="color:#999;font-size:22px;">‹</span>
+    </div>
+
+    <div class="menu-item" onclick="showToast('👥 قريباً')">
+      <span style="font-size:24px;">👥</span>
+      <span style="flex:1;font-weight:600;">إدارة المستخدمين</span>
+      <span style="color:#999;font-size:22px;">‹</span>
+    </div>
+  </div>
+</div>
+
+<div id="adsManagerScreen" class="screen">
+  <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
+    <button class="icon-btn" onclick="goBack()">→</button>
+    <div class="logo"><span>📢 إدارة الإعلانات</span></div>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="content">
+    <div class="section-title">➕ إضافة إعلان جديد</div>
+
+    <div class="form-group">
+      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">عنوان الإعلان</label>
+      <input type="text" class="form-input" id="adTitle" placeholder="مثال: خصم 50%">
+    </div>
+
+    <div class="form-group">
+      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">رفع من الجهاز</label>
+      <input type="file" class="form-input" id="adFile" accept="image/*,video/*" style="padding:10px;">
+    </div>
+
+    <div class="form-group">
+      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">المدة (ثواني)</label>
+      <input type="number" class="form-input" id="adDuration" value="10">
+    </div>
+
+    <button class="btn-primary" onclick="addNewAd()">➕ إضافة الإعلان</button>
+
+    <div class="section-title">📋 الإعلانات الحالية</div>
+    <div id="adsList"></div>
+  </div>
+</div>
+
+<script>
+function goToProfile() {
+  document.getElementById('profileName').textContent = currentUser ? currentUser.name : 'أحمد محمد';
+  document.getElementById('profileRole').textContent = 
+    currentRole === 'student' ? 'طالب' :
+    currentRole === 'teacher' ? 'معلم' : 'المالك';
+  document.getElementById('profilePoints').textContent = currentUser ? currentUser.points : 1250;
+
+  const adminMenu = document.getElementById('adminMenu');
+  if (adminMenu) adminMenu.style.display = currentRole === 'owner' ? 'flex' : 'none';
+
+  screenHistory.push(currentScreen);
+  showScreen('profileScreen');
+}
+
+function openQR() {
+  document.getElementById('qrLabel').textContent = currentUser ? currentUser.name : 'أحمد محمد';
+  document.getElementById('qrRole').textContent = 
+    currentRole === 'student' ? 'طالب' :
+    currentRole === 'teacher' ? 'معلم' : 'مالك';
+  screenHistory.push(currentScreen);
+  showScreen('qrScreen');
+}
+
+function toggleDark() {
+  document.body.classList.toggle('dark-mode');
+  showToast(document.body.classList.contains('dark-mode') ? '🌙 وضع ليلي' : '☀️ وضع نهاري');
+}
+
+function logout() {
+  if (confirm('تسجيل خروج؟')) {
+    currentUser = null;
+    currentRole = 'student';
+    screenHistory = [];
+    document.getElementById('emailInput').value = '';
+    document.getElementById('passwordInput').value = '';
+    showScreen('loginScreen');
+    showToast('👋 تم الخروج');
+  }
+}
+
+function openAdmin() {
+  screenHistory.push(currentScreen);
+  showScreen('adminScreen');
+}
+
+function openAdsManager() {
+  loadAds();
+  screenHistory.push(currentScreen);
+  showScreen('adsManagerScreen');
+}
+
+let adsData = [
+  {id:'1',title:'خصم 50% على الكتب',duration:10},
+  {id:'2',title:'دورة رياضيات مجانية',duration:15}
+];
+
+function addNewAd() {
+  const title = document.getElementById('adTitle').value.trim();
+  if (!title) { showToast('⚠️ أدخل عنوان'); return; }
+  adsData.push({
+    id: Date.now().toString(),
+    title: title,
+    duration: parseInt(document.getElementById('adDuration').value) || 10
+  });
+  document.getElementById('adTitle').value = '';
+  document.getElementById('adFile').value = '';
+  loadAds();
+  showToast('✅ تم إضافة الإعلان');
+}
+
+function loadAds() {
+  const list = document.getElementById('adsList');
+  if (!list) return;
+  if (adsData.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">لا توجد إعلانات</div>';
+    return;
+  }
+  list.innerHTML = adsData.map(ad => `
+    <div style="background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+      <div style="font-size:24px;">📢</div>
+      <div style="flex:1;">
+        <div style="font-weight:bold;font-size:14px;">${ad.title}</div>
+        <div style="font-size:12px;color:#999;">${ad.duration} ثانية</div>
+      </div>
+      <button onclick="deleteAd('${ad.id}')" style="background:#FFEBEE;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">🗑️</button>
+    </div>
+  `).join('');
+}
+
+function deleteAd(id) {
+  if (confirm('حذف الإعلان؟')) {
+    adsData = adsData.filter(a => a.id !== id);
+    loadAds();
+    showToast('🗑️ تم الحذف');
+  }
+}
+</script>
+
+<style>
+.menu-item {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.menu-item:active { transform: scale(0.98); }
+
+body.dark-mode { background: #1A1A1A; color: #fff; }
+
+body.dark-mode .menu-item,
+body.dark-mode .stats-card,
+body.dark-mode .stage-item,
+body.dark-mode .subject-card,
+body.dark-mode .surah-item,
+body.dark-mode .tool-btn,
+body.dark-mode .lesson-body,
+body.dark-mode .exercise-item,
+body.dark-mode .exam-card,
+body.dark-mode .unit-item,
+body.dark-mode .message-item,
+body.dark-mode .calc-display,
+body.dark-mode .calc-btn,
+body.dark-mode .audio-btn {
+  background: #2A2A2A;
+  color: #fff;
+}
+
+body.dark-mode .section-title { color: #fff; }
+</style>
 </body>
 </html>
