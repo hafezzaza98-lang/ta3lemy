@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>منصة حافظ التعليمية</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --primary: #2E7D32;
@@ -21,265 +21,94 @@
   --success: #43A047;
   --shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html, body {
-  font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
-  background: var(--light-gray);
-  color: var(--black);
-  direction: rtl;
-  overflow-x: hidden;
-  min-height: 100vh;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-.screen {
-  display: none;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.screen.active {
-  display: flex;
-}
-
-.top-bar {
-  background: var(--primary);
-  color: var(--white);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 0 0 24px 24px;
-  box-shadow: var(--shadow);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.top-bar .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.icon-btn {
-  background: rgba(255,255,255,0.15);
-  border: none;
-  color: var(--white);
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--white);
-  display: flex;
-  justify-content: space-around;
-  padding: 8px 4px;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
-  border-top: 1px solid #eee;
-  z-index: 100;
-}
-
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 6px;
-  background: none;
-  border: none;
-  color: var(--gray);
-  font-size: 11px;
-  font-family: inherit;
-  cursor: pointer;
-}
-
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; background: var(--light-gray); color: var(--black); direction: rtl; overflow-x: hidden; min-height: 100vh; }
+.screen { display: none; flex-direction: column; min-height: 100vh; }
+.screen.active { display: flex; }
+.top-bar { background: var(--primary); color: var(--white); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border-radius: 0 0 24px 24px; box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100; }
+.top-bar .logo { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: bold; }
+.icon-btn { background: rgba(255,255,255,0.15); border: none; color: var(--white); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; }
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); display: flex; justify-content: space-around; padding: 8px 4px; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); border-top: 1px solid #eee; z-index: 100; }
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px; background: none; border: none; color: var(--gray); font-size: 11px; font-family: inherit; cursor: pointer; }
 .nav-item .icon { font-size: 22px; }
 .nav-item.active { color: var(--primary); }
-
-.content {
-  flex: 1;
-  padding: 16px;
-  padding-bottom: 90px;
-  overflow-y: auto;
-}
-
-#splashScreen {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  align-items: center;
-  justify-content: center;
-}
-
+.content { flex: 1; padding: 16px; padding-bottom: 90px; overflow-y: auto; }
+#splashScreen { background: linear-gradient(135deg, var(--primary), var(--primary-light)); align-items: center; justify-content: center; }
 .splash-content { text-align: center; color: var(--white); }
-
-.splash-logo {
-  width: 120px;
-  height: 120px;
-  background: var(--white);
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 70px;
-  margin: 0 auto 24px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-}
-
+.splash-logo { width: 120px; height: 120px; background: var(--white); border-radius: 30px; display: flex; align-items: center; justify-content: center; font-size: 70px; margin: 0 auto 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
 .splash-title { font-size: 26px; font-weight: bold; margin-bottom: 8px; }
 .splash-subtitle { font-size: 15px; opacity: 0.9; margin-bottom: 32px; }
-
-.loader {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(255,255,255,0.3);
-  border-top-color: var(--white);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
-}
-
+.loader { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.3); border-top-color: var(--white); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-#loginScreen {
-  background: var(--white);
-  padding: 24px;
-  justify-content: center;
-}
-
-.login-logo {
-  width: 100px;
-  height: 100px;
-  background: var(--primary-pale);
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 55px;
-  margin: 0 auto 20px;
-}
-
-.login-title {
-  text-align: center;
-  font-size: 26px;
-  font-weight: bold;
-  color: var(--primary);
-  margin-bottom: 8px;
-}
-
-.login-sub {
-  text-align: center;
-  color: var(--gray);
-  margin-bottom: 32px;
-}
-
+#loginScreen { background: var(--white); padding: 24px; justify-content: center; }
+.login-logo { width: 100px; height: 100px; background: var(--primary-pale); border-radius: 25px; display: flex; align-items: center; justify-content: center; font-size: 55px; margin: 0 auto 20px; }
+.login-title { text-align: center; font-size: 26px; font-weight: bold; color: var(--primary); margin-bottom: 8px; }
+.login-sub { text-align: center; color: var(--gray); margin-bottom: 32px; }
 .role-selector { display: flex; gap: 8px; margin-bottom: 20px; }
-
-.role-btn {
-  flex: 1;
-  padding: 12px;
-  background: var(--light-gray);
-  border: 2px solid transparent;
-  border-radius: 12px;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--dark-gray);
-  cursor: pointer;
-}
-
-.role-btn.active {
-  background: var(--primary);
-  color: var(--white);
-}
-
+.role-btn { flex: 1; padding: 12px; background: var(--light-gray); border: 2px solid transparent; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--dark-gray); cursor: pointer; }
+.role-btn.active { background: var(--primary); color: var(--white); }
 .form-group { margin-bottom: 16px; }
-
-.form-input {
-  width: 100%;
-  padding: 14px 16px;
-  background: var(--light-gray);
-  border: 2px solid transparent;
-  border-radius: 14px;
-  font-family: inherit;
-  font-size: 15px;
-  color: var(--black);
-  outline: none;
-}
-
-.form-input:focus {
-  border-color: var(--primary);
-  background: var(--white);
-}
-
-.btn-primary {
-  width: 100%;
-  padding: 16px;
-  background: var(--primary);
-  color: var(--white);
-  border: none;
-  border-radius: 14px;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-}
-
-.link-btn {
-  background: none;
-  border: none;
-  color: var(--primary);
-  font-family: inherit;
-  font-size: 14px;
-  padding: 12px;
-  cursor: pointer;
-  display: block;
-  margin: 12px auto;
-}
-
-.toast {
-  position: fixed;
-  bottom: 100px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: var(--black);
-  color: var(--white);
-  padding: 12px 24px;
-  border-radius: 24px;
-  font-size: 14px;
-  z-index: 1000;
-  opacity: 0;
-  transition: all 0.3s;
-  pointer-events: none;
-  max-width: 85%;
-  text-align: center;
-}
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
+.form-input { width: 100%; padding: 14px 16px; background: var(--light-gray); border: 2px solid transparent; border-radius: 14px; font-family: inherit; font-size: 15px; color: var(--black); outline: none; }
+.form-input:focus { border-color: var(--primary); background: var(--white); }
+.btn-primary { width: 100%; padding: 16px; background: var(--primary); color: var(--white); border: none; border-radius: 14px; font-family: inherit; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: var(--shadow); }
+.link-btn { background: none; border: none; color: var(--primary); font-family: inherit; font-size: 14px; padding: 12px; cursor: pointer; display: block; margin: 12px auto; }
+.toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--black); color: var(--white); padding: 12px 24px; border-radius: 24px; font-size: 14px; z-index: 1000; opacity: 0; transition: all 0.3s; pointer-events: none; max-width: 85%; text-align: center; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.search-box { background: var(--white); border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow); margin-bottom: 16px; }
+.search-box input { flex: 1; border: none; outline: none; font-family: inherit; font-size: 15px; background: transparent; }
+.section-title { font-size: 17px; font-weight: bold; margin: 20px 0 12px; }
+.ad-banner { background: linear-gradient(135deg, #FF6B6B, #FF8E53); border-radius: 16px; padding: 18px; color: var(--white); cursor: pointer; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow); }
+.cards-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.big-card { padding: 20px 10px; border-radius: 16px; text-align: center; color: var(--white); cursor: pointer; box-shadow: var(--shadow); }
+.azhar-card, .quran-card { border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 14px; color: var(--white); cursor: pointer; box-shadow: var(--shadow); }
+.azhar-card { background: linear-gradient(135deg,#C9A227,#E6C75E); }
+.quran-card { background: linear-gradient(135deg,#00695C,#26A69A); }
+.tools-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.tool-btn { background: var(--white); border-radius: 14px; padding: 14px 6px; text-align: center; cursor: pointer; box-shadow: var(--shadow); }
+.tool-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 8px; }
+.tool-label { font-size: 12px; font-weight: 600; }
+.wisdom-card { background: linear-gradient(135deg,#F3E5F5,#EDE7F6); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); }
+.stats-card { background: var(--white); border-radius: 16px; padding: 20px; display: flex; align-items: center; box-shadow: var(--shadow); }
+.stat-item { flex: 1; text-align: center; }
+.stat-value { font-size: 24px; font-weight: bold; color: var(--primary); }
+.stat-label { font-size: 12px; color: var(--gray); }
+.stage-item, .azhar-subject-item { background: var(--white); border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; box-shadow: var(--shadow); margin-bottom: 12px; }
+.azhar-subject-item { border-right: 4px solid #C9A227; }
+.stage-icon { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; background: #E8F5E9; }
+.stage-info { flex: 1; }
+.stage-name { font-size: 15px; font-weight: bold; }
+.stage-sub { font-size: 12px; color: var(--gray); }
+.stage-arrow { font-size: 26px; color: var(--gray); }
+.subjects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.subject-card { background: var(--white); border-radius: 16px; padding: 20px 12px; text-align: center; cursor: pointer; box-shadow: var(--shadow); }
+.subject-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 10px; }
+.subject-name { font-size: 14px; font-weight: 600; }
+.unit-item { background: var(--white); border-radius: 16px; margin-bottom: 12px; box-shadow: var(--shadow); overflow: hidden; }
+.lesson-body { background: var(--white); border-radius: 16px; padding: 20px; line-height: 1.9; box-shadow: var(--shadow); }
+.surah-item { background: var(--white); border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px; cursor: pointer; box-shadow: var(--shadow); border-right: 3px solid #26A69A; margin-bottom: 10px; }
+.surah-num { width: 40px; height: 40px; background: linear-gradient(135deg,#00695C,#26A69A); color: var(--white); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; }
+.calc-display { background: var(--white); border-radius: 20px; padding: 24px; text-align: left; margin-bottom: 16px; box-shadow: var(--shadow); direction: ltr; }
+.calc-history { color: var(--gray); font-size: 14px; min-height: 20px; }
+.calc-screen { font-size: 36px; font-weight: bold; word-break: break-all; }
+.calc-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.calc-btn { padding: 18px 8px; background: var(--white); border: none; border-radius: 14px; font-family: inherit; font-size: 18px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow); }
+.calc-btn.func { background: #E3F2FD; color: #1976D2; font-size: 15px; }
+.calc-btn.op { background: #FFF3E0; color: #F57C00; }
+.calc-btn.eq { background: linear-gradient(135deg,#1976D2,#42A5F5); color: var(--white); }
+.calc-btn.clear { background: #FFEBEE; color: var(--error); }
+.drawing-canvas-full { background: var(--white); border-radius: 16px; height: calc(100vh - 220px); overflow: hidden; box-shadow: var(--shadow); }
+#fullDrawingCanvas { width: 100%; height: 100%; touch-action: none; display: block; }
+.drawing-palette { display: flex; gap: 10px; padding: 16px; background: var(--white); border-radius: 16px; margin-top: 12px; align-items: center; box-shadow: var(--shadow); }
+.color-dot { width: 36px; height: 36px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); cursor: pointer; }
+.clear-btn { width: 42px; height: 42px; border-radius: 50%; background: #FFEBEE; border: none; font-size: 18px; margin-right: auto; }
+.wisdom-item { background: linear-gradient(135deg,#F3E5F5,#EDE7F6); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 14px; }
+.message-item { background: var(--white); border-radius: 16px; padding: 14px; display: flex; align-items: center; gap: 12px; margin-bottom: 10px; box-shadow: var(--shadow); }
+.message-avatar { width: 50px; height: 50px; background: var(--primary-pale); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.message-badge { background: var(--error); color: var(--white); font-size: 11px; font-weight: bold; min-width: 22px; height: 22px; border-radius: 11px; display: flex; align-items: center; justify-content: center; padding: 0 6px; }
+.menu-item { background: #fff; border-radius: 14px; padding: 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 10px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+body.dark-mode { background: #1A1A1A; color: #fff; }
+body.dark-mode .menu-item, body.dark-mode .stats-card, body.dark-mode .stage-item, body.dark-mode .subject-card, body.dark-mode .surah-item, body.dark-mode .tool-btn, body.dark-mode .lesson-body, body.dark-mode .unit-item, body.dark-mode .message-item, body.dark-mode .calc-display, body.dark-mode .calc-btn { background: #2A2A2A; color: #fff; }
+body.dark-mode .section-title { color: #fff; }
 </style>
 </head>
 <body>
@@ -297,685 +126,202 @@ html, body {
   <div class="login-logo">🎓</div>
   <div class="login-title">مرحباً بك</div>
   <div class="login-sub">سجّل دخولك للمتابعة</div>
-
   <div class="role-selector">
     <button class="role-btn active" onclick="selectRole(this, 'student')">🎒 طالب</button>
     <button class="role-btn" onclick="selectRole(this, 'teacher')">👨‍🏫 معلم</button>
     <button class="role-btn" onclick="selectRole(this, 'owner')">👑 مالك</button>
   </div>
-
-  <div class="form-group">
-    <input type="text" id="emailInput" class="form-input" placeholder="👤 اسم المستخدم">
-  </div>
-
-  <div class="form-group">
-    <input type="password" id="passwordInput" class="form-input" placeholder="🔒 كلمة المرور">
-  </div>
-
-  <div class="form-group" id="ownerCodeGroup" style="display:none;">
-    <input type="password" id="ownerCodeInput" class="form-input" placeholder="🔐 كود المالك">
-  </div>
-
+  <div class="form-group"><input type="text" id="emailInput" class="form-input" placeholder="👤 اسم المستخدم"></div>
+  <div class="form-group"><input type="password" id="passwordInput" class="form-input" placeholder="🔒 كلمة المرور"></div>
+  <div class="form-group" id="ownerCodeGroup" style="display:none;"><input type="password" id="ownerCodeInput" class="form-input" placeholder="🔐 كود المالك"></div>
   <button class="btn-primary" onclick="login()">تسجيل الدخول</button>
-  <button class="link-btn" onclick="showToast('قريباً')">ليس لديك حساب؟ سجّل الآن</button>
-  <button class="link-btn" onclick="showToast('قريباً')">دخول كزائر</button>
+</div>
+
+<div id="homeScreen" class="screen">
+  <div class="top-bar">
+    <div class="logo"><span style="font-size:24px;">🎓</span><span>منصة حافظ التعليمية</span></div>
+    <button class="icon-btn" onclick="goToProfile()">👤</button>
+  </div>
+  <div class="content">
+    <div class="search-box"><span>🔍</span><input type="text" placeholder="ابحث..." oninput="showToast('🔍 بحث')"></div>
+    <div class="ad-banner" onclick="showToast('📢 إعلان')"><div style="font-size:36px;">📢</div><div><div style="font-weight:bold;">إعلان رئيسي</div><div style="font-size:12px;opacity:0.9;">اضغط للمشاهدة</div></div></div>
+    <div class="section-title">📚 التعليم العام</div>
+    <div class="cards-row">
+      <div class="big-card" style="background:linear-gradient(135deg,#66BB6A,#4CAF50);" onclick="openStage('primary')"><div style="font-size:32px;">🎒</div><div>ابتدائي</div></div>
+      <div class="big-card" style="background:linear-gradient(135deg,#43A047,#2E7D32);" onclick="openStage('prep')"><div style="font-size:32px;">📗</div><div>إعدادي</div></div>
+      <div class="big-card" style="background:linear-gradient(135deg,#2E7D32,#1B5E20);" onclick="openStage('sec')"><div style="font-size:32px;">📕</div><div>ثانوي</div></div>
+    </div>
+    <div class="section-title">🕌 الأزهر الشريف</div>
+    <div class="azhar-card" onclick="openAzhar()"><div style="font-size:40px;">🕌</div><div style="flex:1;"><div style="font-weight:bold;">المواد الشرعية</div><div style="font-size:12px;opacity:0.9;">تفسير • حديث • فقه • عقيدة</div></div><div style="font-size:28px;">‹</div></div>
+    <div class="section-title">📖 القرآن الكريم</div>
+    <div class="quran-card" onclick="openQuran()"><div style="font-size:40px;">📖</div><div style="flex:1;"><div style="font-weight:bold;">اقرأ • ترديد • حفظ</div><div style="font-size:12px;opacity:0.9;">المصحف كامل بالصوت</div></div><div style="font-size:28px;">‹</div></div>
+    <div class="section-title">🧰 أدوات سريعة</div>
+    <div class="tools-grid">
+      <div class="tool-btn" onclick="openCalculator()"><div class="tool-icon" style="background:#E3F2FD;color:#1976D2;">🧮</div><div class="tool-label">حاسبة</div></div>
+      <div class="tool-btn" onclick="openDrawing()"><div class="tool-icon" style="background:#FFF3E0;color:#F57C00;">✏️</div><div class="tool-label">رسم</div></div>
+      <div class="tool-btn" onclick="openWisdom()"><div class="tool-icon" style="background:#F3E5F5;color:#7B1FA2;">💡</div><div class="tool-label">حكم</div></div>
+      <div class="tool-btn" onclick="openMessages()"><div class="tool-icon" style="background:#E8F5E9;color:#2E7D32;">💬</div><div class="tool-label">رسائل</div></div>
+    </div>
+    <div class="section-title">💡 حكمة اليوم</div>
+    <div class="wisdom-card"><div style="font-size:50px;color:#7B1FA2;opacity:0.2;">"</div><div style="font-size:16px;font-weight:600;color:#4A148C;">العلم نور والجهل ظلام</div><div style="font-size:13px;color:#7B1FA2;text-align:left;">— الإمام علي</div></div>
+  </div>
+  <div class="bottom-nav">
+    <button class="nav-item active" onclick="navTo('home')"><span class="icon">🏠</span><span>الرئيسية</span></button>
+    <button class="nav-item" onclick="navTo('education')"><span class="icon">📚</span><span>المناهج</span></button>
+    <button class="nav-item" onclick="navTo('quran')"><span class="icon">📖</span><span>القرآن</span></button>
+    <button class="nav-item" onclick="navTo('tools')"><span class="icon">🧰</span><span>أدوات</span></button>
+    <button class="nav-item" onclick="navTo('profile')"><span class="icon">👤</span><span>حسابي</span></button>
+  </div>
+</div>
+
+<div id="educationScreen" class="screen">
+  <div class="top-bar"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span>📚 التعليم العام</span></div><div style="width:40px;"></div></div>
+  <div class="content"><div class="section-title">اختر المرحلة</div><div id="stagesList"></div></div>
+</div>
+
+<div id="gradesScreen" class="screen">
+  <div class="top-bar"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span id="gradesTitle">الصفوف</span></div><div style="width:40px;"></div></div>
+  <div class="content"><div id="gradesList"></div></div>
+</div>
+
+<div id="subjectsScreen" class="screen">
+  <div class="top-bar"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span id="subjectsTitle">المواد</span></div><div style="width:40px;"></div></div>
+  <div class="content"><div id="subjectsList" class="subjects-grid"></div></div>
+</div>
+
+<div id="unitsScreen" class="screen">
+  <div class="top-bar"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span id="unitsTitle">الدروس</span></div><div style="width:40px;"></div></div>
+  <div class="content"><div id="unitsList"></div></div>
+</div>
+
+<div id="lessonScreen" class="screen">
+  <div class="top-bar"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span id="lessonTitle">الدرس</span></div><div style="width:40px;"></div></div>
+  <div class="content"><div class="lesson-body" id="lessonBody"></div></div>
+</div>
+
+<div id="azharScreen" class="screen">
+  <div class="top-bar" style="background:linear-gradient(135deg,#C9A227,#E6C75E);"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span>🕌 الأزهر الشريف</span></div><div style="width:40px;"></div></div>
+  <div class="content"><div class="section-title">المواد الشرعية</div><div id="azharList"></div></div>
+</div>
+
+<div id="quranScreen" class="screen">
+  <div class="top-bar" style="background:linear-gradient(135deg,#00695C,#26A69A);"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span>📖 القرآن الكريم</span></div><div style="width:40px;"></div></div>
+  <div class="content"><div class="search-box"><span>🔍</span><input type="text" placeholder="ابحث عن سورة..." oninput="filterSurahs(this.value)"></div><div id="surahsList"></div></div>
+</div>
+
+<div id="calculatorScreen" class="screen">
+  <div class="top-bar"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span>🧮 الحاسبة</span></div><div style="width:40px;"></div></div>
+  <div class="content">
+    <div class="calc-display"><div class="calc-history" id="calcHistory"></div><div class="calc-screen" id="calcScreen">0</div></div>
+    <div class="calc-buttons">
+      <button class="calc-btn func" onclick="calcFunc('sin')">sin</button>
+      <button class="calc-btn func" onclick="calcFunc('cos')">cos</button>
+      <button class="calc-btn func" onclick="calcFunc('tan')">tan</button>
+      <button class="calc-btn func" onclick="calcFunc('√')">√</button>
+      <button class="calc-btn func" onclick="calcFunc('log')">log</button>
+      <button class="calc-btn func" onclick="calcFunc('ln')">ln</button>
+      <button class="calc-btn func" onclick="calcInput('^')">^</button>
+      <button class="calc-btn func" onclick="calcInput('π')">π</button>
+      <button class="calc-btn" onclick="calcInput('7')">7</button>
+      <button class="calc-btn" onclick="calcInput('8')">8</button>
+      <button class="calc-btn" onclick="calcInput('9')">9</button>
+      <button class="calc-btn op" onclick="calcInput('÷')">÷</button>
+      <button class="calc-btn" onclick="calcInput('4')">4</button>
+      <button class="calc-btn" onclick="calcInput('5')">5</button>
+      <button class="calc-btn" onclick="calcInput('6')">6</button>
+      <button class="calc-btn op" onclick="calcInput('×')">×</button>
+      <button class="calc-btn" onclick="calcInput('1')">1</button>
+      <button class="calc-btn" onclick="calcInput('2')">2</button>
+      <button class="calc-btn" onclick="calcInput('3')">3</button>
+      <button class="calc-btn op" onclick="calcInput('-')">−</button>
+      <button class="calc-btn" onclick="calcInput('0')">0</button>
+      <button class="calc-btn" onclick="calcInput('.')">.</button>
+      <button class="calc-btn op" onclick="calcInput('+')">+</button>
+      <button class="calc-btn eq" onclick="calcResult()">=</button>
+      <button class="calc-btn clear" onclick="calcClear()">C</button>
+      <button class="calc-btn clear" onclick="calcDelete()">⌫</button>
+      <button class="calc-btn func" onclick="calcInput('%')">%</button>
+      <button class="calc-btn func" onclick="calcInput('(')">(</button>
+    </div>
+  </div>
+</div>
+
+<div id="drawingScreen" class="screen">
+  <div class="top-bar"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span>✏️ لوحة الرسم</span></div><div style="width:40px;"></div></div>
+  <div class="content" style="padding:8px;">
+    <div class="drawing-canvas-full"><canvas id="fullDrawingCanvas"></canvas></div>
+    <div class="drawing-palette">
+      <button class="color-dot" style="background:#000;" onclick="fullChangeColor('#000')"></button>
+      <button class="color-dot" style="background:#2E7D32;" onclick="fullChangeColor('#2E7D32')"></button>
+      <button class="color-dot" style="background:#1976D2;" onclick="fullChangeColor('#1976D2')"></button>
+      <button class="color-dot" style="background:#E53935;" onclick="fullChangeColor('#E53935')"></button>
+      <button class="color-dot" style="background:#FB8C00;" onclick="fullChangeColor('#FB8C00')"></button>
+      <button class="clear-btn" onclick="fullClear()">🗑️</button>
+    </div>
+  </div>
+</div>
+
+<div id="wisdomScreen" class="screen">
+  <div class="top-bar" style="background:linear-gradient(135deg,#7B1FA2,#9C27B0);"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span>💡 حكم وأقاويل</span></div><div style="width:40px;"></div></div>
+  <div class="content"><div id="wisdomList"></div></div>
+</div>
+
+<div id="messagesScreen" class="screen">
+  <div class="top-bar"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span>💬 رسائلي</span></div><div style="width:40px;"></div></div>
+  <div class="content"><div id="messagesList"></div></div>
+</div>
+
+<div id="profileScreen" class="screen">
+  <div class="top-bar"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span>👤 حسابي</span></div><div style="width:40px;"></div></div>
+  <div class="content">
+    <div style="background:linear-gradient(135deg,#2E7D32,#4CAF50);border-radius:20px;padding:24px;text-align:center;color:#fff;margin-bottom:20px;">
+      <div style="width:90px;height:90px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 12px;">👤</div>
+      <div id="profileName" style="font-size:20px;font-weight:bold;">أحمد محمد</div>
+      <div id="profileRole" style="font-size:13px;opacity:0.9;">طالب</div>
+    </div>
+    <div class="menu-item" onclick="openAdmin()" id="adminMenu" style="display:none;"><span style="font-size:24px;">🛡️</span><span style="flex:1;font-weight:600;color:#E53935;">لوحة المالك</span><span style="color:#999;">‹</span></div>
+    <div class="menu-item" onclick="toggleDark()"><span style="font-size:24px;">🌙</span><span style="flex:1;font-weight:600;">الوضع الليلي</span><span style="color:#999;">‹</span></div>
+    <div class="menu-item" onclick="logout()" style="background:#FFEBEE;"><span style="font-size:24px;">🚪</span><span style="flex:1;font-weight:600;color:#E53935;">تسجيل الخروج</span><span style="color:#E53935;">‹</span></div>
+  </div>
+</div>
+
+<div id="adminScreen" class="screen">
+  <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span>🛡️ لوحة المالك</span></div><div style="width:40px;"></div></div>
+  <div class="content">
+    <div class="section-title">📊 الإحصائيات</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;"><div style="font-size:20px;font-weight:bold;color:#E53935;">15K</div><div style="font-size:11px;color:#999;">👥 الزوار</div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;"><div style="font-size:20px;font-weight:bold;color:#E53935;">1,250</div><div style="font-size:11px;color:#999;">📱 اليوم</div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;"><div style="font-size:20px;font-weight:bold;color:#E53935;">45</div><div style="font-size:11px;color:#999;">🟢 الآن</div></div>
+    </div>
+    <div class="section-title">⚙️ التحكم</div>
+    <div class="menu-item" onclick="openAdsManager()"><span style="font-size:24px;">📢</span><span style="flex:1;font-weight
+            <span style="font-weight:600;">إدارة الإعلانات</span><span style="color:#999;">‹</span></div>
+    <div class="menu-item" onclick="showToast('📚 قريباً')"><span style="font-size:24px;">📚</span><span style="flex:1;font-weight:600;">إدارة المحتوى</span><span style="color:#999;">‹</span></div>
+    <div class="menu-item" onclick="showToast('👥 قريباً')"><span style="font-size:24px;">👥</span><span style="flex:1;font-weight:600;">إدارة المستخدمين</span><span style="color:#999;">‹</span></div>
+  </div>
+</div>
+
+<div id="adsManagerScreen" class="screen">
+  <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);"><button class="icon-btn" onclick="goBack()">→</button><div class="logo"><span>📢 إدارة الإعلانات</span></div><div style="width:40px;"></div></div>
+  <div class="content">
+    <div class="section-title">➕ إضافة إعلان جديد</div>
+    <div class="form-group"><label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">عنوان الإعلان</label><input type="text" class="form-input" id="adTitle" placeholder="مثال: خصم 50%"></div>
+    <div class="form-group"><label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">رفع من الجهاز</label><input type="file" class="form-input" id="adFile" accept="image/*,video/*" style="padding:10px;"></div>
+    <div class="form-group"><label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">المدة (ثواني)</label><input type="number" class="form-input" id="adDuration" value="10"></div>
+    <button class="btn-primary" onclick="addNewAd()">➕ إضافة الإعلان</button>
+    <div class="section-title">📋 الإعلانات الحالية</div>
+    <div id="adsList"></div>
+  </div>
 </div>
 
 <div id="toast" class="toast"></div>
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>منصة حافظ التعليمية</title>
 
-<style>
-:root {
-  --primary: #2E7D32;
-  --primary-light: #4CAF50;
-  --primary-soft: #A5D6A7;
-  --primary-pale: #E8F5E9;
-  --azhar: #C9A227;
-  --white: #FFFFFF;
-  --light-gray: #F5F5F5;
-  --gray: #9E9E9E;
-  --dark-gray: #424242;
-  --black: #212121;
-  --error: #E53935;
-  --success: #43A047;
-  --shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html, body {
-  font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
-  background: var(--light-gray);
-  color: var(--black);
-  direction: rtl;
-  overflow-x: hidden;
-  min-height: 100vh;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-.screen {
-  display: none;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.screen.active {
-  display: flex;
-}
-
-.top-bar {
-  background: var(--primary);
-  color: var(--white);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 0 0 24px 24px;
-  box-shadow: var(--shadow);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.top-bar .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.icon-btn {
-  background: rgba(255,255,255,0.15);
-  border: none;
-  color: var(--white);
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--white);
-  display: flex;
-  justify-content: space-around;
-  padding: 8px 4px;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
-  border-top: 1px solid #eee;
-  z-index: 100;
-}
-
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 6px;
-  background: none;
-  border: none;
-  color: var(--gray);
-  font-size: 11px;
-  font-family: inherit;
-  cursor: pointer;
-}
-
-.nav-item .icon { font-size: 22px; }
-.nav-item.active { color: var(--primary); }
-
-.content {
-  flex: 1;
-  padding: 16px;
-  padding-bottom: 90px;
-  overflow-y: auto;
-}
-
-#splashScreen {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  align-items: center;
-  justify-content: center;
-}
-
-.splash-content { text-align: center; color: var(--white); }
-
-.splash-logo {
-  width: 120px;
-  height: 120px;
-  background: var(--white);
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 70px;
-  margin: 0 auto 24px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-}
-
-.splash-title { font-size: 26px; font-weight: bold; margin-bottom: 8px; }
-.splash-subtitle { font-size: 15px; opacity: 0.9; margin-bottom: 32px; }
-
-.loader {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(255,255,255,0.3);
-  border-top-color: var(--white);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-#loginScreen {
-  background: var(--white);
-  padding: 24px;
-  justify-content: center;
-}
-
-.login-logo {
-  width: 100px;
-  height: 100px;
-  background: var(--primary-pale);
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 55px;
-  margin: 0 auto 20px;
-}
-
-.login-title {
-  text-align: center;
-  font-size: 26px;
-  font-weight: bold;
-  color: var(--primary);
-  margin-bottom: 8px;
-}
-
-.login-sub {
-  text-align: center;
-  color: var(--gray);
-  margin-bottom: 32px;
-}
-
-.role-selector { display: flex; gap: 8px; margin-bottom: 20px; }
-
-.role-btn {
-  flex: 1;
-  padding: 12px;
-  background: var(--light-gray);
-  border: 2px solid transparent;
-  border-radius: 12px;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--dark-gray);
-  cursor: pointer;
-}
-
-.role-btn.active {
-  background: var(--primary);
-  color: var(--white);
-}
-
-.form-group { margin-bottom: 16px; }
-
-.form-input {
-  width: 100%;
-  padding: 14px 16px;
-  background: var(--light-gray);
-  border: 2px solid transparent;
-  border-radius: 14px;
-  font-family: inherit;
-  font-size: 15px;
-  color: var(--black);
-  outline: none;
-}
-
-.form-input:focus {
-  border-color: var(--primary);
-  background: var(--white);
-}
-
-.btn-primary {
-  width: 100%;
-  padding: 16px;
-  background: var(--primary);
-  color: var(--white);
-  border: none;
-  border-radius: 14px;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-}
-
-.link-btn {
-  background: none;
-  border: none;
-  color: var(--primary);
-  font-family: inherit;
-  font-size: 14px;
-  padding: 12px;
-  cursor: pointer;
-  display: block;
-  margin: 12px auto;
-}
-
-.toast {
-  position: fixed;
-  bottom: 100px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: var(--black);
-  color: var(--white);
-  padding: 12px 24px;
-  border-radius: 24px;
-  font-size: 14px;
-  z-index: 1000;
-  opacity: 0;
-  transition: all 0.3s;
-  pointer-events: none;
-  max-width: 85%;
-  text-align: center;
-}
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-</style>
-</head>
-<body>
-
-<div id="splashScreen" class="screen active">
-  <div class="splash-content">
-    <div class="splash-logo">🎓</div>
-    <div class="splash-title">منصة حافظ التعليمية</div>
-    <div class="splash-subtitle">للتعليم العام والأزهر الشريف</div>
-    <div class="loader"></div>
-  </div>
-</div>
-
-<div id="loginScreen" class="screen">
-  <div class="login-logo">🎓</div>
-  <div class="login-title">مرحباً بك</div>
-  <div class="login-sub">سجّل دخولك للمتابعة</div>
-
-  <div class="role-selector">
-    <button class="role-btn active" onclick="selectRole(this, 'student')">🎒 طالب</button>
-    <button class="role-btn" onclick="selectRole(this, 'teacher')">👨‍🏫 معلم</button>
-    <button class="role-btn" onclick="selectRole(this, 'owner')">👑 مالك</button>
-  </div>
-
-  <div class="form-group">
-    <input type="text" id="emailInput" class="form-input" placeholder="👤 اسم المستخدم">
-  </div>
-
-  <div class="form-group">
-    <input type="password" id="passwordInput" class="form-input" placeholder="🔒 كلمة المرور">
-  </div>
-
-  <div class="form-group" id="ownerCodeGroup" style="display:none;">
-    <input type="password" id="ownerCodeInput" class="form-input" placeholder="🔐 كود المالك">
-  </div>
-
-  <button class="btn-primary" onclick="login()">تسجيل الدخول</button>
-  <button class="link-btn" onclick="showToast('قريباً')">ليس لديك حساب؟ سجّل الآن</button>
-  <button class="link-btn" onclick="showToast('قريباً')">دخول كزائر</button>
-</div>
-
-<div id="toast" class="toast"></div>
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>منصة حافظ التعليمية</title>
-
-<style>
-:root {
-  --primary: #2E7D32;
-  --primary-light: #4CAF50;
-  --primary-soft: #A5D6A7;
-  --primary-pale: #E8F5E9;
-  --azhar: #C9A227;
-  --white: #FFFFFF;
-  --light-gray: #F5F5F5;
-  --gray: #9E9E9E;
-  --dark-gray: #424242;
-  --black: #212121;
-  --error: #E53935;
-  --success: #43A047;
-  --shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html, body {
-  font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
-  background: var(--light-gray);
-  color: var(--black);
-  direction: rtl;
-  overflow-x: hidden;
-  min-height: 100vh;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-.screen {
-  display: none;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.screen.active {
-  display: flex;
-}
-
-.top-bar {
-  background: var(--primary);
-  color: var(--white);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 0 0 24px 24px;
-  box-shadow: var(--shadow);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.top-bar .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.icon-btn {
-  background: rgba(255,255,255,0.15);
-  border: none;
-  color: var(--white);
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--white);
-  display: flex;
-  justify-content: space-around;
-  padding: 8px 4px;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
-  border-top: 1px solid #eee;
-  z-index: 100;
-}
-
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 6px;
-  background: none;
-  border: none;
-  color: var(--gray);
-  font-size: 11px;
-  font-family: inherit;
-  cursor: pointer;
-}
-
-.nav-item .icon { font-size: 22px; }
-.nav-item.active { color: var(--primary); }
-
-.content {
-  flex: 1;
-  padding: 16px;
-  padding-bottom: 90px;
-  overflow-y: auto;
-}
-
-#splashScreen {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  align-items: center;
-  justify-content: center;
-}
-
-.splash-content { text-align: center; color: var(--white); }
-
-.splash-logo {
-  width: 120px;
-  height: 120px;
-  background: var(--white);
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 70px;
-  margin: 0 auto 24px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-}
-
-.splash-title { font-size: 26px; font-weight: bold; margin-bottom: 8px; }
-.splash-subtitle { font-size: 15px; opacity: 0.9; margin-bottom: 32px; }
-
-.loader {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(255,255,255,0.3);
-  border-top-color: var(--white);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-#loginScreen {
-  background: var(--white);
-  padding: 24px;
-  justify-content: center;
-}
-
-.login-logo {
-  width: 100px;
-  height: 100px;
-  background: var(--primary-pale);
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 55px;
-  margin: 0 auto 20px;
-}
-
-.login-title {
-  text-align: center;
-  font-size: 26px;
-  font-weight: bold;
-  color: var(--primary);
-  margin-bottom: 8px;
-}
-
-.login-sub {
-  text-align: center;
-  color: var(--gray);
-  margin-bottom: 32px;
-}
-
-.role-selector { display: flex; gap: 8px; margin-bottom: 20px; }
-
-.role-btn {
-  flex: 1;
-  padding: 12px;
-  background: var(--light-gray);
-  border: 2px solid transparent;
-  border-radius: 12px;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--dark-gray);
-  cursor: pointer;
-}
-
-.role-btn.active {
-  background: var(--primary);
-  color: var(--white);
-}
-
-.form-group { margin-bottom: 16px; }
-
-.form-input {
-  width: 100%;
-  padding: 14px 16px;
-  background: var(--light-gray);
-  border: 2px solid transparent;
-  border-radius: 14px;
-  font-family: inherit;
-  font-size: 15px;
-  color: var(--black);
-  outline: none;
-}
-
-.form-input:focus {
-  border-color: var(--primary);
-  background: var(--white);
-}
-
-.btn-primary {
-  width: 100%;
-  padding: 16px;
-  background: var(--primary);
-  color: var(--white);
-  border: none;
-  border-radius: 14px;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-}
-
-.link-btn {
-  background: none;
-  border: none;
-  color: var(--primary);
-  font-family: inherit;
-  font-size: 14px;
-  padding: 12px;
-  cursor: pointer;
-  display: block;
-  margin: 12px auto;
-}
-
-.toast {
-  position: fixed;
-  bottom: 100px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: var(--black);
-  color: var(--white);
-  padding: 12px 24px;
-  border-radius: 24px;
-  font-size: 14px;
-  z-index: 1000;
-  opacity: 0;
-  transition: all 0.3s;
-  pointer-events: none;
-  max-width: 85%;
-  text-align: center;
-}
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-</style>
-</head>
-<body>
-
-<div id="splashScreen" class="screen active">
-  <div class="splash-content">
-    <div class="splash-logo">🎓</div>
-    <div class="splash-title">منصة حافظ التعليمية</div>
-    <div class="splash-subtitle">للتعليم العام والأزهر الشريف</div>
-    <div class="loader"></div>
-  </div>
-</div>
-
-<div id="loginScreen" class="screen">
-  <div class="login-logo">🎓</div>
-  <div class="login-title">مرحباً بك</div>
-  <div class="login-sub">سجّل دخولك للمتابعة</div>
-
-  <div class="role-selector">
-    <button class="role-btn active" onclick="selectRole(this, 'student')">🎒 طالب</button>
-    <button class="role-btn" onclick="selectRole(this, 'teacher')">👨‍🏫 معلم</button>
-    <button class="role-btn" onclick="selectRole(this, 'owner')">👑 مالك</button>
-  </div>
-
-  <div class="form-group">
-    <input type="text" id="emailInput" class="form-input" placeholder="👤 اسم المستخدم">
-  </div>
-
-  <div class="form-group">
-    <input type="password" id="passwordInput" class="form-input" placeholder="🔒 كلمة المرور">
-  </div>
-
-  <div class="form-group" id="ownerCodeGroup" style="display:none;">
-    <input type="password" id="ownerCodeInput" class="form-input" placeholder="🔐 كود المالك">
-  </div>
-
-  <button class="btn-primary" onclick="login()">تسجيل الدخول</button>
-  <button class="link-btn" onclick="showToast('قريباً')">ليس لديك حساب؟ سجّل الآن</button>
-  <button class="link-btn" onclick="showToast('قريباً')">دخول كزائر</button>
-</div>
-
-<div id="toast" class="toast"></div>
 <script>
 let currentUser = null;
 let currentRole = 'student';
 let currentScreen = 'splashScreen';
 let screenHistory = [];
-
 const OWNER_CODE = '135790';
 const SHEETDB_API = 'https://sheetdb.io/api/v1/5l1j0bvzaz6st';
 
@@ -1002,612 +348,45 @@ function selectRole(btn, role) {
   document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   currentRole = role;
-
   const ownerGroup = document.getElementById('ownerCodeGroup');
-  if (ownerGroup) {
-    ownerGroup.style.display = (role === 'owner') ? 'block' : 'none';
-  }
+  if (ownerGroup) ownerGroup.style.display = (role === 'owner') ? 'block' : 'none';
 }
 
 function login() {
   const username = document.getElementById('emailInput').value.trim();
   const password = document.getElementById('passwordInput').value;
   const ownerCode = document.getElementById('ownerCodeInput') ? document.getElementById('ownerCodeInput').value : '';
-
-  if (!username || username.length < 3) {
-    showToast('⚠️ أدخل اسم مستخدم (3 حروف على الأقل)');
-    return;
-  }
-  if (password.length < 4) {
-    showToast('⚠️ كلمة المرور قصيرة');
-    return;
-  }
-
-  if (currentRole === 'owner') {
-    if (ownerCode !== OWNER_CODE) {
-      showToast('🔐 كود المالك غير صحيح');
-      return;
-    }
-  }
-
-  currentUser = {
-    name: username,
-    email: username,
-    role: currentRole,
-    points: 1250
-  };
-
+  if (!username || username.length < 3) { showToast('⚠️ أدخل اسم مستخدم'); return; }
+  if (password.length < 4) { showToast('⚠️ كلمة المرور قصيرة'); return; }
+  if (currentRole === 'owner' && ownerCode !== OWNER_CODE) { showToast('🔐 كود المالك خطأ'); return; }
+  currentUser = { name: username, role: currentRole, points: 1250 };
   showToast('✅ تم تسجيل الدخول');
-
-  setTimeout(() => {
-    const home = document.getElementById('homeScreen');
-    if (home) {
-      showScreen('homeScreen');
-    } else {
-      showToast('🎯 محتاج الجزء 3');
-    }
-  }, 800);
+  setTimeout(() => showScreen('homeScreen'), 800);
 }
 
 function goBack() {
-  if (screenHistory.length > 0) {
-    const prev = screenHistory.pop();
-    showScreen(prev);
-  } else {
-    showScreen('homeScreen');
-  }
+  if (screenHistory.length > 0) showScreen(screenHistory.pop());
+  else showScreen('homeScreen');
 }
 
-/* ============================================
-   SheetDB Integration - تحميل البيانات
-   ============================================ */
 async function loadLessonsFromSheet() {
   try {
-    showToast('⏳ جاري التحميل من الشيت...');
+    showToast('⏳ جاري التحميل...');
     const response = await fetch(SHEETDB_API);
-    
-    if (!response.ok) {
-      throw new Error('خطأ في الاتصال');
-    }
-    
+    if (!response.ok) throw new Error('فشل الاتصال');
     const data = await response.json();
-    console.log('📚 البيانات من الشيت:', data);
     showToast(`✅ تم تحميل ${data.length} درس`);
     return data;
   } catch (error) {
-    console.error('❌ خطأ:', error);
-    showToast('⚠️ فشل التحميل من الشيت');
+    showToast('⚠️ فشل التحميل');
     return [];
   }
 }
 
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    showScreen('loginScreen');
-  }, 2500);
-});
-</script>
-justify-content: center;
-  font-size: 24px;
-}
-.message-badge {
-  background: var(--error);
-  color: var(--white);
-  font-size: 11px;
-  font-weight: bold;
-  min-width: 22px;
-  height: 22px;
-  border-radius: 11px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 6px;
-}
-</style>
-  <!-- شاشة الحساب -->
-<div id="profileScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>👤 حسابي</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div style="background:linear-gradient(135deg,#2E7D32,#4CAF50);border-radius:20px;padding:24px;text-align:center;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,0.12);margin-bottom:20px;">
-      <div style="width:90px;height:90px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 12px;">👤</div>
-      <div id="profileName" style="font-size:20px;font-weight:bold;">أحمد محمد</div>
-      <div id="profileRole" style="font-size:13px;opacity:0.9;margin-top:4px;">طالب</div>
-      <button onclick="openQR()" style="margin-top:14px;padding:10px 20px;background:#fff;color:#2E7D32;border:none;border-radius:20px;font-family:inherit;font-weight:bold;cursor:pointer;">📱 عرض QR Code</button>
-    </div>
-
-    <div class="section-title">📊 إحصائياتي</div>
-    <div class="stats-card">
-      <div class="stat-item">
-        <div class="stat-value">45</div>
-        <div class="stat-label">درس</div>
-      </div>
-      <div style="width:1px;height:40px;background:#eee;"></div>
-      <div class="stat-item">
-        <div class="stat-value" id="profilePoints">1250</div>
-        <div class="stat-label">نقطة</div>
-      </div>
-      <div style="width:1px;height:40px;background:#eee;"></div>
-      <div class="stat-item">
-        <div class="stat-value">12</div>
-        <div class="stat-label">امتحان</div>
-      </div>
-    </div>
-
-    <div class="section-title">🏆 إنجازاتي</div>
-    <div style="display:flex;gap:10px;justify-content:center;">
-      <div style="width:60px;height:60px;background:#FFF8E1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">🥇</div>
-      <div style="width:60px;height:60px;background:#F5F5F5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">🥈</div>
-      <div style="width:60px;height:60px;background:#FFF3E0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">🥉</div>
-      <div style="width:60px;height:60px;background:#E3F2FD;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">🎖️</div>
-    </div>
-
-    <div class="section-title">⚙️ الإعدادات</div>
-
-    <div class="menu-item" onclick="showToast('👨‍🏫 قريباً')">
-      <span style="font-size:24px;">👨‍🏫</span>
-      <span style="flex:1;font-weight:600;">تواصل مع معلم</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="toggleDark()">
-      <span style="font-size:24px;">🌙</span>
-      <span style="flex:1;font-weight:600;">الوضع الليلي</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="openAdmin()" id="adminMenu" style="display:none;">
-      <span style="font-size:24px;">🛡️</span>
-      <span style="flex:1;font-weight:600;color:#E53935;">لوحة المالك</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="logout()" style="background:#FFEBEE;">
-      <span style="font-size:24px;">🚪</span>
-      <span style="flex:1;font-weight:600;color:#E53935;">تسجيل الخروج</span>
-      <span style="color:#E53935;font-size:22px;">‹</span>
-    </div>
-  </div>
-</div>
-
-<!-- شاشة QR -->
-<div id="qrScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>📱 QR Code</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content" style="text-align:center;">
-    <div style="background:#fff;border-radius:24px;padding:30px;box-shadow:0 4px 16px rgba(0,0,0,0.12);max-width:340px;margin:0 auto;">
-      <div id="qrCode" style="width:220px;height:220px;background:repeating-linear-gradient(45deg,#000 0 10px,#fff 10px 20px);margin:0 auto 20px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:80px;color:#fff;">▦</div>
-      <div id="qrLabel" style="font-size:20px;font-weight:bold;color:#212121;">أحمد محمد</div>
-      <div id="qrRole" style="font-size:14px;color:#999;margin-top:4px;">طالب</div>
-      <div style="font-size:12px;color:#999;margin-top:12px;">امسح الكود لمشاركة حسابك</div>
-    </div>
-    <button class="btn-primary" style="margin-top:20px;" onclick="showToast('📥 جاري التحميل...')">تحميل QR</button>
-  </div>
-</div>
-
-<!-- شاشة لوحة المالك -->
-<div id="adminScreen" class="screen">
-  <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>🛡️ لوحة المالك</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div class="section-title">📊 الإحصائيات</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-        <div style="font-size:20px;font-weight:bold;color:#E53935;">15K</div>
-        <div style="font-size:11px;color:#999;margin-top:4px;">👥 الزوار</div>
-      </div>
-      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-        <div style="font-size:20px;font-weight:bold;color:#E53935;">1,250</div>
-        <div style="font-size:11px;color:#999;margin-top:4px;">📱 اليوم</div>
-      </div>
-      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-        <div style="font-size:20px;font-weight:bold;color:#E53935;">45</div>
-        <div style="font-size:11px;color:#999;margin-top:4px;">🟢 الآن</div>
-      </div>
-    </div>
-
-    <div class="section-title">⚙️ التحكم</div>
-
-    <div class="menu-item" onclick="openAdsManager()">
-      <span style="font-size:24px;">📢</span>
-      <span style="flex:1;font-weight:600;">إدارة الإعلانات</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="showToast('📚 قريباً')">
-      <span style="font-size:24px;">📚</span>
-      <span style="flex:1;font-weight:600;">إدارة المحتوى</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="showToast('💡 قريباً')">
-      <span style="font-size:24px;">💡</span>
-      <span style="flex:1;font-weight:600;">إدارة الحكم</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="showToast('👥 قريباً')">
-      <span style="font-size:24px;">👥</span>
-      <span style="flex:1;font-weight:600;">إدارة المستخدمين</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-  </div>
-</div>
-
-<!-- شاشة إدارة الإعلانات -->
-<div id="adsManagerScreen" class="screen">
-  <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>📢 إدارة الإعلانات</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div class="section-title">➕ إضافة إعلان جديد</div>
-
-    <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">عنوان الإعلان</label>
-      <input type="text" class="form-input" id="adTitle" placeholder="مثال: خصم 50%">
-    </div>
-
-    <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">رفع من الجهاز</label>
-      <input type="file" class="form-input" id="adFile" accept="image/*,video/*" style="padding:10px;">
-    </div>
-
-    <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">المدة (ثواني)</label>
-      <input type="number" class="form-input" id="adDuration" value="10">
-    </div>
-
-    <button class="btn-primary" onclick="addNewAd()">➕ إضافة الإعلان</button>
-
-    <div class="section-title">📋 الإعلانات الحالية</div>
-    <div id="adsList"></div>
-  </div>
-</div>
-
-<script>
-function goToProfile() {
-  document.getElementById('profileName').textContent = currentUser ? currentUser.name : 'أحمد محمد';
-  document.getElementById('profileRole').textContent = 
-    currentRole === 'student' ? 'طالب' :
-    currentRole === 'teacher' ? 'معلم' : 'المالك';
-  document.getElementById('profilePoints').textContent = currentUser ? currentUser.points : 1250;
-
-  const adminMenu = document.getElementById('adminMenu');
-  if (adminMenu) adminMenu.style.display = currentRole === 'owner' ? 'flex' : 'none';
-
-  screenHistory.push(currentScreen);
-  showScreen('profileScreen');
-}
-
-function openQR() {
-  document.getElementById('qrLabel').textContent = currentUser ? currentUser.name : 'أحمد محمد';
-  document.getElementById('qrRole').textContent = 
-    currentRole === 'student' ? 'طالب' :
-    currentRole === 'teacher' ? 'معلم' : 'مالك';
-  screenHistory.push(currentScreen);
-  showScreen('qrScreen');
-}
-
-function toggleDark() {
-  document.body.classList.toggle('dark-mode');
-  showToast(document.body.classList.contains('dark-mode') ? '🌙 وضع ليلي' : '☀️ وضع نهاري');
-}
-
-function logout() {
-  if (confirm('تسجيل خروج؟')) {
-    currentUser = null;
-    currentRole = 'student';
-    screenHistory = [];
-    document.getElementById('emailInput').value = '';
-    document.getElementById('passwordInput').value = '';
-    showScreen('loginScreen');
-    showToast('👋 تم الخروج');
-  }
-}
-
-function openAdmin() {
-  screenHistory.push(currentScreen);
-  showScreen('adminScreen');
-}
-
-function openAdsManager() {
-  loadAds();
-  screenHistory.push(currentScreen);
-  showScreen('adsManagerScreen');
-}
-
-let adsData = [
-  {id:'1',title:'خصم 50% على الكتب',duration:10},
-  {id:'2',title:'دورة رياضيات مجانية',duration:15}
-];
-
-function addNewAd() {
-  const title = document.getElementById('adTitle').value.trim();
-  if (!title) { showToast('⚠️ أدخل عنوان'); return; }
-  adsData.push({
-    id: Date.now().toString(),
-    title: title,
-    duration: parseInt(document.getElementById('adDuration').value) || 10
-  });
-  document.getElementById('adTitle').value = '';
-  document.getElementById('adFile').value = '';
-  loadAds();
-  showToast('✅ تم إضافة الإعلان');
-}
-
-function loadAds() {
-  const list = document.getElementById('adsList');
-  if (!list) return;
-  if (adsData.length === 0) {
-    list.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">لا توجد إعلانات</div>';
-    return;
-  }
-  list.innerHTML = adsData.map(ad => `
-    <div style="background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-      <div style="font-size:24px;">📢</div>
-      <div style="flex:1;">
-        <div style="font-weight:bold;font-size:14px;">${ad.title}</div>
-        <div style="font-size:12px;color:#999;">${ad.duration} ثانية</div>
-      </div>
-      <button onclick="deleteAd('${ad.id}')" style="background:#FFEBEE;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">🗑️</button>
-    </div>
-  `).join('');
-}
-
-function deleteAd(id) {
-  if (confirm('حذف الإعلان؟')) {
-    adsData = adsData.filter(a => a.id !== id);
-    loadAds();
-    showToast('🗑️ تم الحذف');
-  }
-}
-</script>
-
-<style>
-.menu-item {
-  background: #fff;
-  border-radius: 14px;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-.menu-item:active { transform: scale(0.98); }
-
-body.dark-mode { background: #1A1A1A; color: #fff; }
-
-body.dark-mode .menu-item,
-body.dark-mode .stats-card,
-body.dark-mode .stage-item,
-body.dark-mode .subject-card,
-body.dark-mode .surah-item,
-body.dark-mode .tool-btn,
-body.dark-mode .lesson-body,
-body.dark-mode .exercise-item,
-body.dark-mode .exam-card,
-body.dark-mode .unit-item,
-body.dark-mode .message-item,
-body.dark-mode .calc-display,
-body.dark-mode .calc-btn,
-body.dark-mode .audio-btn {
-  background: #2A2A2A;
-  color: #fff;
-}
-
-body.dark-mode .section-title { color: #fff; }
-</style>
-homeScreen
-  <!-- ============================================ -->
-<!-- الجزء الناقص 1 : الشاشة الرئيسية + المناهج -->
-<!-- ============================================ -->
-
-<div id="homeScreen" class="screen">
-  <div class="top-bar">
-    <div class="logo">
-      <span style="font-size:24px;">🎓</span>
-      <span>منصة حافظ التعليمية</span>
-    </div>
-    <button class="icon-btn" onclick="goToProfile()">👤</button>
-  </div>
-
-  <div class="content">
-    <div class="search-box">
-      <span>🔍</span>
-      <input type="text" placeholder="ابحث..." oninput="showToast('🔍 بحث')">
-    </div>
-
-    <div class="ad-banner" onclick="showToast('📢 إعلان')">
-      <div style="font-size:36px;">📢</div>
-      <div>
-        <div style="font-weight:bold;">إعلان رئيسي</div>
-        <div style="font-size:12px;opacity:0.9;">اضغط للمشاهدة</div>
-      </div>
-    </div>
-
-    <div class="section-title">📚 التعليم العام</div>
-    <div class="cards-row">
-      <div class="big-card" style="background:linear-gradient(135deg,#66BB6A,#4CAF50);" onclick="openStage('primary')">
-        <div style="font-size:32px;">🎒</div>
-        <div>ابتدائي</div>
-      </div>
-      <div class="big-card" style="background:linear-gradient(135deg,#43A047,#2E7D32);" onclick="openStage('prep')">
-        <div style="font-size:32px;">📗</div>
-        <div>إعدادي</div>
-      </div>
-      <div class="big-card" style="background:linear-gradient(135deg,#2E7D32,#1B5E20);" onclick="openStage('sec')">
-        <div style="font-size:32px;">📕</div>
-        <div>ثانوي</div>
-      </div>
-    </div>
-
-    <div class="section-title">🕌 الأزهر الشريف</div>
-    <div class="azhar-card" onclick="openAzhar()">
-      <div style="font-size:40px;">🕌</div>
-      <div style="flex:1;">
-        <div style="font-weight:bold;">المواد الشرعية</div>
-        <div style="font-size:12px;opacity:0.9;">تفسير • حديث • فقه • عقيدة</div>
-      </div>
-      <div style="font-size:28px;">‹</div>
-    </div>
-
-    <div class="section-title">📖 القرآن الكريم</div>
-    <div class="quran-card" onclick="openQuran()">
-      <div style="font-size:40px;">📖</div>
-      <div style="flex:1;">
-        <div style="font-weight:bold;">اقرأ • ترديد • حفظ</div>
-        <div style="font-size:12px;opacity:0.9;">المصحف كامل بالصوت</div>
-      </div>
-      <div style="font-size:28px;">‹</div>
-    </div>
-
-    <div class="section-title">🧰 أدوات سريعة</div>
-    <div class="tools-grid">
-      <div class="tool-btn" onclick="openCalculator()">
-        <div class="tool-icon" style="background:#E3F2FD;color:#1976D2;">🧮</div>
-        <div class="tool-label">حاسبة</div>
-      </div>
-      <div class="tool-btn" onclick="openDrawing()">
-        <div class="tool-icon" style="background:#FFF3E0;color:#F57C00;">✏️</div>
-        <div class="tool-label">رسم</div>
-      </div>
-      <div class="tool-btn" onclick="openWisdom()">
-        <div class="tool-icon" style="background:#F3E5F5;color:#7B1FA2;">💡</div>
-        <div class="tool-label">حكم</div>
-      </div>
-      <div class="tool-btn" onclick="openMessages()">
-        <div class="tool-icon" style="background:#E8F5E9;color:#2E7D32;">💬</div>
-        <div class="tool-label">رسائل</div>
-      </div>
-    </div>
-
-    <div class="section-title">💡 حكمة اليوم</div>
-    <div class="wisdom-card">
-      <div style="font-size:50px;color:#7B1FA2;opacity:0.2;">"</div>
-      <div style="font-size:16px;font-weight:600;color:#4A148C;">العلم نور والجهل ظلام</div>
-      <div style="font-size:13px;color:#7B1FA2;text-align:left;">— الإمام علي</div>
-    </div>
-
-    <div class="section-title">📊 إحصائياتي</div>
-    <div class="stats-card">
-      <div class="stat-item">
-        <div class="stat-value">45</div>
-        <div class="stat-label">درس</div>
-      </div>
-      <div style="width:1px;height:40px;background:#eee;"></div>
-      <div class="stat-item">
-        <div class="stat-value">1250</div>
-        <div class="stat-label">نقطة</div>
-      </div>
-      <div style="width:1px;height:40px;background:#eee;"></div>
-      <div class="stat-item">
-        <div class="stat-value">12</div>
-        <div class="stat-label">امتحان</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="bottom-nav">
-    <button class="nav-item active" onclick="navTo('home')">
-      <span class="icon">🏠</span>
-      <span>الرئيسية</span>
-    </button>
-    <button class="nav-item" onclick="navTo('education')">
-      <span class="icon">📚</span>
-      <span>المناهج</span>
-    </button>
-    <button class="nav-item" onclick="navTo('quran')">
-      <span class="icon">📖</span>
-      <span>القرآن</span>
-    </button>
-    <button class="nav-item" onclick="navTo('tools')">
-      <span class="icon">🧰</span>
-      <span>أدوات</span>
-    </button>
-    <button class="nav-item" onclick="navTo('profile')">
-      <span class="icon">👤</span>
-      <span>حسابي</span>
-    </button>
-  </div>
-</div>
-
-<div id="educationScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>📚 التعليم العام</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div class="section-title">اختر المرحلة</div>
-    <div id="stagesList"></div>
-  </div>
-</div>
-
-<div id="gradesScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span id="gradesTitle">الصفوف</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div id="gradesList"></div>
-  </div>
-</div>
-
-<div id="subjectsScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span id="subjectsTitle">المواد</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div id="subjectsList" class="subjects-grid"></div>
-  </div>
-</div>
-
-<div id="azharScreen" class="screen">
-  <div class="top-bar" style="background:linear-gradient(135deg,#C9A227,#E6C75E);">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>🕌 الأزهر الشريف</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div class="section-title">المواد الشرعية</div>
-    <div id="azharList"></div>
-  </div>
-</div>
-
-<script>
 const stagesData = {
-  primary: {
-    name: 'المرحلة الابتدائية',
-    icon: '🎒',
-    grades: ['الأول','الثاني','الثالث','الرابع','الخامس','السادس']
-  },
-  prep: {
-    name: 'المرحلة الإعدادية',
-    icon: '📗',
-    grades: ['الأول','الثاني','الثالث']
-  },
-  sec: {
-    name: 'المرحلة الثانوية',
-    icon: '📕',
-    grades: ['الأول','الثاني','الثالث']
-  }
+  primary: { name: 'المرحلة الابتدائية', icon: '🎒', grades: ['الأول','الثاني','الثالث','الرابع','الخامس','السادس'] },
+  prep: { name: 'المرحلة الإعدادية', icon: '📗', grades: ['الأول','الثاني','الثالث'] },
+  sec: { name: 'المرحلة الثانوية', icon: '📕', grades: ['الأول','الثاني','الثالث'] }
 };
 
 const generalSubjects = [
@@ -1633,14 +412,39 @@ const azharSubjects = [
   { id: 'sarf', name: 'الصرف والبلاغة', icon: '📚' }
 ];
 
+const surahsData = [
+  {id:1,name:'الفاتحة',verses:7,type:'مكية'},
+  {id:2,name:'البقرة',verses:286,type:'مدنية'},
+  {id:18,name:'الكهف',verses:110,type:'مكية'},
+  {id:36,name:'يس',verses:83,type:'مكية'},
+  {id:55,name:'الرحمن',verses:78,type:'مدنية'},
+  {id:67,name:'الملك',verses:30,type:'مكية'},
+  {id:112,name:'الإخلاص',verses:4,type:'مكية'},
+  {id:113,name:'الفلق',verses:5,type:'مكية'},
+  {id:114,name:'الناس',verses:6,type:'مكية'}
+];
+
+const wisdomData = [
+  {text:'العلم نور والجهل ظلام',author:'الإمام علي'},
+  {text:'من جد وجد ومن زرع حصد',author:'مثل عربي'},
+  {text:'اطلبوا العلم من المهد إلى اللحد',author:'حديث شريف'},
+  {text:'الرياضيات ملكة العلوم',author:'غاوس'},
+  {text:'الفيزياء فلسفة الطبيعة',author:'نيوتن'}
+];
+
+const messagesData = [
+  {name:'أ. محمد - رياضيات',last:'كيف حالك؟',unread:2,icon:'👨‍🏫'},
+  {name:'أ. أحمد - فيزياء',last:'الدرس القادم',unread:0,icon:'👨‍🏫'},
+  {name:'إدارة المنصة',last:'مرحبًا بك',unread:1,icon:'👑'}
+];
+
 function navTo(dest) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   if (event && event.target) event.target.closest('.nav-item')?.classList.add('active');
-
   if (dest === 'home') showScreen('homeScreen');
   else if (dest === 'education') openEducation();
   else if (dest === 'quran') openQuran();
-  else if (dest === 'tools') showToast('🧰 قريباً');
+  else if (dest === 'tools') showToast('🧰 اختر أداة من الرئيسية');
   else if (dest === 'profile') goToProfile();
 }
 
@@ -1648,18 +452,8 @@ function openEducation() {
   const list = document.getElementById('stagesList');
   list.innerHTML = Object.keys(stagesData).map(key => {
     const s = stagesData[key];
-    return `
-      <div class="stage-item" onclick="openStage('${key}')">
-        <div class="stage-icon">${s.icon}</div>
-        <div class="stage-info">
-          <div class="stage-name">${s.name}</div>
-          <div class="stage-sub">${s.grades.length} صفوف</div>
-        </div>
-        <div class="stage-arrow">‹</div>
-      </div>
-    `;
+    return `<div class="stage-item" onclick="openStage('${key}')"><div class="stage-icon">${s.icon}</div><div class="stage-info"><div class="stage-name">${s.name}</div><div class="stage-sub">${s.grades.length} صفوف</div></div><div class="stage-arrow">‹</div></div>`;
   }).join('');
-
   screenHistory.push(currentScreen);
   showScreen('educationScreen');
 }
@@ -1667,423 +461,141 @@ function openEducation() {
 function openStage(stageId) {
   const stage = stagesData[stageId];
   document.getElementById('gradesTitle').textContent = stage.name;
-
   const list = document.getElementById('gradesList');
-  list.innerHTML = stage.grades.map((g, i) => `
-    <div class="stage-item" onclick="openGrade('${stageId}', ${i+1}, '${g}')">
-      <div class="stage-icon" style="background:#E8F5E9;">🎓</div>
-      <div class="stage-info">
-        <div class="stage-name">الصف ${g}</div>
-        <div class="stage-sub">اضغط لعرض المواد</div>
-      </div>
-      <div class="stage-arrow">‹</div>
-    </div>
-  `).join('');
-
+  list.innerHTML = stage.grades.map((g, i) => `<div class="stage-item" onclick="openGrade('${stageId}', ${i+1}, '${g}')"><div class="stage-icon" style="background:#E8F5E9;">🎓</div><div class="stage-info"><div class="stage-name">الصف ${g}</div><div class="stage-sub">اضغط لعرض المواد</div></div><div class="stage-arrow">‹</div></div>`).join('');
   screenHistory.push(currentScreen);
   showScreen('gradesScreen');
 }
 
 function openGrade(stageId, num, gradeName) {
   document.getElementById('subjectsTitle').textContent = 'الصف ' + gradeName;
-
   const list = document.getElementById('subjectsList');
-  list.innerHTML = generalSubjects.map(s => `
-    <div class="subject-card" onclick="openSubject('${s.id}', '${s.name}')">
-      <div class="subject-icon" style="background:${s.color}20;color:${s.color};">${s.icon}</div>
-      <div class="subject-name">${s.name}</div>
-    </div>
-  `).join('');
-
+  list.innerHTML = generalSubjects.map(s => `<div class="subject-card" onclick="openSubject('${s.id}', '${s.name}')"><div class="subject-icon" style="background:${s.color}20;color:${s.color};">${s.icon}</div><div class="subject-name">${s.name}</div></div>`).join('');
   screenHistory.push(currentScreen);
   showScreen('subjectsScreen');
 }
 
+async function openSubject(subjectId, subjectName) {
+  document.getElementById('unitsTitle').textContent = subjectName;
+  const lessons = await loadLessonsFromSheet();
+  const list = document.getElementById('unitsList');
+  if (lessons.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;"><div style="font-size:50px;">📭</div><p style="margin-top:12px;">لا توجد دروس بعد</p><p style="font-size:12px;">أضف دروس من Google Sheet</p></div>';
+  } else {
+    list.innerHTML = lessons.map(lesson => `<div class="unit-item" onclick="openLesson('${(lesson.title||'').replace(/'/g,"\\'")}', '${(lesson.content||'').replace(/'/g,"\\'")}')"><div style="display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;"><span style="font-size:22px;">📄</span><span style="flex:1;font-weight:bold;">${lesson.title || 'بدون عنوان'}</span><span style="color:#2E7D32;">✅</span></div></div>`).join('');
+  }
+  screenHistory.push(currentScreen);
+  showScreen('unitsScreen');
+}
+
+function openLesson(title, content) {
+  document.getElementById('lessonTitle').textContent = title;
+  document.getElementById('lessonBody').innerHTML = `<h3 style="color:#2E7D32;margin-bottom:12px;">${title}</h3><div style="line-height:1.9;font-size:15px;">${content}</div>`;
+  screenHistory.push(currentScreen);
+  showScreen('lessonScreen');
+}
+
 function openAzhar() {
   const list = document.getElementById('azharList');
-  list.innerHTML = azharSubjects.map(s => `
-    <div class="azhar-subject-item" onclick="showToast('🕌 ${s.name}')">
-      <div style="font-size:30px;">${s.icon}</div>
-      <div class="stage-info">
-        <div class="stage-name">${s.name}</div>
-      </div>
-      <div class="stage-arrow" style="color:#C9A227;">‹</div>
-    </div>
-  `).join('');
-
+  list.innerHTML = azharSubjects.map(s => `<div class="azhar-subject-item" onclick="showToast('🕌 ${s.name}')"><div style="font-size:30px;">${s.icon}</div><div class="stage-info"><div class="stage-name">${s.name}</div></div><div class="stage-arrow" style="color:#C9A227;">‹</div></div>`).join('');
   screenHistory.push(currentScreen);
   showScreen('azharScreen');
 }
-</script>
 
-<style>
-.search-box {
-  background: var(--white);
-  border-radius: 14px;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: var(--shadow);
-  margin-bottom: 16px;
+function openQuran() {
+  loadSurahs();
+  screenHistory.push(currentScreen);
+  showScreen('quranScreen');
 }
 
-.search-box input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-family: inherit;
-  font-size: 15px;
-  background: transparent;
+function loadSurahs() {
+  const list = document.getElementById('surahsList');
+  list.innerHTML = surahsData.map(s=>`<div class="surah-item" onclick="showToast('📖 سورة ${s.name}')"><div class="surah-num">${s.id}</div><div style="flex:1;"><div style="font-weight:bold;">${s.name}</div><div style="font-size:12px;color:#999;">${s.verses} آية • ${s.type}</div></div><div style="font-size:22px;color:#999;">‹</div></div>`).join('');
 }
 
-.section-title {
-  font-size: 17px;
-  font-weight: bold;
-  margin: 20px 0 12px;
+function filterSurahs(q) {
+  const list = document.getElementById('surahsList');
+  const f = surahsData.filter(s=>s.name.includes(q));
+  list.innerHTML = f.map(s=>`<div class="surah-item" onclick="showToast('📖 سورة ${s.name}')"><div class="surah-num">${s.id}</div><div style="flex:1;"><div style="font-weight:bold;">${s.name}</div></div></div>`).join('');
 }
 
-.ad-banner {
-  background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-  border-radius: 16px;
-  padding: 18px;
-  color: var(--white);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  box-shadow: var(--shadow);
+function openCalculator() { screenHistory.push(currentScreen); showScreen('calculatorScreen'); }
+
+let calcCurrent = '';
+function calcInput(v) { calcCurrent += v; document.getElementById('calcScreen').textContent = calcCurrent || '0'; }
+function calcClear() { calcCurrent = ''; document.getElementById('calcScreen').textContent = '0'; document.getElementById('calcHistory').textContent = ''; }
+function calcDelete() { calcCurrent = calcCurrent.slice(0,-1); document.getElementById('calcScreen').textContent = calcCurrent || '0'; }
+function calcResult() {
+  try {
+    let e = calcCurrent.replace(/×/g,'*').replace(/÷/g,'/').replace(/π/g,Math.PI).replace(/\^/g,'**');
+    const r = eval(e);
+    document.getElementById('calcHistory').textContent = calcCurrent + ' =';
+    document.getElementById('calcScreen').textContent = r;
+    calcCurrent = String(r);
+  } catch { showToast('⚠️ خطأ'); }
+}
+function calcFunc(fn) {
+  const c = parseFloat(calcCurrent) || 0;
+  let r = 0;
+  if (fn==='sin') r = Math.sin(c);
+  else if (fn==='cos') r = Math.cos(c);
+  else if (fn==='tan') r = Math.tan(c);
+  else if (fn==='√') r = Math.sqrt(c);
+  else if (fn==='log') r = Math.log10(c);
+  else if (fn==='ln') r = Math.log(c);
+  document.getElementById('calcHistory').textContent = fn + '(' + c + ')';
+  document.getElementById('calcScreen').textContent = r.toFixed(4);
+  calcCurrent = String(r);
 }
 
-.cards-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+function openDrawing() {
+  screenHistory.push(currentScreen);
+  showScreen('drawingScreen');
+  setTimeout(initFullCanvas, 200);
 }
 
-.big-card {
-  padding: 20px 10px;
-  border-radius: 16px;
-  text-align: center;
-  color: var(--white);
-  cursor: pointer;
-  box-shadow: var(--shadow);
+let fullCanvas, fullCtx, fullDrawing=false, fullColor='#000';
+function initFullCanvas() {
+  fullCanvas = document.getElementById('fullDrawingCanvas');
+  if (!fullCanvas) return;
+  const r = fullCanvas.getBoundingClientRect();
+  fullCanvas.width = r.width || 300;
+  fullCanvas.height = r.height || 400;
+  fullCtx = fullCanvas.getContext('2d');
+  fullCtx.lineCap='round'; fullCtx.lineJoin='round'; fullCtx.lineWidth=4;
+  fullCanvas.addEventListener('touchstart', fs, {passive:false});
+  fullCanvas.addEventListener('touchmove', fm, {passive:false});
+  fullCanvas.addEventListener('touchend', ()=>fullDrawing=false);
+  fullCanvas.addEventListener('mousedown', (e)=>{ fullDrawing=true; const r=fullCanvas.getBoundingClientRect(); fullCtx.beginPath(); fullCtx.moveTo(e.clientX-r.left, e.clientY-r.top); });
+  fullCanvas.addEventListener('mousemove', (e)=>{ if(!fullDrawing) return; const r=fullCanvas.getBoundingClientRect(); fullCtx.strokeStyle=fullColor; fullCtx.lineTo(e.clientX-r.left, e.clientY-r.top); fullCtx.stroke(); });
+  fullCanvas.addEventListener('mouseup', ()=>fullDrawing=false);
+}
+function fs(e) { e.preventDefault(); fullDrawing=true; const r=fullCanvas.getBoundingClientRect(); const t=e.touches[0]; fullCtx.beginPath(); fullCtx.moveTo(t.clientX-r.left, t.clientY-r.top); }
+function fm(e) { e.preventDefault(); if(!fullDrawing) return; const r=fullCanvas.getBoundingClientRect(); const t=e.touches[0]; fullCtx.strokeStyle=fullColor; fullCtx.lineTo(t.clientX-r.left, t.clientY-r.top); fullCtx.stroke(); }
+function fullChangeColor(c) { fullColor=c; showToast('🎨 لون'); }
+function fullClear() { if(fullCtx) fullCtx.clearRect(0,0,fullCanvas.width,fullCanvas.height); }
+
+function openWisdom() {
+  const list = document.getElementById('wisdomList');
+  list.innerHTML = wisdomData.map(w=>`<div class="wisdom-item"><div style="font-size:50px;color:#7B1FA2;opacity:0.2;">"</div><div style="font-size:16px;font-weight:600;color:#4A148C;margin:8px 0;">${w.text}</div><div style="font-size:13px;color:#7B1FA2;">— ${w.author}</div></div>`).join('');
+  screenHistory.push(currentScreen);
+  showScreen('wisdomScreen');
 }
 
-.azhar-card, .quran-card {
-  border-radius: 16px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  color: var(--white);
-  cursor: pointer;
-  box-shadow: var(--shadow);
+function openMessages() {
+  const list = document.getElementById('messagesList');
+  list.innerHTML = messagesData.map(m=>`<div class="message-item"><div class="message-avatar">${m.icon}</div><div style="flex:1;"><div style="font-weight:bold;font-size:14px;">${m.name}</div><div style="font-size:12px;color:#999;">${m.last}</div></div>${m.unread>0?`<div class="message-badge">${m.unread}</div>`:''}</div>`).join('');
+  screenHistory.push(currentScreen);
+  showScreen('messagesScreen');
 }
 
-.azhar-card { background: linear-gradient(135deg,#C9A227,#E6C75E); }
-.quran-card { background: linear-gradient(135deg,#00695C,#26A69A); }
-
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-
-.tool-btn {
-  background: var(--white);
-  border-radius: 14px;
-  padding: 14px 6px;
-  text-align: center;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-}
-
-.tool-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  margin: 0 auto 8px;
-}
-
-.tool-label { font-size: 12px; font-weight: 600; }
-
-.wisdom-card {
-  background: linear-gradient(135deg,#F3E5F5,#EDE7F6);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: var(--shadow);
-}
-
-.stats-card {
-  background: var(--white);
-  border-radius: 16px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  box-shadow: var(--shadow);
-}
-
-.stat-item { flex: 1; text-align: center; }
-.stat-value { font-size: 24px; font-weight: bold; color: var(--primary); }
-.stat-label { font-size: 12px; color: var(--gray); }
-
-.stage-item, .azhar-subject-item {
-  background: var(--white);
-  border-radius: 16px;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-  margin-bottom: 12px;
-}
-
-.azhar-subject-item { border-right: 4px solid #C9A227; }
-
-.stage-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  background: #E8F5E9;
-}
-
-.stage-info { flex: 1; }
-.stage-name { font-size: 15px; font-weight: bold; }
-.stage-sub { font-size: 12px; color: var(--gray); }
-.stage-arrow { font-size: 26px; color: var(--gray); }
-
-.subjects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.subject-card {
-  background: var(--white);
-  border-radius: 16px;
-  padding: 20px 12px;
-  text-align: center;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-}
-
-.subject-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  margin: 0 auto 10px;
-}
-
-.subject-name { font-size: 14px; font-weight: 600; }
-</style>
-
-  <!-- ============================================ -->
-<!-- الجزء الناقص 3 : الحساب + لوحة المالك -->
-<!-- ============================================ -->
-
-<div id="profileScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>👤 حسابي</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div style="background:linear-gradient(135deg,#2E7D32,#4CAF50);border-radius:20px;padding:24px;text-align:center;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,0.12);margin-bottom:20px;">
-      <div style="width:90px;height:90px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 12px;">👤</div>
-      <div id="profileName" style="font-size:20px;font-weight:bold;">أحمد محمد</div>
-      <div id="profileRole" style="font-size:13px;opacity:0.9;margin-top:4px;">طالب</div>
-      <button onclick="openQR()" style="margin-top:14px;padding:10px 20px;background:#fff;color:#2E7D32;border:none;border-radius:20px;font-family:inherit;font-weight:bold;cursor:pointer;">📱 عرض QR Code</button>
-    </div>
-
-    <div class="section-title">📊 إحصائياتي</div>
-    <div class="stats-card">
-      <div class="stat-item">
-        <div class="stat-value">45</div>
-        <div class="stat-label">درس</div>
-      </div>
-      <div style="width:1px;height:40px;background:#eee;"></div>
-      <div class="stat-item">
-        <div class="stat-value" id="profilePoints">1250</div>
-        <div class="stat-label">نقطة</div>
-      </div>
-      <div style="width:1px;height:40px;background:#eee;"></div>
-      <div class="stat-item">
-        <div class="stat-value">12</div>
-        <div class="stat-label">امتحان</div>
-      </div>
-    </div>
-
-    <div class="section-title">🏆 إنجازاتي</div>
-    <div style="display:flex;gap:10px;justify-content:center;">
-      <div style="width:60px;height:60px;background:#FFF8E1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;">🥇</div>
-      <div style="width:60px;height:60px;background:#F5F5F5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;">🥈</div>
-      <div style="width:60px;height:60px;background:#FFF3E0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;">🥉</div>
-      <div style="width:60px;height:60px;background:#E3F2FD;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;">🎖️</div>
-    </div>
-
-    <div class="section-title">⚙️ الإعدادات</div>
-
-    <div class="menu-item" onclick="showToast('👨‍🏫 قريباً')">
-      <span style="font-size:24px;">👨‍🏫</span>
-      <span style="flex:1;font-weight:600;">تواصل مع معلم</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="toggleDark()">
-      <span style="font-size:24px;">🌙</span>
-      <span style="flex:1;font-weight:600;">الوضع الليلي</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="openAdmin()" id="adminMenu" style="display:none;">
-      <span style="font-size:24px;">🛡️</span>
-      <span style="flex:1;font-weight:600;color:#E53935;">لوحة المالك</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="logout()" style="background:#FFEBEE;">
-      <span style="font-size:24px;">🚪</span>
-      <span style="flex:1;font-weight:600;color:#E53935;">تسجيل الخروج</span>
-      <span style="color:#E53935;font-size:22px;">‹</span>
-    </div>
-  </div>
-</div>
-
-<div id="qrScreen" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>📱 QR Code</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content" style="text-align:center;">
-    <div style="background:#fff;border-radius:24px;padding:30px;box-shadow:0 4px 16px rgba(0,0,0,0.12);max-width:340px;margin:0 auto;">
-      <div id="qrCode" style="width:220px;height:220px;background:repeating-linear-gradient(45deg,#000 0 10px,#fff 10px 20px);margin:0 auto 20px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:80px;color:#fff;">▦</div>
-      <div id="qrLabel" style="font-size:20px;font-weight:bold;color:#212121;">أحمد محمد</div>
-      <div id="qrRole" style="font-size:14px;color:#999;margin-top:4px;">طالب</div>
-      <div style="font-size:12px;color:#999;margin-top:12px;">امسح الكود لمشاركة حسابك</div>
-    </div>
-    <button class="btn-primary" style="margin-top:20px;" onclick="showToast('📥 جاري التحميل...')">تحميل QR</button>
-  </div>
-</div>
-
-<div id="adminScreen" class="screen">
-  <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>🛡️ لوحة المالك</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div class="section-title">📊 الإحصائيات</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-        <div style="font-size:20px;font-weight:bold;color:#E53935;">15K</div>
-        <div style="font-size:11px;color:#999;margin-top:4px;">👥 الزوار</div>
-      </div>
-      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-        <div style="font-size:20px;font-weight:bold;color:#E53935;">1,250</div>
-        <div style="font-size:11px;color:#999;margin-top:4px;">📱 اليوم</div>
-      </div>
-      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-        <div style="font-size:20px;font-weight:bold;color:#E53935;">45</div>
-        <div style="font-size:11px;color:#999;margin-top:4px;">🟢 الآن</div>
-      </div>
-    </div>
-
-    <div class="section-title">⚙️ التحكم</div>
-
-    <div class="menu-item" onclick="openAdsManager()">
-      <span style="font-size:24px;">📢</span>
-      <span style="flex:1;font-weight:600;">إدارة الإعلانات</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="showToast('📚 قريباً')">
-      <span style="font-size:24px;">📚</span>
-      <span style="flex:1;font-weight:600;">إدارة المحتوى</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="showToast('💡 قريباً')">
-      <span style="font-size:24px;">💡</span>
-      <span style="flex:1;font-weight:600;">إدارة الحكم</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-
-    <div class="menu-item" onclick="showToast('👥 قريباً')">
-      <span style="font-size:24px;">👥</span>
-      <span style="flex:1;font-weight:600;">إدارة المستخدمين</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
-  </div>
-</div>
-
-<div id="adsManagerScreen" class="screen">
-  <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
-    <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>📢 إدارة الإعلانات</span></div>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="content">
-    <div class="section-title">➕ إضافة إعلان جديد</div>
-
-    <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">عنوان الإعلان</label>
-      <input type="text" class="form-input" id="adTitle" placeholder="مثال: خصم 50%">
-    </div>
-
-    <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">رفع من الجهاز</label>
-      <input type="file" class="form-input" id="adFile" accept="image/*,video/*" style="padding:10px;">
-    </div>
-
-    <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">المدة (ثواني)</label>
-      <input type="number" class="form-input" id="adDuration" value="10">
-    </div>
-
-    <button class="btn-primary" onclick="addNewAd()">➕ إضافة الإعلان</button>
-
-    <div class="section-title">📋 الإعلانات الحالية</div>
-    <div id="adsList"></div>
-  </div>
-</div>
-
-<script>
 function goToProfile() {
   document.getElementById('profileName').textContent = currentUser ? currentUser.name : 'أحمد محمد';
-  document.getElementById('profileRole').textContent = 
-    currentRole === 'student' ? 'طالب' :
-    currentRole === 'teacher' ? 'معلم' : 'المالك';
-  document.getElementById('profilePoints').textContent = currentUser ? currentUser.points : 1250;
-
+  document.getElementById('profileRole').textContent = currentRole === 'student' ? 'طالب' : currentRole === 'teacher' ? 'معلم' : 'المالك';
   const adminMenu = document.getElementById('adminMenu');
   if (adminMenu) adminMenu.style.display = currentRole === 'owner' ? 'flex' : 'none';
-
   screenHistory.push(currentScreen);
   showScreen('profileScreen');
-}
-
-function openQR() {
-  document.getElementById('qrLabel').textContent = currentUser ? currentUser.name : 'أحمد محمد';
-  document.getElementById('qrRole').textContent = 
-    currentRole === 'student' ? 'طالب' :
-    currentRole === 'teacher' ? 'معلم' : 'مالك';
-  screenHistory.push(currentScreen);
-  showScreen('qrScreen');
 }
 
 function toggleDark() {
@@ -2103,16 +615,8 @@ function logout() {
   }
 }
 
-function openAdmin() {
-  screenHistory.push(currentScreen);
-  showScreen('adminScreen');
-}
-
-function openAdsManager() {
-  loadAds();
-  screenHistory.push(currentScreen);
-  showScreen('adsManagerScreen');
-}
+function openAdmin() { screenHistory.push(currentScreen); showScreen('adminScreen'); }
+function openAdsManager() { loadAds(); screenHistory.push(currentScreen); showScreen('adsManagerScreen'); }
 
 let adsData = [
   {id:'1',title:'خصم 50% على الكتب',duration:10},
@@ -2122,11 +626,7 @@ let adsData = [
 function addNewAd() {
   const title = document.getElementById('adTitle').value.trim();
   if (!title) { showToast('⚠️ أدخل عنوان'); return; }
-  adsData.push({
-    id: Date.now().toString(),
-    title: title,
-    duration: parseInt(document.getElementById('adDuration').value) || 10
-  });
+  adsData.push({id: Date.now().toString(), title: title, duration: parseInt(document.getElementById('adDuration').value) || 10});
   document.getElementById('adTitle').value = '';
   document.getElementById('adFile').value = '';
   loadAds();
@@ -2136,20 +636,8 @@ function addNewAd() {
 function loadAds() {
   const list = document.getElementById('adsList');
   if (!list) return;
-  if (adsData.length === 0) {
-    list.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">لا توجد إعلانات</div>';
-    return;
-  }
-  list.innerHTML = adsData.map(ad => `
-    <div style="background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-      <div style="font-size:24px;">📢</div>
-      <div style="flex:1;">
-        <div style="font-weight:bold;font-size:14px;">${ad.title}</div>
-        <div style="font-size:12px;color:#999;">${ad.duration} ثانية</div>
-      </div>
-      <button onclick="deleteAd('${ad.id}')" style="background:#FFEBEE;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">🗑️</button>
-    </div>
-  `).join('');
+  if (adsData.length === 0) { list.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">لا توجد إعلانات</div>'; return; }
+  list.innerHTML = adsData.map(ad => `<div style="background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;"><div style="font-size:24px;">📢</div><div style="flex:1;"><div style="font-weight:bold;font-size:14px;">${ad.title}</div><div style="font-size:12px;color:#999;">${ad.duration} ثانية</div></div><button onclick="deleteAd('${ad.id}')" style="background:#FFEBEE;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">🗑️</button></div>`).join('');
 }
 
 function deleteAd(id) {
@@ -2159,44 +647,11 @@ function deleteAd(id) {
     showToast('🗑️ تم الحذف');
   }
 }
+
+window.addEventListener('load', () => {
+  setTimeout(() => showScreen('loginScreen'), 2500);
+});
 </script>
 
-<style>
-.menu-item {
-  background: #fff;
-  border-radius: 14px;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-.menu-item:active { transform: scale(0.98); }
-
-body.dark-mode { background: #1A1A1A; color: #fff; }
-
-body.dark-mode .menu-item,
-body.dark-mode .stats-card,
-body.dark-mode .stage-item,
-body.dark-mode .subject-card,
-body.dark-mode .surah-item,
-body.dark-mode .tool-btn,
-body.dark-mode .lesson-body,
-body.dark-mode .exercise-item,
-body.dark-mode .exam-card,
-body.dark-mode .unit-item,
-body.dark-mode .message-item,
-body.dark-mode .calc-display,
-body.dark-mode .calc-btn,
-body.dark-mode .audio-btn {
-  background: #2A2A2A;
-  color: #fff;
-}
-
-body.dark-mode .section-title { color: #fff; }
-</style>
 </body>
 </html>
