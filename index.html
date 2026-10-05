@@ -4,15 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>منصة حافظ التعليمية</title>
-  <script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js')
-      .then(reg => console.log('✅ Service Worker registered'))
-      .catch(err => console.log('❌ SW registration failed:', err));
-  });
-}
-</script>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#2E7D32">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -134,7 +127,8 @@ html, body {
 .splash-title { font-size: 26px; font-weight: bold; margin-bottom: 8px; }
 .splash-subtitle { font-size: 15px; opacity: 0.9; margin-bottom: 32px; }
 .loader {
-  width: 40px; height: 40px;
+  width: 40px;
+  height: 40px;
   border: 4px solid rgba(255,255,255,0.3);
   border-top-color: var(--white);
   border-radius: 50%;
@@ -144,7 +138,8 @@ html, body {
 @keyframes spin { to { transform: rotate(360deg); } }
 #loginScreen { background: var(--white); padding: 24px; justify-content: center; }
 .login-logo {
-  width: 100px; height: 100px;
+  width: 100px;
+  height: 100px;
   background: var(--primary-pale);
   border-radius: 25px;
   display: flex;
@@ -224,7 +219,7 @@ html, body {
   text-align: center;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .search-box {
+.search-box {
   background: var(--white);
   border-radius: 14px;
   padding: 12px 16px;
@@ -247,8 +242,6 @@ html, body {
   font-weight: bold;
   margin: 20px 0 12px;
 }
-
-/* الإعلان الكبير */
 .ad-banner {
   background: linear-gradient(135deg, #FF6B6B, #FF8E53);
   border-radius: 20px;
@@ -281,8 +274,6 @@ html, body {
 }
 .ad-banner-title { font-size: 22px; font-weight: bold; margin-bottom: 4px; }
 .ad-banner-sub { font-size: 14px; opacity: 0.95; }
-
-/* شريط الحكمة المتحرك */
 .wisdom-bar {
   background: linear-gradient(90deg, #7B1FA2, #9C27B0, #7B1FA2);
   border-radius: 12px;
@@ -306,8 +297,6 @@ html, body {
   from { transform: translateX(-100%); }
   to { transform: translateX(100%); }
 }
-
-/* بطاقات المراحل */
 .cards-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -325,8 +314,6 @@ html, body {
 .big-card:active { transform: scale(0.96); }
 .big-card-icon { font-size: 36px; margin-bottom: 8px; }
 .big-card-label { font-size: 14px; font-weight: bold; }
-
-/* بطاقات الأزهر والقرآن */
 .azhar-card, .quran-card {
   border-radius: 16px;
   padding: 24px;
@@ -346,8 +333,6 @@ html, body {
 .azhar-title, .quran-title { font-size: 17px; font-weight: bold; margin-bottom: 4px; }
 .azhar-sub, .quran-sub { font-size: 13px; opacity: 0.9; }
 .azhar-arrow, .quran-arrow { font-size: 28px; font-weight: bold; }
-
-/* الأدوات */
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -373,8 +358,6 @@ html, body {
   margin: 0 auto 8px;
 }
 .tool-label { font-size: 12px; font-weight: 600; }
-
-/* إحصائيات */
 .stats-card {
   background: var(--white);
   border-radius: 16px;
@@ -387,8 +370,6 @@ html, body {
 .stat-value { font-size: 24px; font-weight: bold; color: var(--primary); margin-bottom: 4px; }
 .stat-label { font-size: 12px; color: var(--gray); }
 .stat-divider { width: 1px; height: 40px; background: #eee; }
-
-/* قوائم المراحل والصفوف */
 .stage-item, .azhar-subject-item {
   background: var(--white);
   border-radius: 16px;
@@ -416,8 +397,6 @@ html, body {
 .stage-name { font-size: 15px; font-weight: bold; margin-bottom: 4px; }
 .stage-sub { font-size: 12px; color: var(--gray); }
 .stage-arrow { font-size: 26px; color: var(--gray); font-weight: bold; }
-
-/* شبكة المواد */
 .subjects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -443,8 +422,6 @@ html, body {
   margin: 0 auto 10px;
 }
 .subject-name { font-size: 14px; font-weight: 600; }
-
-/* شاشة الترمين */
 .term-container {
   display: flex;
   flex-direction: column;
@@ -498,8 +475,6 @@ html, body {
   background: var(--primary-pale);
   color: var(--primary);
 }
-
-/* شاشة المحتوى */
 .content-header {
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: var(--white);
@@ -510,8 +485,6 @@ html, body {
 }
 .content-header-title { font-size: 20px; font-weight: bold; margin-bottom: 4px; }
 .content-header-sub { font-size: 13px; opacity: 0.9; }
-
-/* بطاقة المحتوى */
 .content-item {
   background: var(--white);
   border-radius: 16px;
@@ -544,11 +517,113 @@ html, body {
 }
 .content-item-sub { font-size: 12px; color: var(--gray); }
 .content-item-arrow { font-size: 22px; color: var(--gray); }
-  </style>
+.lesson-body {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 20px;
+  line-height: 1.9;
+  box-shadow: var(--shadow);
+}
+.drawing-canvas-full {
+  background: var(--white);
+  border-radius: 16px;
+  height: calc(100vh - 220px);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+#fullDrawingCanvas {
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  display: block;
+}
+.drawing-palette {
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+  background: var(--white);
+  border-radius: 16px;
+  margin-top: 12px;
+  align-items: center;
+  box-shadow: var(--shadow);
+  flex-wrap: wrap;
+}
+.color-dot {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+.clear-btn {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: #FFEBEE;
+  border: none;
+  font-size: 18px;
+  margin-right: auto;
+}
+.calc-display {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 24px;
+  text-align: left;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  direction: ltr;
+}
+.calc-history { color: var(--gray); font-size: 14px; min-height: 20px; }
+.calc-screen { font-size: 36px; font-weight: bold; word-break: break-all; }
+.calc-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.calc-btn {
+  padding: 18px 8px;
+  background: var(--white);
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+.calc-btn.func { background: #E3F2FD; color: #1976D2; font-size: 15px; }
+.calc-btn.op { background: #FFF3E0; color: #F57C00; }
+.calc-btn.eq { background: linear-gradient(135deg,#1976D2,#42A5F5); color: var(--white); }
+.calc-btn.clear { background: #FFEBEE; color: var(--error); }
+.menu-item {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.menu-item:active { transform: scale(0.98); }
+body.dark-mode { background: #1A1A1A; color: #fff; }
+body.dark-mode .menu-item,
+body.dark-mode .stats-card,
+body.dark-mode .stage-item,
+body.dark-mode .subject-card,
+body.dark-mode .tool-btn,
+body.dark-mode .lesson-body,
+body.dark-mode .content-item,
+body.dark-mode .term-card,
+body.dark-mode .calc-display,
+body.dark-mode .calc-btn {
+  background: #2A2A2A;
+  color: #fff;
+}
+body.dark-mode .section-title { color: #fff; }
+</style>
 </head>
 <body>
-
-<!-- شاشة البداية -->
 <div id="splashScreen" class="screen active">
   <div class="splash-content">
     <div class="splash-logo">🎓</div>
@@ -558,7 +633,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة تسجيل الدخول -->
 <div id="loginScreen" class="screen">
   <div class="login-logo">🎓</div>
   <div class="login-title">مرحباً بك</div>
@@ -583,10 +657,8 @@ html, body {
   </div>
 
   <button class="btn-primary" onclick="login()">تسجيل الدخول</button>
-  <button class="link-btn" onclick="showToast('قريباً')">ليس لديك حساب؟ سجّل الآن</button>
 </div>
 
-<!-- الشاشة الرئيسية -->
 <div id="homeScreen" class="screen">
   <div class="top-bar">
     <div class="logo">
@@ -597,13 +669,11 @@ html, body {
   </div>
 
   <div class="content">
-    <!-- البحث -->
     <div class="search-box">
       <span>🔍</span>
       <input type="text" placeholder="ابحث..." oninput="showToast('🔍 جاري البحث...')">
     </div>
 
-    <!-- الإعلان الكبير -->
     <div id="mainAd" class="ad-banner" onclick="showToast('📢 إعلان')">
       <div class="ad-banner-content">
         <div class="ad-banner-title">📢 إعلان رئيسي</div>
@@ -611,7 +681,6 @@ html, body {
       </div>
     </div>
 
-    <!-- التعليم العام -->
     <div class="section-title">📚 التعليم العام</div>
     <div class="cards-row">
       <div class="big-card" style="background:linear-gradient(135deg,#66BB6A,#4CAF50);" onclick="openStage('primary')">
@@ -628,7 +697,6 @@ html, body {
       </div>
     </div>
 
-    <!-- الأزهر الشريف -->
     <div class="section-title">🕌 الأزهر الشريف</div>
     <div class="azhar-card" onclick="openAzhar()">
       <div class="azhar-icon">🕌</div>
@@ -639,7 +707,6 @@ html, body {
       <div class="azhar-arrow">‹</div>
     </div>
 
-    <!-- القرآن الكريم -->
     <div class="section-title">📖 القرآن الكريم</div>
     <div class="quran-card" onclick="openQuran()">
       <div class="quran-icon">📖</div>
@@ -650,7 +717,6 @@ html, body {
       <div class="quran-arrow">‹</div>
     </div>
 
-    <!-- أدوات سريعة -->
     <div class="section-title">🧰 أدوات سريعة</div>
     <div class="tools-grid">
       <div class="tool-btn" onclick="openCalculator()">
@@ -671,13 +737,11 @@ html, body {
       </div>
     </div>
 
-    <!-- شريط الحكمة المتحرك -->
     <div class="section-title">💡 حكمة اليوم</div>
     <div class="wisdom-bar">
       <span class="wisdom-bar-content" id="wisdomBar">💡 العلم نور والجهل ظلام — الإمام علي بن أبي طالب  •  من جد وجد ومن زرع حصد  •  اطلبوا العلم من المهد إلى اللحد  •  💡</span>
     </div>
 
-    <!-- إحصائياتي -->
     <div class="section-title">📊 إحصائياتي</div>
     <div class="stats-card">
       <div class="stat-item">
@@ -697,7 +761,6 @@ html, body {
     </div>
   </div>
 
-  <!-- شريط التنقل السفلي -->
   <div class="bottom-nav">
     <button class="nav-item active" onclick="navTo('home')">
       <span class="icon">🏠</span>
@@ -722,7 +785,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة المراحل -->
 <div id="educationScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -735,7 +797,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة الصفوف -->
 <div id="gradesScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -747,7 +808,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة المواد -->
 <div id="subjectsScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -759,7 +819,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة الترمين -->
 <div id="termsScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -775,7 +834,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة المحتوى (الدروس/تدريبات/امتحانات) -->
 <div id="contentScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -791,7 +849,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة عرض المحتوى -->
 <div id="viewerScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -802,7 +859,7 @@ html, body {
     <div class="lesson-body" id="viewerBody"></div>
   </div>
 </div>
-<!-- شاشة الأزهر -->
+
 <div id="azharScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#C9A227,#E6C75E);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -815,7 +872,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة القرآن -->
 <div id="quranScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#00695C,#26A69A);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -831,7 +887,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة الحاسبة -->
 <div id="calculatorScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -876,7 +931,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة الرسم -->
 <div id="drawingScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -899,7 +953,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة الرسائل -->
 <div id="messagesScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -911,7 +964,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة الحساب -->
 <div id="profileScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -954,7 +1006,6 @@ html, body {
   </div>
 </div>
 
-<!-- شاشة المالك -->
 <div id="ownerProfileScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -970,7 +1021,6 @@ html, body {
   </div>
 </div>
 
-<!-- لوحة المالك -->
 <div id="adminScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1013,16 +1063,8 @@ html, body {
       <span style="flex:1;font-weight:600;">تعديل معلومات المالك</span>
       <span style="color:#999;font-size:22px;">‹</span>
     </div>
-
-    <div class="menu-item" onclick="showToast('قريباً')">
-      <span style="font-size:24px;">👥</span>
-      <span style="flex:1;font-weight:600;">إدارة المستخدمين</span>
-      <span style="color:#999;font-size:22px;">‹</span>
-    </div>
   </div>
 </div>
-
-<!-- شاشة إضافة درس -->
 <div id="addLessonScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1059,20 +1101,19 @@ html, body {
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">رابط صورة (اختياري)</label>
-      <input type="text" class="form-input" id="newLessonImage" placeholder="https://...">
+      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">صورة من الجهاز (اختياري)</label>
+      <input type="file" class="form-input" id="newLessonImageFile" accept="image/*" style="padding:10px;">
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">رابط فيديو (اختياري)</label>
-      <input type="text" class="form-input" id="newLessonVideo" placeholder="https://youtube.com/...">
+      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">فيديو من الجهاز (اختياري)</label>
+      <input type="file" class="form-input" id="newLessonVideoFile" accept="video/*" style="padding:10px;">
     </div>
 
     <button class="btn-primary" onclick="saveNewLesson()">💾 حفظ الدرس</button>
   </div>
 </div>
 
-<!-- شاشة تعديل المالك -->
 <div id="ownerEditorScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1091,15 +1132,14 @@ html, body {
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">رابط الصورة</label>
-      <input type="text" class="form-input" id="ownerImageUrl" placeholder="https://...">
+      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">صورة المالك (من الجهاز)</label>
+      <input type="file" class="form-input" id="ownerImageFile" accept="image/*" style="padding:10px;">
     </div>
 
     <button class="btn-primary" onclick="saveOwnerProfile()">💾 حفظ</button>
   </div>
 </div>
 
-<!-- شاشة إدارة الإعلانات -->
 <div id="adsManagerScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1122,23 +1162,11 @@ html, body {
       </select>
     </div>
 
-<div class="form-group">
-  <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">طريقة الإضافة</label>
-  <select class="form-input" id="adSource" onchange="toggleAdSource()">
-    <option value="url">🔗 رابط</option>
-    <option value="file">📤 رفع من الجهاز</option>
-  </select>
-</div>
+    <div class="form-group">
+      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">اختر الملف من الجهاز</label>
+      <input type="file" class="form-input" id="adFile" accept="image/*,video/*" style="padding:10px;">
+    </div>
 
-<div class="form-group" id="adUrlGroup">
-  <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">رابط الصورة/الفيديو</label>
-  <input type="text" class="form-input" id="adUrl" placeholder="https://...">
-</div>
-
-<div class="form-group" id="adFileGroup" style="display:none;">
-  <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">اختر الملف من الجهاز</label>
-  <input type="file" class="form-input" id="adFile" accept="image/*,video/*" style="padding:10px;">
-</div>
     <div class="form-group">
       <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">المدة (ثواني)</label>
       <input type="number" class="form-input" id="adDuration" value="10">
@@ -1180,7 +1208,7 @@ let currentSection = null;
 const OWNER_CODE = '135790';
 
 // ============================================
-// التنقل بين الشاشات
+// التنقل
 // ============================================
 function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1202,11 +1230,8 @@ function showToast(msg) {
 }
 
 function goBack() {
-  if (screenHistory.length > 0) {
-    showScreen(screenHistory.pop());
-  } else {
-    showScreen('homeScreen');
-  }
+  if (screenHistory.length > 0) showScreen(screenHistory.pop());
+  else showScreen('homeScreen');
 }
 
 function navTo(dest) {
@@ -1230,15 +1255,13 @@ function selectRole(btn, role) {
   if (ownerGroup) ownerGroup.style.display = (role === 'owner') ? 'block' : 'none';
 }
 
-async function login() {
+function login() {
   const username = document.getElementById('usernameInput').value.trim();
   const password = document.getElementById('passwordInput').value;
   const ownerCode = document.getElementById('ownerCodeInput') ? document.getElementById('ownerCodeInput').value : '';
-
   if (!username || username.length < 3) { showToast('⚠️ أدخل اسم مستخدم'); return; }
   if (password.length < 4) { showToast('⚠️ كلمة المرور قصيرة'); return; }
   if (currentRole === 'owner' && ownerCode !== OWNER_CODE) { showToast('🔐 كود المالك خطأ'); return; }
-
   currentUser = { name: username, role: currentRole, points: 1250 };
   showToast('✅ تم تسجيل الدخول');
   setTimeout(() => showScreen('homeScreen'), 800);
@@ -1299,20 +1322,33 @@ const surahsData = [
 ];
 
 // ============================================
-// المناهج - المراحل والصفوف
+// رفع الملفات
+// ============================================
+async function uploadFile(file, folder) {
+  if (!file || !supabaseClient) return null;
+  try {
+    showToast('⏳ جاري الرفع...');
+    const fileName = folder + '/' + Date.now() + '_' + file.name;
+    const { data, error } = await supabaseClient.storage.from('ta3lemy').upload(fileName, file);
+    if (error) throw error;
+    const { data: urlData } = supabaseClient.storage.from('ta3lemy').getPublicUrl(fileName);
+    showToast('✅ تم الرفع');
+    return urlData.publicUrl;
+  } catch (e) {
+    console.error(e);
+    showToast('❌ فشل الرفع');
+    return null;
+  }
+}
+
+// ============================================
+// المناهج
 // ============================================
 function openEducation() {
   const list = document.getElementById('stagesList');
   list.innerHTML = Object.keys(stagesData).map(key => {
     const s = stagesData[key];
-    return `<div class="stage-item" onclick="openStage('${key}')">
-      <div class="stage-icon">${s.icon}</div>
-      <div class="stage-info">
-        <div class="stage-name">${s.name}</div>
-        <div class="stage-sub">${s.grades.length} صفوف</div>
-      </div>
-      <div class="stage-arrow">‹</div>
-    </div>`;
+    return `<div class="stage-item" onclick="openStage('${key}')"><div class="stage-icon">${s.icon}</div><div class="stage-info"><div class="stage-name">${s.name}</div><div class="stage-sub">${s.grades.length} صفوف</div></div><div class="stage-arrow">‹</div></div>`;
   }).join('');
   screenHistory.push(currentScreen);
   showScreen('educationScreen');
@@ -1323,16 +1359,7 @@ function openStage(stageId) {
   const stage = stagesData[stageId];
   document.getElementById('gradesTitle').textContent = stage.name;
   const list = document.getElementById('gradesList');
-  list.innerHTML = stage.grades.map((g, i) => `
-    <div class="stage-item" onclick="openGrade('${stageId}', '${g}')">
-      <div class="stage-icon" style="background:#E8F5E9;">🎓</div>
-      <div class="stage-info">
-        <div class="stage-name">الصف ${g}</div>
-        <div class="stage-sub">اضغط لعرض المواد</div>
-      </div>
-      <div class="stage-arrow">‹</div>
-    </div>
-  `).join('');
+  list.innerHTML = stage.grades.map(g => `<div class="stage-item" onclick="openGrade('${stageId}', '${g}')"><div class="stage-icon" style="background:#E8F5E9;">🎓</div><div class="stage-info"><div class="stage-name">الصف ${g}</div><div class="stage-sub">اضغط لعرض المواد</div></div><div class="stage-arrow">‹</div></div>`).join('');
   screenHistory.push(currentScreen);
   showScreen('gradesScreen');
 }
@@ -1341,12 +1368,7 @@ function openGrade(stageId, gradeName) {
   currentGrade = gradeName;
   document.getElementById('subjectsTitle').textContent = 'الصف ' + gradeName;
   const list = document.getElementById('subjectsList');
-  list.innerHTML = generalSubjects.map(s => `
-    <div class="subject-card" onclick="openSubject('${s.id}', '${s.name}')">
-      <div class="subject-icon" style="background:${s.color}20;color:${s.color};">${s.icon}</div>
-      <div class="subject-name">${s.name}</div>
-    </div>
-  `).join('');
+  list.innerHTML = generalSubjects.map(s => `<div class="subject-card" onclick="openSubject('${s.id}', '${s.name}')"><div class="subject-icon" style="background:${s.color}20;color:${s.color};">${s.icon}</div><div class="subject-name">${s.name}</div></div>`).join('');
   screenHistory.push(currentScreen);
   showScreen('subjectsScreen');
 }
@@ -1363,10 +1385,9 @@ function openSubject(subjectId, subjectName) {
 function renderTerms() {
   const list = document.getElementById('termsList');
   const terms = [
-    { num: 1, name: 'الترم الأول', icon: '📘', color: '#2E7D32' },
-    { num: 2, name: 'الترم الثاني', icon: '📙', color: '#1976D2' }
+    { num: 1, name: 'الترم الأول', icon: '📘' },
+    { num: 2, name: 'الترم الثاني', icon: '📙' }
   ];
-  
   list.innerHTML = terms.map(t => `
     <div class="term-card ${t.num === 2 ? 'term-2' : ''}">
       <div class="term-header">
@@ -1387,77 +1408,34 @@ function renderTerms() {
   `).join('');
 }
 
-// ============================================
-// فتح المحتوى - يستخدم Supabase
-// ============================================
 async function openContent(sectionType, termNum, termName) {
   currentTerm = termNum;
   currentSection = sectionType;
   const titles = {
-    lessons: '📄 الدروس',
-    exercises: '✏️ تدريبات',
-    exams: '📝 امتحانات',
-    previous: '📋 سنوات سابقة',
-    reviews: '📖 مراجعات',
-    summaries: '📑 ملخصات',
-    videos: '🎥 فيديوهات'
+    lessons: '📄 الدروس', exercises: '✏️ تدريبات', exams: '📝 امتحانات',
+    previous: '📋 سنوات سابقة', reviews: '📖 مراجعات', summaries: '📑 ملخصات', videos: '🎥 فيديوهات'
   };
-  
   document.getElementById('contentTitle').textContent = titles[sectionType] || 'المحتوى';
   document.getElementById('contentHeaderTitle').textContent = (currentSubject || '') + ' - ' + termName;
   document.getElementById('contentHeaderSub').textContent = titles[sectionType];
-  
   const list = document.getElementById('contentList');
   list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;"><div style="font-size:30px;">⏳</div><p>جاري التحميل...</p></div>';
-  
   screenHistory.push(currentScreen);
   showScreen('contentScreen');
-  
-  // جلب البيانات من Supabase
   try {
-    if (!supabaseClient) {
-      list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;"><div style="font-size:50px;">📭</div><p>لا توجد بيانات</p></div>';
-      return;
-    }
-    
-    let query = supabaseClient.from('lessons').select('*');
-    
-    // فلترة حسب النوع
-    if (sectionType === 'exercises') query = supabaseClient.from('exercises').select('*');
-    else if (sectionType === 'exams') query = supabaseClient.from('exams').select('*');
-    else query = supabaseClient.from('lessons').select('*').eq('term', termNum);
-    
-    // فلترة حسب المادة
+    if (!supabaseClient) { list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">لا توجد بيانات</div>'; return; }
+    let query = supabaseClient.from('lessons').select('*').eq('term', termNum);
     if (currentSubject) query = query.eq('subject', currentSubject);
-    
     const { data, error } = await query.order('order', { ascending: true });
-    
     if (error) throw error;
-    
     if (!data || data.length === 0) {
-      list.innerHTML = `<div style="text-align:center;padding:40px;color:#999;">
-        <div style="font-size:50px;">📭</div>
-        <p style="margin-top:12px;">لا يوجد محتوى بعد</p>
-        <p style="font-size:12px;margin-top:8px;">سيتم إضافة المحتوى قريباً</p>
-      </div>`;
+      list.innerHTML = `<div style="text-align:center;padding:40px;color:#999;"><div style="font-size:50px;">📭</div><p style="margin-top:12px;">لا يوجد محتوى بعد</p><p style="font-size:12px;margin-top:8px;">سيتم إضافة المحتوى قريباً</p></div>`;
     } else {
-      list.innerHTML = data.map(item => `
-        <div class="content-item" onclick="viewContent('${(item.title||'').replace(/'/g,"\\'")}', '${(item.content||'').replace(/'/g,"\\'")}', '${item.video_url||''}', '${item.image_url||''}')">
-          <div class="content-item-icon">📄</div>
-          <div class="content-item-info">
-            <div class="content-item-title">${item.title || 'بدون عنوان'}</div>
-            <div class="content-item-sub">${item.content ? item.content.substring(0, 50) + '...' : ''}</div>
-          </div>
-          <div class="content-item-arrow">‹</div>
-        </div>
-      `).join('');
+      list.innerHTML = data.map(item => `<div class="content-item" onclick="viewContent('${(item.title||'').replace(/'/g,"\\'")}', '${(item.content||'').replace(/'/g,"\\'")}', '${item.video_url||''}', '${item.image_url||''}')"><div class="content-item-icon">📄</div><div class="content-item-info"><div class="content-item-title">${item.title || 'بدون عنوان'}</div><div class="content-item-sub">${item.content ? item.content.substring(0, 50) + '...' : ''}</div></div><div class="content-item-arrow">‹</div></div>`).join('');
     }
   } catch (err) {
     console.error(err);
-    list.innerHTML = `<div style="text-align:center;padding:40px;color:#999;">
-      <div style="font-size:50px;">⚠️</div>
-      <p>حدث خطأ في التحميل</p>
-    </div>`;
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">حدث خطأ</div>';
   }
 }
 
@@ -1484,13 +1462,7 @@ function viewContent(title, content, videoUrl, imageUrl) {
 // ============================================
 function openAzhar() {
   const list = document.getElementById('azharList');
-  list.innerHTML = azharSubjects.map(s => `
-    <div class="azhar-subject-item" onclick="openAzharSubject('${s.id}', '${s.name}')">
-      <div style="font-size:30px;">${s.icon}</div>
-      <div class="stage-info"><div class="stage-name">${s.name}</div></div>
-      <div class="stage-arrow" style="color:#C9A227;">‹</div>
-    </div>
-  `).join('');
+  list.innerHTML = azharSubjects.map(s => `<div class="azhar-subject-item" onclick="openAzharSubject('${s.id}', '${s.name}')"><div style="font-size:30px;">${s.icon}</div><div class="stage-info"><div class="stage-name">${s.name}</div></div><div class="stage-arrow" style="color:#C9A227;">‹</div></div>`).join('');
   screenHistory.push(currentScreen);
   showScreen('azharScreen');
 }
@@ -1516,44 +1488,24 @@ function openQuran() {
 
 function loadSurahs() {
   const list = document.getElementById('surahsList');
-  list.innerHTML = surahsData.map(s => `
-    <div class="content-item" onclick="showToast('📖 سورة ${s.name}')">
-      <div class="content-item-icon" style="background:linear-gradient(135deg,#00695C,#26A69A);color:#fff;font-weight:bold;">${s.id}</div>
-      <div class="content-item-info">
-        <div class="content-item-title">${s.name}</div>
-        <div class="content-item-sub">${s.verses} آية • ${s.type}</div>
-      </div>
-      <div class="content-item-arrow">‹</div>
-    </div>
-  `).join('');
+  list.innerHTML = surahsData.map(s => `<div class="content-item" onclick="showToast('📖 سورة ${s.name}')"><div class="content-item-icon" style="background:linear-gradient(135deg,#00695C,#26A69A);color:#fff;font-weight:bold;">${s.id}</div><div class="content-item-info"><div class="content-item-title">${s.name}</div><div class="content-item-sub">${s.verses} آية • ${s.type}</div></div><div class="content-item-arrow">‹</div></div>`).join('');
 }
 
 function filterSurahs(q) {
   const list = document.getElementById('surahsList');
   const f = surahsData.filter(s => s.name.includes(q));
-  list.innerHTML = f.map(s => `
-    <div class="content-item" onclick="showToast('📖 سورة ${s.name}')">
-      <div class="content-item-icon" style="background:linear-gradient(135deg,#00695C,#26A69A);color:#fff;font-weight:bold;">${s.id}</div>
-      <div class="content-item-info">
-        <div class="content-item-title">${s.name}</div>
-      </div>
-    </div>
-  `).join('');
+  list.innerHTML = f.map(s => `<div class="content-item" onclick="showToast('📖 سورة ${s.name}')"><div class="content-item-icon" style="background:linear-gradient(135deg,#00695C,#26A69A);color:#fff;font-weight:bold;">${s.id}</div><div class="content-item-info"><div class="content-item-title">${s.name}</div></div></div>`).join('');
 }
 
 // ============================================
-// الحساب الشخصي
+// الحساب
 // ============================================
 function goToProfile() {
   document.getElementById('profileName').textContent = currentUser ? currentUser.name : 'مستخدم';
-  document.getElementById('profileRole').textContent = 
-    currentRole === 'student' ? 'طالب' :
-    currentRole === 'teacher' ? 'معلم' : 'المالك';
+  document.getElementById('profileRole').textContent = currentRole === 'student' ? 'طالب' : currentRole === 'teacher' ? 'معلم' : 'المالك';
   document.getElementById('profilePoints').textContent = '⭐ ' + (currentUser ? currentUser.points : 0) + ' نقطة';
-  
   const adminMenu = document.getElementById('adminMenu');
   if (adminMenu) adminMenu.style.display = currentRole === 'owner' ? 'flex' : 'none';
-  
   screenHistory.push(currentScreen);
   showScreen('profileScreen');
 }
@@ -1580,11 +1532,8 @@ function openAdmin() {
 async function loadAdminStats() {
   try {
     if (!supabaseClient) return;
-    const { count: usersCount } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
     const { count: lessonsCount } = await supabaseClient.from('lessons').select('*', { count: 'exact', head: true });
     const { count: adsCount } = await supabaseClient.from('ads').select('*', { count: 'exact', head: true });
-    
-    document.getElementById('statUsers').textContent = usersCount || 0;
     document.getElementById('statLessons').textContent = lessonsCount || 0;
     document.getElementById('statAds').textContent = adsCount || 0;
   } catch(e) { console.error(e); }
@@ -1601,32 +1550,40 @@ async function saveNewLesson() {
   const subject = document.getElementById('newLessonSubject').value.trim();
   const grade = document.getElementById('newLessonGrade').value.trim();
   const term = parseInt(document.getElementById('newLessonTerm').value);
-  const imageUrl = document.getElementById('newLessonImage').value.trim();
-  const videoUrl = document.getElementById('newLessonVideo').value.trim();
+  const imageFile = document.getElementById('newLessonImageFile').files[0];
+  const videoFile = document.getElementById('newLessonVideoFile').files[0];
   
   if (!title) { showToast('⚠️ أدخل عنوان الدرس'); return; }
+  if (!supabaseClient) { showToast('⚠️ Supabase غير متصل'); return; }
+  
+  let imageUrl = null;
+  let videoUrl = null;
+  
+  if (imageFile) {
+    showToast('⏳ جاري رفع الصورة...');
+    imageUrl = await uploadFile(imageFile, 'lessons/images');
+  }
+  if (videoFile) {
+    showToast('⏳ جاري رفع الفيديو...');
+    videoUrl = await uploadFile(videoFile, 'lessons/videos');
+  }
   
   try {
-    if (!supabaseClient) { showToast('⚠️ Supabase غير متصل'); return; }
-    
     const { error } = await supabaseClient.from('lessons').insert([{
       title, content, subject, grade, term,
-      image_url: imageUrl || null,
-      video_url: videoUrl || null,
+      image_url: imageUrl,
+      video_url: videoUrl,
       type: 'lesson',
       order: 1
     }]);
-    
     if (error) throw error;
-    
     showToast('✅ تم حفظ الدرس');
     document.getElementById('newLessonTitle').value = '';
     document.getElementById('newLessonContent').value = '';
     document.getElementById('newLessonSubject').value = '';
     document.getElementById('newLessonGrade').value = '';
-    document.getElementById('newLessonImage').value = '';
-    document.getElementById('newLessonVideo').value = '';
-    
+    document.getElementById('newLessonImageFile').value = '';
+    document.getElementById('newLessonVideoFile').value = '';
     setTimeout(() => goBack(), 1000);
   } catch(e) {
     console.error(e);
@@ -1642,22 +1599,28 @@ function openOwnerEditor() {
 async function saveOwnerProfile() {
   const name = document.getElementById('ownerName').value.trim();
   const bio = document.getElementById('ownerBio').value.trim();
-  const imageUrl = document.getElementById('ownerImageUrl').value.trim();
+  const imageFile = document.getElementById('ownerImageFile').files[0];
+  
+  if (!supabaseClient) { showToast('⚠️ Supabase غير متصل'); return; }
+  
+  let imageUrl = null;
+  if (imageFile) {
+    showToast('⏳ جاري رفع الصورة...');
+    imageUrl = await uploadFile(imageFile, 'owner');
+  }
   
   try {
-    if (!supabaseClient) { showToast('⚠️ Supabase غير متصل'); return; }
-    
     const { error } = await supabaseClient.from('owner_profile').insert([{
       name, bio, image_url: imageUrl
     }]);
-    
     if (error) throw error;
-    
-    if (imageUrl) document.getElementById('ownerAvatar').src = imageUrl;
+    if (imageUrl) {
+      document.getElementById('ownerAvatar').src = imageUrl;
+      document.getElementById('ownerProfileImage').src = imageUrl;
+    }
     document.getElementById('ownerProfileName').textContent = name;
     document.getElementById('ownerProfileBio').textContent = bio;
-    
-    showToast('✅ تم حفظ المعلومات');
+    showToast('✅ تم الحفظ');
     setTimeout(() => goBack(), 1000);
   } catch(e) {
     console.error(e);
@@ -1677,67 +1640,31 @@ function openAdsManager() {
 async function loadAds() {
   const list = document.getElementById('adsList');
   if (!list) return;
-  
   try {
     if (!supabaseClient) { list.innerHTML = ''; return; }
-    
     const { data, error } = await supabaseClient.from('ads').select('*').order('created_at', { ascending: false });
     if (error) throw error;
-    
     if (!data || data.length === 0) {
       list.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">لا توجد إعلانات</div>';
       return;
     }
-    
-    list.innerHTML = data.map(ad => `
-      <div style="background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-        <div style="font-size:24px;">📢</div>
-        <div style="flex:1;">
-          <div style="font-weight:bold;font-size:14px;">${ad.title}</div>
-          <div style="font-size:12px;color:#999;">${ad.duration} ثانية • ${ad.ad_type}</div>
-        </div>
-        <button onclick="deleteAd(${ad.id})" style="background:#FFEBEE;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">🗑️</button>
-      </div>
-    `).join('');
+    list.innerHTML = data.map(ad => `<div style="background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:24px;">📢</div><div style="flex:1;"><div style="font-weight:bold;font-size:14px;">${ad.title}</div><div style="font-size:12px;color:#999;">${ad.duration} ثانية • ${ad.ad_type}</div></div><button onclick="deleteAd(${ad.id})" style="background:#FFEBEE;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">🗑️</button></div>`).join('');
   } catch(e) { console.error(e); }
 }
-function toggleAdSource() {
-  const source = document.getElementById('adSource').value;
-  const urlGroup = document.getElementById('adUrlGroup');
-  const fileGroup = document.getElementById('adFileGroup');
-  
-  if (source === 'url') {
-    urlGroup.style.display = 'block';
-    fileGroup.style.display = 'none';
-  } else {
-    urlGroup.style.display = 'none';
-    fileGroup.style.display = 'block';
-  }
-}
+
 async function addNewAd() {
   const title = document.getElementById('adTitle').value.trim();
   const adType = document.getElementById('adType').value;
-  const adSource = document.getElementById('adSource').value;
   const duration = parseInt(document.getElementById('adDuration').value) || 10;
+  const fileInput = document.getElementById('adFile');
   
   if (!title) { showToast('⚠️ أدخل عنوان الإعلان'); return; }
+  if (!fileInput.files || !fileInput.files[0]) { showToast('⚠️ اختر ملف'); return; }
   if (!supabaseClient) { showToast('⚠️ Supabase غير متصل'); return; }
   
-  let fileUrl = '';
-  
-  if (adSource === 'url') {
-    fileUrl = document.getElementById('adUrl').value.trim();
-    if (!fileUrl) { showToast('⚠️ أدخل الرابط'); return; }
-  } else {
-    const fileInput = document.getElementById('adFile');
-    if (!fileInput.files || !fileInput.files[0]) {
-      showToast('⚠️ اختر ملف');
-      return;
-    }
-    showToast('⏳ جاري الرفع...');
-    fileUrl = await uploadFile(fileInput.files[0], 'ads');
-    if (!fileUrl) { showToast('❌ فشل الرفع'); return; }
-  }
+  showToast('⏳ جاري الرفع...');
+  const fileUrl = await uploadFile(fileInput.files[0], 'ads');
+  if (!fileUrl) { showToast('❌ فشل الرفع'); return; }
   
   try {
     const { error } = await supabaseClient.from('ads').insert([{
@@ -1749,13 +1676,10 @@ async function addNewAd() {
       position: 'home',
       active: true
     }]);
-    
     if (error) throw error;
-    
     showToast('✅ تم إضافة الإعلان');
     document.getElementById('adTitle').value = '';
-    document.getElementById('adUrl').value = '';
-    document.getElementById('adFile').value = '';
+    fileInput.value = '';
     loadAds();
   } catch(e) {
     console.error(e);
@@ -1778,22 +1702,7 @@ async function deleteAd(id) {
 // ============================================
 function openMessages() {
   const list = document.getElementById('messagesList');
-  list.innerHTML = `
-    <div class="content-item">
-      <div class="content-item-icon" style="background:#E8F5E9;font-size:24px;">👨‍🏫</div>
-      <div class="content-item-info">
-        <div class="content-item-title">أ. محمد - رياضيات</div>
-        <div class="content-item-sub">كيف حالك؟</div>
-      </div>
-    </div>
-    <div class="content-item">
-      <div class="content-item-icon" style="background:#E8F5E9;font-size:24px;">👨‍🏫</div>
-      <div class="content-item-info">
-        <div class="content-item-title">أ. أحمد - فيزياء</div>
-        <div class="content-item-sub">الدرس القادم...</div>
-      </div>
-    </div>
-  `;
+  list.innerHTML = `<div class="content-item"><div class="content-item-icon" style="background:#E8F5E9;font-size:24px;">👨‍🏫</div><div class="content-item-info"><div class="content-item-title">أ. محمد - رياضيات</div><div class="content-item-sub">كيف حالك؟</div></div></div>`;
   screenHistory.push(currentScreen);
   showScreen('messagesScreen');
 }
@@ -1834,7 +1743,7 @@ function openCalculator() {
 }
 
 // ============================================
-// لوحة الرسم
+// الرسم
 // ============================================
 function openDrawing() {
   screenHistory.push(currentScreen);
@@ -1858,22 +1767,18 @@ function initFullCanvas() {
   fullCanvas.addEventListener('mousedown', (e)=>{ fullDrawing=true; const r=fullCanvas.getBoundingClientRect(); fullCtx.beginPath(); fullCtx.moveTo(e.clientX-r.left, e.clientY-r.top); });
   fullCanvas.addEventListener('mousemove', (e)=>{ if(!fullDrawing) return; const r=fullCanvas.getBoundingClientRect(); fullCtx.strokeStyle=fullColor; fullCtx.lineTo(e.clientX-r.left, e.clientY-r.top); fullCtx.stroke(); });
   fullCanvas.addEventListener('mouseup', ()=>fullDrawing=false);
-  
-  // تحميل الرسم المحفوظ
   setTimeout(fullLoad, 500);
 }
 
 function fs(e) { e.preventDefault(); fullDrawing=true; const r=fullCanvas.getBoundingClientRect(); const t=e.touches[0]; fullCtx.beginPath(); fullCtx.moveTo(t.clientX-r.left, t.clientY-r.top); }
 function fm(e) { e.preventDefault(); if(!fullDrawing) return; const r=fullCanvas.getBoundingClientRect(); const t=e.touches[0]; fullCtx.strokeStyle=fullColor; fullCtx.lineTo(t.clientX-r.left, t.clientY-r.top); fullCtx.stroke(); }
 function fullChangeColor(c) { fullColor=c; showToast('🎨 لون'); }
-
 function fullClear() {
   if (!confirm('مسح الرسم؟')) return;
   if (fullCtx) fullCtx.clearRect(0, 0, fullCanvas.width, fullCanvas.height);
   localStorage.removeItem('ta3lemy_drawing');
   showToast('🗑️ تم المسح');
 }
-
 function fullSave() {
   if (!fullCanvas) return;
   try {
@@ -1882,7 +1787,6 @@ function fullSave() {
     showToast('💾 تم الحفظ');
   } catch(e) { showToast('⚠️ فشل الحفظ'); }
 }
-
 function fullLoad() {
   const dataURL = localStorage.getItem('ta3lemy_drawing');
   if (!dataURL) return;
@@ -1918,15 +1822,6 @@ async function loadOwnerInfo() {
       }
     }
   } catch(e) { console.error('Error loading owner:', e); }
-}
-</script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js')
-      .then(reg => console.log('✅ Service Worker registered'))
-      .catch(err => console.log('❌ SW registration failed:', err));
-  });
 }
 </script>
 </body>
