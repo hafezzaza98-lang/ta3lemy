@@ -1122,11 +1122,23 @@ html, body {
       </select>
     </div>
 
-    <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">رابط الصورة/الفيديو</label>
-      <input type="text" class="form-input" id="adUrl" placeholder="https://...">
-    </div>
+<div class="form-group">
+  <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">طريقة الإضافة</label>
+  <select class="form-input" id="adSource" onchange="toggleAdSource()">
+    <option value="url">🔗 رابط</option>
+    <option value="file">📤 رفع من الجهاز</option>
+  </select>
+</div>
 
+<div class="form-group" id="adUrlGroup">
+  <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">رابط الصورة/الفيديو</label>
+  <input type="text" class="form-input" id="adUrl" placeholder="https://...">
+</div>
+
+<div class="form-group" id="adFileGroup" style="display:none;">
+  <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">اختر الملف من الجهاز</label>
+  <input type="file" class="form-input" id="adFile" accept="image/*,video/*" style="padding:10px;">
+</div>
     <div class="form-group">
       <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">المدة (ثواني)</label>
       <input type="number" class="form-input" id="adDuration" value="10">
@@ -1689,23 +1701,50 @@ async function loadAds() {
     `).join('');
   } catch(e) { console.error(e); }
 }
-
+function toggleAdSource() {
+  const source = document.getElementById('adSource').value;
+  const urlGroup = document.getElementById('adUrlGroup');
+  const fileGroup = document.getElementById('adFileGroup');
+  
+  if (source === 'url') {
+    urlGroup.style.display = 'block';
+    fileGroup.style.display = 'none';
+  } else {
+    urlGroup.style.display = 'none';
+    fileGroup.style.display = 'block';
+  }
+}
 async function addNewAd() {
   const title = document.getElementById('adTitle').value.trim();
   const adType = document.getElementById('adType').value;
-  const adUrl = document.getElementById('adUrl').value.trim();
+  const adSource = document.getElementById('adSource').value;
   const duration = parseInt(document.getElementById('adDuration').value) || 10;
   
   if (!title) { showToast('⚠️ أدخل عنوان الإعلان'); return; }
+  if (!supabaseClient) { showToast('⚠️ Supabase غير متصل'); return; }
+  
+  let fileUrl = '';
+  
+  if (adSource === 'url') {
+    fileUrl = document.getElementById('adUrl').value.trim();
+    if (!fileUrl) { showToast('⚠️ أدخل الرابط'); return; }
+  } else {
+    const fileInput = document.getElementById('adFile');
+    if (!fileInput.files || !fileInput.files[0]) {
+      showToast('⚠️ اختر ملف');
+      return;
+    }
+    showToast('⏳ جاري الرفع...');
+    fileUrl = await uploadFile(fileInput.files[0], 'ads');
+    if (!fileUrl) { showToast('❌ فشل الرفع'); return; }
+  }
   
   try {
-    if (!supabaseClient) { showToast('⚠️ Supabase غير متصل'); return; }
-    
     const { error } = await supabaseClient.from('ads').insert([{
       title,
       ad_type: adType,
-      image_url: adType === 'image' ? adUrl : null,
-      video_url: adType === 'video' ? adUrl : null,
+      image_url: adType === 'image' ? fileUrl : null,
+      video_url: adType === 'video' ? fileUrl : null,
       duration,
       position: 'home',
       active: true
@@ -1716,6 +1755,7 @@ async function addNewAd() {
     showToast('✅ تم إضافة الإعلان');
     document.getElementById('adTitle').value = '';
     document.getElementById('adUrl').value = '';
+    document.getElementById('adFile').value = '';
     loadAds();
   } catch(e) {
     console.error(e);
