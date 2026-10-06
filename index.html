@@ -15,6 +15,11 @@
   --primary-soft: #A5D6A7;
   --primary-pale: #E8F5E9;
   --azhar: #C9A227;
+  --blue: #1976D2;
+  --blue-light: #42A5F5;
+  --blue-pale: #E3F2FD;
+  --cream: #FFFEF7;
+  --cream-dark: #FAF7EE;
   --white: #FFFFFF;
   --light-gray: #F5F5F5;
   --gray: #9E9E9E;
@@ -23,20 +28,24 @@
   --error: #E53935;
   --success: #43A047;
   --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body {
   font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
-  background: var(--light-gray);
+  background: var(--cream);
   color: var(--black);
   direction: rtl;
   overflow-x: hidden;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 .screen { display: none; flex-direction: column; min-height: 100vh; }
 .screen.active { display: flex; }
+
+/* ====== الرأس العلوي ====== */
 .top-bar {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: var(--white);
   padding: 12px 16px;
   display: flex;
@@ -52,30 +61,36 @@ html, body {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: bold;
 }
 .owner-avatar {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--white);
   background: var(--white);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 .icon-btn {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.2);
   border: none;
   color: var(--white);
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
   cursor: pointer;
+  transition: background 0.2s;
 }
+.icon-btn:active { background: rgba(255,255,255,0.35); }
+
+/* ====== الشريط السفلي الواضح ====== */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -84,9 +99,9 @@ html, body {
   background: var(--white);
   display: flex;
   justify-content: space-around;
-  padding: 8px 4px;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
-  border-top: 1px solid #eee;
+  padding: 8px 4px 10px;
+  box-shadow: 0 -3px 14px rgba(0,0,0,0.15);
+  border-top: 2px solid var(--primary-soft);
   z-index: 100;
 }
 .nav-item {
@@ -94,18 +109,36 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 6px;
-  background: none;
+  gap: 3px;
+  padding: 6px 2px;
+  background: transparent;
   border: none;
-  color: var(--gray);
+  color: var(--dark-gray);
   font-size: 11px;
   font-family: inherit;
+  font-weight: 700;
   cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.2s;
 }
-.nav-item .icon { font-size: 22px; }
-.nav-item.active { color: var(--primary); }
-.content { flex: 1; padding: 16px; padding-bottom: 90px; overflow-y: auto; }
+.nav-item .icon {
+  font-size: 24px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+}
+.nav-item.active {
+  background: var(--primary-pale);
+  color: var(--primary);
+  transform: translateY(-3px);
+}
+.nav-item.active .icon {
+  filter: drop-shadow(0 2px 4px rgba(46,125,50,0.4));
+}
+
+/* ====== المحتوى ====== */
+.content { flex: 1; padding: 16px; padding-bottom: 100px; overflow-y: auto; }
+
+/* ====== Splash ====== */
 #splashScreen {
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   align-items: center;
@@ -113,22 +146,27 @@ html, body {
 }
 .splash-content { text-align: center; color: var(--white); }
 .splash-logo {
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   background: var(--white);
-  border-radius: 30px;
+  border-radius: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 70px;
+  font-size: 75px;
   margin: 0 auto 24px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  animation: pulse 2s infinite;
 }
-.splash-title { font-size: 26px; font-weight: bold; margin-bottom: 8px; }
-.splash-subtitle { font-size: 15px; opacity: 0.9; margin-bottom: 32px; }
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+.splash-title { font-size: 28px; font-weight: bold; margin-bottom: 8px; }
+.splash-subtitle { font-size: 15px; opacity: 0.95; margin-bottom: 32px; }
 .loader {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   border: 4px solid rgba(255,255,255,0.3);
   border-top-color: var(--white);
   border-radius: 50%;
@@ -136,51 +174,72 @@ html, body {
   margin: 0 auto;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-#loginScreen { background: var(--white); padding: 24px; justify-content: center; }
+
+/* ====== Login ====== */
+#loginScreen { background: var(--cream); padding: 24px; justify-content: center; }
 .login-logo {
-  width: 100px;
-  height: 100px;
+  width: 110px;
+  height: 110px;
   background: var(--primary-pale);
-  border-radius: 25px;
+  border-radius: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 55px;
+  font-size: 60px;
   margin: 0 auto 20px;
+  box-shadow: var(--shadow);
 }
-.login-title { text-align: center; font-size: 26px; font-weight: bold; color: var(--primary); margin-bottom: 8px; }
-.login-sub { text-align: center; color: var(--gray); margin-bottom: 32px; }
-.role-selector { display: flex; gap: 8px; margin-bottom: 20px; }
+.login-title { text-align: center; font-size: 28px; font-weight: bold; color: var(--primary); margin-bottom: 8px; }
+.login-sub { text-align: center; color: var(--gray); margin-bottom: 32px; font-size: 15px; }
+.role-selector { display: flex; gap: 10px; margin-bottom: 20px; }
 .role-btn {
   flex: 1;
-  padding: 12px;
-  background: var(--light-gray);
-  border: 2px solid transparent;
-  border-radius: 12px;
+  padding: 14px 8px;
+  background: var(--white);
+  border: 2px solid #E0E0E0;
+  border-radius: 14px;
   font-family: inherit;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--dark-gray);
   cursor: pointer;
+  transition: all 0.2s;
 }
-.role-btn.active { background: var(--primary); color: var(--white); }
+.role-btn.active {
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+  box-shadow: var(--shadow);
+}
 .form-group { margin-bottom: 16px; }
+.form-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark-gray);
+  margin-bottom: 6px;
+  display: block;
+}
 .form-input {
   width: 100%;
   padding: 14px 16px;
-  background: var(--light-gray);
-  border: 2px solid transparent;
+  background: var(--white);
+  border: 2px solid #E0E0E0;
   border-radius: 14px;
   font-family: inherit;
   font-size: 15px;
   color: var(--black);
   outline: none;
+  transition: all 0.2s;
 }
-.form-input:focus { border-color: var(--primary); background: var(--white); }
+.form-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-pale);
+}
+textarea.form-input { resize: vertical; min-height: 100px; }
 .btn-primary {
   width: 100%;
   padding: 16px;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: var(--white);
   border: none;
   border-radius: 14px;
@@ -189,6 +248,11 @@ html, body {
   font-weight: bold;
   cursor: pointer;
   box-shadow: var(--shadow);
+  transition: transform 0.2s;
+}
+.btn-primary:active { transform: scale(0.98); }
+.btn-blue {
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
 }
 .link-btn {
   background: none;
@@ -196,38 +260,54 @@ html, body {
   color: var(--primary);
   font-family: inherit;
   font-size: 14px;
+  font-weight: 600;
   padding: 12px;
   cursor: pointer;
   display: block;
   margin: 12px auto;
+  text-decoration: underline;
 }
+
+/* ====== Toast ====== */
 .toast {
   position: fixed;
-  bottom: 100px;
+  bottom: 110px;
   left: 50%;
-  transform: translateX(-50%) translateY(100px);
+  transform: translateX(-50%) translateY(120px);
   background: var(--black);
   color: var(--white);
-  padding: 12px 24px;
-  border-radius: 24px;
+  padding: 14px 26px;
+  border-radius: 26px;
   font-size: 14px;
-  z-index: 1000;
+  font-weight: 600;
+  z-index: 2000;
   opacity: 0;
   transition: all 0.3s;
   pointer-events: none;
-  max-width: 85%;
+  max-width: 88%;
   text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+/* ====== البحث ====== */
 .search-box {
   background: var(--white);
-  border-radius: 14px;
-  padding: 12px 16px;
+  border-radius: 16px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   box-shadow: var(--shadow);
   margin-bottom: 16px;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+.search-box:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-pale);
 }
 .search-box input {
   flex: 1;
@@ -236,12 +316,21 @@ html, body {
   font-family: inherit;
   font-size: 15px;
   background: transparent;
+  color: var(--black);
 }
+
+/* ====== العناوين ====== */
 .section-title {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: bold;
-  margin: 20px 0 12px;
+  margin: 22px 0 12px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+
+/* ====== الإعلان الكبير ====== */
 .ad-banner {
   background: linear-gradient(135deg, #FF6B6B, #FF8E53);
   border-radius: 20px;
@@ -253,7 +342,7 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  box-shadow: 0 4px 20px rgba(255,107,107,0.3);
+  box-shadow: 0 6px 24px rgba(255,107,107,0.35);
   min-height: 200px;
   position: relative;
   overflow: hidden;
@@ -274,6 +363,8 @@ html, body {
 }
 .ad-banner-title { font-size: 22px; font-weight: bold; margin-bottom: 4px; }
 .ad-banner-sub { font-size: 14px; opacity: 0.95; }
+
+/* ====== شريط الحكمة ====== */
 .wisdom-bar {
   background: linear-gradient(90deg, #7B1FA2, #9C27B0, #7B1FA2);
   border-radius: 12px;
@@ -290,21 +381,23 @@ html, body {
 .wisdom-bar-content {
   display: inline-block;
   padding-right: 100%;
-  animation: scrollWisdom 25s linear infinite;
+  animation: scrollWisdom 30s linear infinite;
   direction: rtl;
 }
 @keyframes scrollWisdom {
   from { transform: translateX(-100%); }
   to { transform: translateX(100%); }
 }
+
+/* ====== بطاقات المراحل ====== */
 .cards-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 .big-card {
-  padding: 20px 10px;
-  border-radius: 16px;
+  padding: 22px 10px;
+  border-radius: 18px;
   text-align: center;
   color: var(--white);
   cursor: pointer;
@@ -312,10 +405,12 @@ html, body {
   transition: transform 0.2s;
 }
 .big-card:active { transform: scale(0.96); }
-.big-card-icon { font-size: 36px; margin-bottom: 8px; }
+.big-card-icon { font-size: 38px; margin-bottom: 8px; }
 .big-card-label { font-size: 14px; font-weight: bold; }
+
+/* ====== أزهر وقرآن ====== */
 .azhar-card, .quran-card {
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 24px;
   display: flex;
   align-items: center;
@@ -328,11 +423,13 @@ html, body {
 .azhar-card:active, .quran-card:active { transform: scale(0.98); }
 .azhar-card { background: linear-gradient(135deg,#C9A227,#E6C75E); }
 .quran-card { background: linear-gradient(135deg,#00695C,#26A69A); }
-.azhar-icon, .quran-icon { font-size: 40px; }
+.azhar-icon, .quran-icon { font-size: 42px; }
 .azhar-text, .quran-text { flex: 1; }
 .azhar-title, .quran-title { font-size: 17px; font-weight: bold; margin-bottom: 4px; }
-.azhar-sub, .quran-sub { font-size: 13px; opacity: 0.9; }
+.azhar-sub, .quran-sub { font-size: 13px; opacity: 0.95; }
 .azhar-arrow, .quran-arrow { font-size: 28px; font-weight: bold; }
+
+/* ====== الأدوات ====== */
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -340,36 +437,44 @@ html, body {
 }
 .tool-btn {
   background: var(--white);
-  border-radius: 14px;
-  padding: 14px 6px;
+  border-radius: 16px;
+  padding: 16px 6px;
   text-align: center;
   cursor: pointer;
   box-shadow: var(--shadow);
   transition: transform 0.2s;
+  border: 2px solid transparent;
 }
-.tool-btn:active { transform: scale(0.95); }
+.tool-btn:active {
+  transform: scale(0.95);
+  border-color: var(--primary);
+}
 .tool-icon {
-  width: 44px; height: 44px;
-  border-radius: 12px;
+  width: 48px; height: 48px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 24px;
   margin: 0 auto 8px;
 }
-.tool-label { font-size: 12px; font-weight: 600; }
+.tool-label { font-size: 12px; font-weight: 700; color: var(--dark-gray); }
+
+/* ====== الإحصائيات ====== */
 .stats-card {
   background: var(--white);
-  border-radius: 16px;
-  padding: 20px;
+  border-radius: 18px;
+  padding: 22px;
   display: flex;
   align-items: center;
   box-shadow: var(--shadow);
 }
 .stat-item { flex: 1; text-align: center; }
-.stat-value { font-size: 24px; font-weight: bold; color: var(--primary); margin-bottom: 4px; }
-.stat-label { font-size: 12px; color: var(--gray); }
-.stat-divider { width: 1px; height: 40px; background: #eee; }
+.stat-value { font-size: 26px; font-weight: bold; color: var(--primary); margin-bottom: 4px; }
+.stat-label { font-size: 12px; color: var(--gray); font-weight: 600; }
+.stat-divider { width: 1px; height: 45px; background: #eee; }
+
+/* ====== قوائم المراحل ====== */
 .stage-item, .azhar-subject-item {
   background: var(--white);
   border-radius: 16px;
@@ -381,22 +486,28 @@ html, body {
   box-shadow: var(--shadow);
   margin-bottom: 12px;
   transition: transform 0.2s;
+  border: 2px solid transparent;
 }
-.stage-item:active, .azhar-subject-item:active { transform: scale(0.98); }
-.azhar-subject-item { border-right: 4px solid #C9A227; }
+.stage-item:active, .azhar-subject-item:active {
+  transform: scale(0.98);
+  border-color: var(--primary-soft);
+}
+.azhar-subject-item { border-right: 5px solid var(--azhar); }
 .stage-icon {
-  width: 50px; height: 50px;
-  border-radius: 14px;
+  width: 54px; height: 54px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
-  background: #E8F5E9;
+  font-size: 28px;
+  background: var(--primary-pale);
 }
 .stage-info { flex: 1; }
-.stage-name { font-size: 15px; font-weight: bold; margin-bottom: 4px; }
+.stage-name { font-size: 16px; font-weight: bold; margin-bottom: 4px; }
 .stage-sub { font-size: 12px; color: var(--gray); }
 .stage-arrow { font-size: 26px; color: var(--gray); font-weight: bold; }
+
+/* ====== المواد ====== */
 .subjects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -404,8 +515,8 @@ html, body {
 }
 .subject-card {
   background: var(--white);
-  border-radius: 16px;
-  padding: 20px 12px;
+  border-radius: 18px;
+  padding: 22px 12px;
   text-align: center;
   cursor: pointer;
   box-shadow: var(--shadow);
@@ -413,78 +524,87 @@ html, body {
 }
 .subject-card:active { transform: scale(0.96); }
 .subject-icon {
-  width: 56px; height: 56px;
-  border-radius: 16px;
+  width: 60px; height: 60px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 30px;
   margin: 0 auto 10px;
 }
-.subject-name { font-size: 14px; font-weight: 600; }
+.subject-name { font-size: 14px; font-weight: 700; color: var(--dark-gray); }
+
+/* ====== الترمين ====== */
 .term-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   margin-top: 12px;
 }
 .term-card {
   background: var(--white);
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 20px;
   box-shadow: var(--shadow);
-  cursor: pointer;
-  border-right: 5px solid var(--primary);
+  border-right: 6px solid var(--primary);
   transition: transform 0.2s;
 }
-.term-card:active { transform: scale(0.98); }
-.term-card.term-2 { border-right-color: #1976D2; }
+.term-card.term-2 { border-right-color: var(--blue); }
 .term-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
-.term-icon { font-size: 32px; }
-.term-title { font-size: 18px; font-weight: bold; flex: 1; }
+.term-icon { font-size: 34px; }
+.term-title { font-size: 19px; font-weight: bold; flex: 1; color: var(--primary); }
+.term-card.term-2 .term-title { color: var(--blue); }
 .term-count {
   background: var(--primary-pale);
   color: var(--primary);
-  padding: 4px 12px;
+  padding: 5px 12px;
   border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
 }
+.term-card.term-2 .term-count { background: var(--blue-pale); color: var(--blue); }
 .term-sections {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
 }
 .section-chip {
-  background: var(--light-gray);
-  padding: 10px;
-  border-radius: 10px;
+  background: var(--cream-dark);
+  padding: 12px 8px;
+  border-radius: 12px;
   text-align: center;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--dark-gray);
   cursor: pointer;
   transition: all 0.2s;
+  border: 2px solid transparent;
 }
 .section-chip:active {
   background: var(--primary-pale);
   color: var(--primary);
+  border-color: var(--primary);
+  transform: scale(0.97);
 }
+
+/* ====== رأس المحتوى ====== */
 .content-header {
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: var(--white);
   padding: 20px;
-  border-radius: 18px;
+  border-radius: 20px;
   margin-bottom: 16px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-lg);
 }
-.content-header-title { font-size: 20px; font-weight: bold; margin-bottom: 4px; }
-.content-header-sub { font-size: 13px; opacity: 0.9; }
+.content-header-title { font-size: 20px; font-weight: bold; margin-bottom: 6px; }
+.content-header-sub { font-size: 13px; opacity: 0.95; }
+
+/* ====== بطاقة المحتوى ====== */
 .content-item {
   background: var(--white);
   border-radius: 16px;
@@ -496,16 +616,20 @@ html, body {
   display: flex;
   align-items: center;
   gap: 12px;
+  border: 2px solid transparent;
 }
-.content-item:active { transform: scale(0.98); }
+.content-item:active {
+  transform: scale(0.98);
+  border-color: var(--primary-soft);
+}
 .content-item-icon {
-  width: 45px; height: 45px;
-  border-radius: 12px;
+  width: 48px; height: 48px;
+  border-radius: 14px;
   background: var(--primary-pale);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 24px;
   flex-shrink: 0;
 }
 .content-item-info { flex: 1; }
@@ -517,96 +641,53 @@ html, body {
 }
 .content-item-sub { font-size: 12px; color: var(--gray); }
 .content-item-arrow { font-size: 22px; color: var(--gray); }
+
+/* ====== الدرس ====== */
 .lesson-body {
   background: var(--white);
-  border-radius: 16px;
-  padding: 20px;
-  line-height: 1.9;
+  border-radius: 18px;
+  padding: 22px;
+  line-height: 2;
   box-shadow: var(--shadow);
+  font-size: 15px;
 }
-.drawing-canvas-full {
-  background: var(--white);
-  border-radius: 16px;
-  height: calc(100vh - 220px);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-#fullDrawingCanvas {
+.lesson-body img, .lesson-body video {
   width: 100%;
-  height: 100%;
-  touch-action: none;
-  display: block;
+  border-radius: 12px;
+  margin-top: 16px;
 }
-.drawing-palette {
-  display: flex;
-  gap: 10px;
-  padding: 16px;
+.lesson-body iframe {
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  margin-top: 16px;
+  border: none;
+}
+
+/* ====== القوائم ====== */
+.menu-item {
   background: var(--white);
   border-radius: 16px;
-  margin-top: 12px;
-  align-items: center;
-  box-shadow: var(--shadow);
-  flex-wrap: wrap;
-}
-.color-dot {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  border: 3px solid #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  cursor: pointer;
-}
-.clear-btn {
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  background: #FFEBEE;
-  border: none;
-  font-size: 18px;
-  margin-right: auto;
-}
-.calc-display {
-  background: var(--white);
-  border-radius: 20px;
-  padding: 24px;
-  text-align: left;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
-  direction: ltr;
-}
-.calc-history { color: var(--gray); font-size: 14px; min-height: 20px; }
-.calc-screen { font-size: 36px; font-weight: bold; word-break: break-all; }
-.calc-buttons {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-}
-.calc-btn {
-  padding: 18px 8px;
-  background: var(--white);
-  border: none;
-  border-radius: 14px;
-  font-family: inherit;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-}
-.calc-btn.func { background: #E3F2FD; color: #1976D2; font-size: 15px; }
-.calc-btn.op { background: #FFF3E0; color: #F57C00; }
-.calc-btn.eq { background: linear-gradient(135deg,#1976D2,#42A5F5); color: var(--white); }
-.calc-btn.clear { background: #FFEBEE; color: var(--error); }
-.menu-item {
-  background: #fff;
-  border-radius: 14px;
   padding: 16px;
   display: flex;
   align-items: center;
   gap: 14px;
   margin-bottom: 10px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s;
+  border: 2px solid transparent;
 }
-.menu-item:active { transform: scale(0.98); }
-body.dark-mode { background: #1A1A1A; color: #fff; }
+.menu-item:active {
+  transform: scale(0.98);
+  border-color: var(--primary-soft);
+}
+
+/* ====== الوضع الليلي ====== */
+body.dark-mode {
+  background: #121212;
+  color: #E0E0E0;
+}
 body.dark-mode .menu-item,
 body.dark-mode .stats-card,
 body.dark-mode .stage-item,
@@ -615,15 +696,21 @@ body.dark-mode .tool-btn,
 body.dark-mode .lesson-body,
 body.dark-mode .content-item,
 body.dark-mode .term-card,
-body.dark-mode .calc-display,
-body.dark-mode .calc-btn {
-  background: #2A2A2A;
-  color: #fff;
+body.dark-mode .search-box,
+body.dark-mode .form-input {
+  background: #1E1E1E;
+  color: #E0E0E0;
+  border-color: #333;
 }
-body.dark-mode .section-title { color: #fff; }
+body.dark-mode .section-title { color: var(--primary-light); }
+body.dark-mode .bottom-nav { background: #1E1E1E; border-color: #333; }
+body.dark-mode .nav-item { color: #B0B0B0; }
+body.dark-mode .nav-item.active { background: #2A2A2A; color: var(--primary-light); }
+body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
 </style>
 </head>
 <body>
+
 <div id="splashScreen" class="screen active">
   <div class="splash-content">
     <div class="splash-logo">🎓</div>
@@ -659,11 +746,12 @@ body.dark-mode .section-title { color: #fff; }
   <button class="btn-primary" onclick="login()">تسجيل الدخول</button>
 </div>
 
+<!-- ====== الشاشة الرئيسية ====== -->
 <div id="homeScreen" class="screen">
   <div class="top-bar">
     <div class="logo">
       <img id="ownerAvatar" class="owner-avatar" src="https://ui-avatars.com/api/?name=حافظ&background=2E7D32&color=fff" alt="المالك" onclick="openOwnerProfile()">
-      <span>منصة حافظ التعليمية</span>
+      <span>منصة حافظ</span>
     </div>
     <button class="icon-btn" onclick="goToProfile()">👤</button>
   </div>
@@ -717,12 +805,18 @@ body.dark-mode .section-title { color: #fff; }
       <div class="quran-arrow">‹</div>
     </div>
 
+    <div class="section-title">📻 إذاعات إسلامية</div>
+    <div class="quran-card" style="background:linear-gradient(135deg,#D32F2F,#FF8F00);" onclick="openRadio()">
+      <div class="quran-icon">📻</div>
+      <div class="quran-text">
+        <div class="quran-title">إذاعات وقرآن</div>
+        <div class="quran-sub">بث مباشر 24 ساعة</div>
+      </div>
+      <div class="quran-arrow">‹</div>
+    </div>
+
     <div class="section-title">🧰 أدوات سريعة</div>
     <div class="tools-grid">
-      <div class="tool-btn" onclick="openCalculator()">
-        <div class="tool-icon" style="background:#E3F2FD;color:#1976D2;">🧮</div>
-        <div class="tool-label">حاسبة</div>
-      </div>
       <div class="tool-btn" onclick="openDrawing()">
         <div class="tool-icon" style="background:#FFF3E0;color:#F57C00;">✏️</div>
         <div class="tool-label">رسم</div>
@@ -730,6 +824,10 @@ body.dark-mode .section-title { color: #fff; }
       <div class="tool-btn" onclick="openMessages()">
         <div class="tool-icon" style="background:#E8F5E9;color:#2E7D32;">💬</div>
         <div class="tool-label">رسائل</div>
+      </div>
+      <div class="tool-btn" onclick="openQuran()">
+        <div class="tool-icon" style="background:#E0F2F1;color:#00695C;">📖</div>
+        <div class="tool-label">قرآن</div>
       </div>
       <div class="tool-btn" onclick="goToProfile()">
         <div class="tool-icon" style="background:#F3E5F5;color:#7B1FA2;">👤</div>
@@ -739,25 +837,7 @@ body.dark-mode .section-title { color: #fff; }
 
     <div class="section-title">💡 حكمة اليوم</div>
     <div class="wisdom-bar">
-      <span class="wisdom-bar-content" id="wisdomBar">💡 العلم نور والجهل ظلام — الإمام علي بن أبي طالب  •  من جد وجد ومن زرع حصد  •  اطلبوا العلم من المهد إلى اللحد  •  💡</span>
-    </div>
-
-    <div class="section-title">📊 إحصائياتي</div>
-    <div class="stats-card">
-      <div class="stat-item">
-        <div class="stat-value">45</div>
-        <div class="stat-label">درس</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <div class="stat-value" id="pointsDisplay">1250</div>
-        <div class="stat-label">نقطة</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <div class="stat-value">12</div>
-        <div class="stat-label">امتحان</div>
-      </div>
+      <span class="wisdom-bar-content">💡 العلم نور والجهل ظلام — الإمام علي  •  من جد وجد ومن زرع حصد  •  اطلبوا العلم من المهد إلى اللحد  •  💡</span>
     </div>
   </div>
 
@@ -774,9 +854,9 @@ body.dark-mode .section-title { color: #fff; }
       <span class="icon">📖</span>
       <span>القرآن</span>
     </button>
-    <button class="nav-item" onclick="navTo('tools')">
-      <span class="icon">🧰</span>
-      <span>أدوات</span>
+    <button class="nav-item" onclick="openDrawing()">
+      <span class="icon">✏️</span>
+      <span>رسم</span>
     </button>
     <button class="nav-item" onclick="navTo('profile')">
       <span class="icon">👤</span>
@@ -785,11 +865,12 @@ body.dark-mode .section-title { color: #fff; }
   </div>
 </div>
 
+<!-- ====== شاشة المراحل ====== -->
 <div id="educationScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span>📚 التعليم العام</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div class="section-title">اختر المرحلة</div>
@@ -797,33 +878,36 @@ body.dark-mode .section-title { color: #fff; }
   </div>
 </div>
 
+<!-- ====== شاشة الصفوف ====== -->
 <div id="gradesScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span id="gradesTitle">الصفوف</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div id="gradesList"></div>
   </div>
 </div>
 
+<!-- ====== شاشة المواد ====== -->
 <div id="subjectsScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span id="subjectsTitle">المواد</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div id="subjectsList" class="subjects-grid"></div>
   </div>
 </div>
 
+<!-- ====== شاشة الترمين ====== -->
 <div id="termsScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span id="termsTitle">الترمين</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div class="content-header">
@@ -834,11 +918,12 @@ body.dark-mode .section-title { color: #fff; }
   </div>
 </div>
 
+<!-- ====== شاشة المحتوى ====== -->
 <div id="contentScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span id="contentTitle">المحتوى</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div class="content-header">
@@ -849,22 +934,24 @@ body.dark-mode .section-title { color: #fff; }
   </div>
 </div>
 
+<!-- ====== شاشة العرض ====== -->
 <div id="viewerScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span id="viewerTitle">المحتوى</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div class="lesson-body" id="viewerBody"></div>
   </div>
 </div>
 
+<!-- ====== شاشة الأزهر ====== -->
 <div id="azharScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#C9A227,#E6C75E);">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span>🕌 الأزهر الشريف</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div class="section-title">المواد الشرعية</div>
@@ -872,11 +959,12 @@ body.dark-mode .section-title { color: #fff; }
   </div>
 </div>
 
+<!-- ====== شاشة القرآن ====== -->
 <div id="quranScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#00695C,#26A69A);">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span>📖 القرآن الكريم</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div class="search-box">
@@ -887,58 +975,34 @@ body.dark-mode .section-title { color: #fff; }
   </div>
 </div>
 
-<div id="calculatorScreen" class="screen">
-  <div class="top-bar">
+<!-- ====== شاشة الراديو ====== -->
+<div id="radioScreen" class="screen">
+  <div class="top-bar" style="background:linear-gradient(135deg,#D32F2F,#FF8F00);">
     <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>🧮 الحاسبة</span></div>
-    <div style="width:40px;"></div>
+    <div class="logo"><span>📻 الإذاعات</span></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
-    <div class="calc-display">
-      <div class="calc-history" id="calcHistory"></div>
-      <div class="calc-screen" id="calcScreen">0</div>
+    <div id="radioPlayer" style="display:none;background:linear-gradient(135deg,#D32F2F,#FF8F00);border-radius:20px;padding:24px;text-align:center;color:#fff;margin-bottom:16px;box-shadow:0 6px 20px rgba(211,47,47,0.3);">
+      <div style="font-size:60px;margin-bottom:12px;" id="radioIconPlaying">📻</div>
+      <div id="radioNowPlaying" style="font-size:18px;font-weight:bold;margin-bottom:6px;">جاري التشغيل</div>
+      <div id="radioStationName" style="font-size:13px;opacity:0.9;margin-bottom:16px;">--</div>
+      <button class="btn-primary" style="background:#fff;color:#D32F2F;max-width:200px;margin:0 auto;" onclick="stopRadio()">⏹️ إيقاف</button>
     </div>
-    <div class="calc-buttons">
-      <button class="calc-btn func" onclick="calcFunc('sin')">sin</button>
-      <button class="calc-btn func" onclick="calcFunc('cos')">cos</button>
-      <button class="calc-btn func" onclick="calcFunc('tan')">tan</button>
-      <button class="calc-btn func" onclick="calcFunc('√')">√</button>
-      <button class="calc-btn func" onclick="calcFunc('log')">log</button>
-      <button class="calc-btn func" onclick="calcFunc('ln')">ln</button>
-      <button class="calc-btn func" onclick="calcInput('^')">^</button>
-      <button class="calc-btn func" onclick="calcInput('π')">π</button>
-      <button class="calc-btn" onclick="calcInput('7')">7</button>
-      <button class="calc-btn" onclick="calcInput('8')">8</button>
-      <button class="calc-btn" onclick="calcInput('9')">9</button>
-      <button class="calc-btn op" onclick="calcInput('÷')">÷</button>
-      <button class="calc-btn" onclick="calcInput('4')">4</button>
-      <button class="calc-btn" onclick="calcInput('5')">5</button>
-      <button class="calc-btn" onclick="calcInput('6')">6</button>
-      <button class="calc-btn op" onclick="calcInput('×')">×</button>
-      <button class="calc-btn" onclick="calcInput('1')">1</button>
-      <button class="calc-btn" onclick="calcInput('2')">2</button>
-      <button class="calc-btn" onclick="calcInput('3')">3</button>
-      <button class="calc-btn op" onclick="calcInput('-')">−</button>
-      <button class="calc-btn" onclick="calcInput('0')">0</button>
-      <button class="calc-btn" onclick="calcInput('.')">.</button>
-      <button class="calc-btn op" onclick="calcInput('+')">+</button>
-      <button class="calc-btn eq" onclick="calcResult()">=</button>
-      <button class="calc-btn clear" onclick="calcClear()">C</button>
-      <button class="calc-btn clear" onclick="calcDelete()">⌫</button>
-      <button class="calc-btn func" onclick="calcInput('%')">%</button>
-      <button class="calc-btn func" onclick="calcInput('(')">(</button>
-    </div>
+    <div class="section-title">📻 إذاعات متاحة</div>
+    <div id="radioList"></div>
   </div>
 </div>
 
+<!-- ====== شاشة الرسم ====== -->
 <div id="drawingScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span>✏️ لوحة الرسم</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
-  <div class="content" style="padding:8px;">
-    <div class="drawing-canvas-full">
+  <div class="content" style="padding:8px;display:flex;flex-direction:column;">
+    <div class="drawing-canvas-full" style="flex:1;">
       <canvas id="fullDrawingCanvas"></canvas>
     </div>
     <div class="drawing-palette">
@@ -947,99 +1011,103 @@ body.dark-mode .section-title { color: #fff; }
       <button class="color-dot" style="background:#1976D2;" onclick="fullChangeColor('#1976D2')"></button>
       <button class="color-dot" style="background:#E53935;" onclick="fullChangeColor('#E53935')"></button>
       <button class="color-dot" style="background:#FB8C00;" onclick="fullChangeColor('#FB8C00')"></button>
+      <button class="color-dot" style="background:#7B1FA2;" onclick="fullChangeColor('#7B1FA2')"></button>
       <button class="save-btn" onclick="fullSave()" style="background:#2E7D32;color:#fff;border:none;padding:10px 14px;border-radius:12px;font-family:inherit;font-weight:bold;cursor:pointer;font-size:13px;">💾 حفظ</button>
       <button class="clear-btn" onclick="fullClear()">🗑️</button>
     </div>
   </div>
 </div>
 
+<!-- ====== شاشة الرسائل ====== -->
 <div id="messagesScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span>💬 رسائلي</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div id="messagesList"></div>
   </div>
 </div>
-
+ <!-- ====== شاشة الحساب ====== -->
 <div id="profileScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span>👤 حسابي</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
-    <div style="background:linear-gradient(135deg,#2E7D32,#4CAF50);border-radius:20px;padding:24px;text-align:center;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,0.12);margin-bottom:20px;">
-      <div style="width:90px;height:90px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 12px;">👤</div>
-      <div id="profileName" style="font-size:20px;font-weight:bold;">مستخدم</div>
-      <div id="profileRole" style="font-size:13px;opacity:0.9;margin-top:4px;">طالب</div>
-      <div id="profilePoints" style="font-size:14px;margin-top:10px;background:rgba(255,255,255,0.2);display:inline-block;padding:6px 16px;border-radius:20px;">⭐ 0 نقطة</div>
+    <div style="background:linear-gradient(135deg,#2E7D32,#4CAF50);border-radius:22px;padding:26px;text-align:center;color:#fff;box-shadow:0 6px 20px rgba(46,125,50,0.3);margin-bottom:22px;">
+      <div style="width:100px;height:100px;background:rgba(255,255,255,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:52px;margin:0 auto 14px;">👤</div>
+      <div id="profileName" style="font-size:22px;font-weight:bold;">مستخدم</div>
+      <div id="profileRole" style="font-size:14px;opacity:0.95;margin-top:4px;">طالب</div>
+      <div id="profilePoints" style="font-size:14px;margin-top:12px;background:rgba(255,255,255,0.25);display:inline-block;padding:8px 18px;border-radius:22px;font-weight:bold;">⭐ 0 نقطة</div>
     </div>
 
     <div class="section-title">⚙️ الإعدادات</div>
 
     <div class="menu-item" onclick="openOwnerProfile()">
-      <span style="font-size:24px;">👨‍🏫</span>
-      <span style="flex:1;font-weight:600;">عن المالك</span>
-      <span style="color:#999;font-size:22px;">‹</span>
+      <span style="font-size:26px;">👨‍🏫</span>
+      <span style="flex:1;font-weight:700;">عن المالك</span>
+      <span style="color:#999;font-size:24px;">‹</span>
     </div>
 
     <div class="menu-item" onclick="toggleDark()">
-      <span style="font-size:24px;">🌙</span>
-      <span style="flex:1;font-weight:600;">الوضع الليلي</span>
-      <span style="color:#999;font-size:22px;">‹</span>
+      <span style="font-size:26px;">🌙</span>
+      <span style="flex:1;font-weight:700;">الوضع الليلي</span>
+      <span style="color:#999;font-size:24px;">‹</span>
     </div>
 
     <div class="menu-item" onclick="openAdmin()" id="adminMenu" style="display:none;">
-      <span style="font-size:24px;">🛡️</span>
-      <span style="flex:1;font-weight:600;color:#E53935;">لوحة المالك</span>
-      <span style="color:#999;font-size:22px;">‹</span>
+      <span style="font-size:26px;">🛡️</span>
+      <span style="flex:1;font-weight:700;color:#E53935;">لوحة المالك</span>
+      <span style="color:#999;font-size:24px;">‹</span>
     </div>
 
     <div class="menu-item" onclick="logout()" style="background:#FFEBEE;">
-      <span style="font-size:24px;">🚪</span>
-      <span style="flex:1;font-weight:600;color:#E53935;">تسجيل الخروج</span>
-      <span style="color:#E53935;font-size:22px;">‹</span>
+      <span style="font-size:26px;">🚪</span>
+      <span style="flex:1;font-weight:700;color:#E53935;">تسجيل الخروج</span>
+      <span style="color:#E53935;font-size:24px;">‹</span>
     </div>
   </div>
 </div>
 
+<!-- ====== شاشة المالك ====== -->
 <div id="ownerProfileScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span>👨‍🏫 عن المالك</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content" style="text-align:center;">
-    <img id="ownerProfileImage" class="owner-avatar" style="width:150px;height:150px;margin:20px auto;display:block;" src="https://ui-avatars.com/api/?name=حافظ&background=2E7D32&color=fff&size=200" alt="المالك">
-    <div id="ownerProfileName" style="font-size:24px;font-weight:bold;color:var(--primary);margin-top:12px;">الأستاذ حافظ</div>
-    <div id="ownerProfileBio" style="font-size:15px;color:var(--gray);margin-top:16px;line-height:1.8;padding:0 20px;">
+    <img id="ownerProfileImage" class="owner-avatar" style="width:160px;height:160px;margin:20px auto;display:block;" src="https://ui-avatars.com/api/?name=حافظ&background=2E7D32&color=fff&size=200" alt="المالك">
+    <div id="ownerProfileName" style="font-size:26px;font-weight:bold;color:var(--primary);margin-top:14px;">الأستاذ حافظ</div>
+    <div id="ownerProfileBio" style="font-size:15px;color:var(--gray);margin-top:18px;line-height:2;padding:0 24px;">
       مؤسس منصة حافظ التعليمية
     </div>
   </div>
 </div>
 
+<!-- ====== لوحة المالك ====== -->
 <div id="adminScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span>🛡️ لوحة المالك</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div class="section-title">📊 الإحصائيات</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
-      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-        <div style="font-size:20px;font-weight:bold;color:#E53935;" id="statUsers">0</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;">
+      <div style="background:#fff;border-radius:16px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <div style="font-size:22px;font-weight:bold;color:#E53935;" id="statUsers">0</div>
         <div style="font-size:11px;color:#999;margin-top:4px;">👥 المستخدمين</div>
       </div>
-      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-        <div style="font-size:20px;font-weight:bold;color:#E53935;" id="statLessons">0</div>
+      <div style="background:#fff;border-radius:16px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <div style="font-size:22px;font-weight:bold;color:#E53935;" id="statLessons">0</div>
         <div style="font-size:11px;color:#999;margin-top:4px;">📚 الدروس</div>
       </div>
-      <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-        <div style="font-size:20px;font-weight:bold;color:#E53935;" id="statAds">0</div>
+      <div style="background:#fff;border-radius:16px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <div style="font-size:22px;font-weight:bold;color:#E53935;" id="statAds">0</div>
         <div style="font-size:11px;color:#999;margin-top:4px;">📢 الإعلانات</div>
       </div>
     </div>
@@ -1047,53 +1115,77 @@ body.dark-mode .section-title { color: #fff; }
     <div class="section-title">⚙️ التحكم</div>
 
     <div class="menu-item" onclick="openAddLesson()">
-      <span style="font-size:24px;">➕</span>
-      <span style="flex:1;font-weight:600;">إضافة درس جديد</span>
-      <span style="color:#999;font-size:22px;">‹</span>
+      <span style="font-size:26px;">➕</span>
+      <span style="flex:1;font-weight:700;">إضافة درس جديد</span>
+      <span style="color:#999;font-size:24px;">‹</span>
     </div>
 
     <div class="menu-item" onclick="openAdsManager()">
-      <span style="font-size:24px;">📢</span>
-      <span style="flex:1;font-weight:600;">إدارة الإعلانات</span>
-      <span style="color:#999;font-size:22px;">‹</span>
+      <span style="font-size:26px;">📢</span>
+      <span style="flex:1;font-weight:700;">إدارة الإعلانات</span>
+      <span style="color:#999;font-size:24px;">‹</span>
     </div>
 
     <div class="menu-item" onclick="openOwnerEditor()">
-      <span style="font-size:24px;">👨‍🏫</span>
-      <span style="flex:1;font-weight:600;">تعديل معلومات المالك</span>
-      <span style="color:#999;font-size:22px;">‹</span>
+      <span style="font-size:26px;">👨‍🏫</span>
+      <span style="flex:1;font-weight:700;">تعديل معلومات المالك</span>
+      <span style="color:#999;font-size:24px;">‹</span>
     </div>
   </div>
 </div>
+
+<!-- ====== شاشة إضافة درس ====== -->
 <div id="addLessonScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span>➕ إضافة درس</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">عنوان الدرس</label>
+      <label class="form-label">عنوان الدرس</label>
       <input type="text" class="form-input" id="newLessonTitle" placeholder="مثال: الدرس الأول">
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">المحتوى</label>
-      <textarea class="form-input" id="newLessonContent" placeholder="اكتب المحتوى هنا..." rows="6" style="resize:vertical;"></textarea>
+      <label class="form-label">المحتوى</label>
+      <textarea class="form-input" id="newLessonContent" placeholder="اكتب المحتوى هنا..." rows="6"></textarea>
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">المادة</label>
-      <input type="text" class="form-input" id="newLessonSubject" placeholder="مثال: اللغة العربية">
+      <label class="form-label">المرحلة</label>
+      <select class="form-input" id="newLessonStage">
+        <option value="primary">الابتدائية</option>
+        <option value="prep">الإعدادية</option>
+        <option value="sec">الثانوية</option>
+      </select>
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">الصف</label>
+      <label class="form-label">الصف</label>
       <input type="text" class="form-input" id="newLessonGrade" placeholder="مثال: الأول الإعدادي">
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">الترم</label>
+      <label class="form-label">المادة</label>
+      <input type="text" class="form-input" id="newLessonSubject" placeholder="مثال: اللغة العربية">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">القسم</label>
+      <select class="form-input" id="newLessonType">
+        <option value="lessons">📄 درس</option>
+        <option value="exercises">✏️ تدريبات</option>
+        <option value="exams">📝 امتحانات</option>
+        <option value="previous">📋 سنوات سابقة</option>
+        <option value="reviews">📖 مراجعات</option>
+        <option value="summaries">📑 ملخصات</option>
+        <option value="videos">🎥 فيديوهات</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">الترم</label>
       <select class="form-input" id="newLessonTerm">
         <option value="1">الترم الأول</option>
         <option value="2">الترم الثاني</option>
@@ -1101,12 +1193,12 @@ body.dark-mode .section-title { color: #fff; }
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">صورة من الجهاز (اختياري)</label>
+      <label class="form-label">📷 صورة من الجهاز (اختياري)</label>
       <input type="file" class="form-input" id="newLessonImageFile" accept="image/*" style="padding:10px;">
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">فيديو من الجهاز (اختياري)</label>
+      <label class="form-label">🎥 فيديو من الجهاز (اختياري)</label>
       <input type="file" class="form-input" id="newLessonVideoFile" accept="video/*" style="padding:10px;">
     </div>
 
@@ -1114,25 +1206,26 @@ body.dark-mode .section-title { color: #fff; }
   </div>
 </div>
 
+<!-- ====== شاشة تعديل المالك ====== -->
 <div id="ownerEditorScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
-    <div class="logo"><span>👨‍🏫 تعديل معلومات المالك</span></div>
-    <div style="width:40px;"></div>
+    <div class="logo"><span>👨‍🏫 تعديل المالك</span></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">الاسم</label>
+      <label class="form-label">الاسم</label>
       <input type="text" class="form-input" id="ownerName" placeholder="الأستاذ حافظ">
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">السيرة الذاتية</label>
-      <textarea class="form-input" id="ownerBio" placeholder="اكتب السيرة الذاتية هنا..." rows="5" style="resize:vertical;"></textarea>
+      <label class="form-label">السيرة الذاتية</label>
+      <textarea class="form-input" id="ownerBio" placeholder="اكتب السيرة الذاتية هنا..." rows="5"></textarea>
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">صورة المالك (من الجهاز)</label>
+      <label class="form-label">📷 صورة المالك (من الجهاز)</label>
       <input type="file" class="form-input" id="ownerImageFile" accept="image/*" style="padding:10px;">
     </div>
 
@@ -1140,22 +1233,23 @@ body.dark-mode .section-title { color: #fff; }
   </div>
 </div>
 
+<!-- ====== شاشة إدارة الإعلانات ====== -->
 <div id="adsManagerScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span>📢 إدارة الإعلانات</span></div>
-    <div style="width:40px;"></div>
+    <div style="width:42px;"></div>
   </div>
   <div class="content">
     <div class="section-title">➕ إضافة إعلان</div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">عنوان الإعلان</label>
+      <label class="form-label">عنوان الإعلان</label>
       <input type="text" class="form-input" id="adTitle" placeholder="مثال: خصم 50%">
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">نوع الإعلان</label>
+      <label class="form-label">نوع الإعلان</label>
       <select class="form-input" id="adType">
         <option value="image">🖼️ صورة</option>
         <option value="video">🎥 فيديو</option>
@@ -1163,12 +1257,12 @@ body.dark-mode .section-title { color: #fff; }
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">اختر الملف من الجهاز</label>
+      <label class="form-label">📤 اختر الملف من الجهاز</label>
       <input type="file" class="form-input" id="adFile" accept="image/*,video/*" style="padding:10px;">
     </div>
 
     <div class="form-group">
-      <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">المدة (ثواني)</label>
+      <label class="form-label">المدة (ثواني)</label>
       <input type="number" class="form-input" id="adDuration" value="10">
     </div>
 
@@ -1179,10 +1273,98 @@ body.dark-mode .section-title { color: #fff; }
   </div>
 </div>
 
+<!-- ====== الحاسبة الجانبية العائمة ====== -->
+<button id="calcToggle" onclick="toggleSideCalculator()" style="position:fixed;bottom:110px;left:16px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#2E7D32,#1976D2);color:#fff;border:none;font-size:24px;cursor:pointer;box-shadow:0 4px 16px rgba(46,125,50,0.4);z-index:900;display:none;align-items:center;justify-content:center;">🧮</button>
+
+<div id="sideCalculator" style="position:fixed;top:0;left:-320px;width:320px;max-width:90vw;height:100vh;background:linear-gradient(180deg,#1E3A8A,#2E7D32);z-index:1500;transition:left 0.3s ease;overflow-y:auto;box-shadow:8px 0 30px rgba(0,0,0,0.3);">
+  <div style="padding:16px;display:flex;justify-content:space-between;align-items:center;color:#fff;border-bottom:1px solid rgba(255,255,255,0.2);">
+    <div style="font-size:18px;font-weight:bold;">🧮 الحاسبة العلمية</div>
+    <button onclick="toggleSideCalculator()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;">✕</button>
+  </div>
+
+  <div style="padding:16px;">
+    <div style="background:rgba(255,255,255,0.95);border-radius:14px;padding:16px;margin-bottom:14px;direction:ltr;">
+      <div id="sideCalcHistory" style="color:#666;font-size:13px;min-height:18px;text-align:right;"></div>
+      <div id="sideCalcScreen" style="font-size:28px;font-weight:bold;color:#212121;word-break:break-all;text-align:right;">0</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;">
+      <button class="sideCalc-btn" onclick="sideCalcFunc('sin')">sin</button>
+      <button class="sideCalc-btn" onclick="sideCalcFunc('cos')">cos</button>
+      <button class="sideCalc-btn" onclick="sideCalcFunc('tan')">tan</button>
+      <button class="sideCalc-btn" onclick="sideCalcInput('(')">(</button>
+      <button class="sideCalc-btn" onclick="sideCalcInput(')')">)</button>
+
+      <button class="sideCalc-btn" onclick="sideCalcFunc('asin')">sin⁻¹</button>
+      <button class="sideCalc-btn" onclick="sideCalcFunc('acos')">cos⁻¹</button>
+      <button class="sideCalc-btn" onclick="sideCalcFunc('atan')">tan⁻¹</button>
+      <button class="sideCalc-btn" onclick="sideCalcInput('π')">π</button>
+      <button class="sideCalc-btn" onclick="sideCalcInput('e')">e</button>
+
+      <button class="sideCalc-btn" onclick="sideCalcFunc('log')">log</button>
+      <button class="sideCalc-btn" onclick="sideCalcFunc('ln')">ln</button>
+      <button class="sideCalc-btn" onclick="sideCalcFunc('sqrt')">√</button>
+      <button class="sideCalc-btn" onclick="sideCalcFunc('cbrt')">∛</button>
+      <button class="sideCalc-btn" onclick="sideCalcInput('^')">x^y</button>
+
+      <button class="sideCalc-btn" onclick="sideCalcFunc('sqr')">x²</button>
+      <button class="sideCalc-btn" onclick="sideCalcFunc('cube')">x³</button>
+      <button class="sideCalc-btn" onclick="sideCalcInput('%')">%</button>
+      <button class="sideCalc-btn" onclick="sideCalcFunc('fact')">n!</button>
+      <button class="sideCalc-btn" onclick="sideCalcInput('1/')">1/x</button>
+
+      <button class="sideCalc-num" onclick="sideCalcInput('7')">7</button>
+      <button class="sideCalc-num" onclick="sideCalcInput('8')">8</button>
+      <button class="sideCalc-num" onclick="sideCalcInput('9')">9</button>
+      <button class="sideCalc-btn op" onclick="sideCalcInput('÷')">÷</button>
+      <button class="sideCalc-btn clear" onclick="sideCalcDelete()">⌫</button>
+
+      <button class="sideCalc-num" onclick="sideCalcInput('4')">4</button>
+      <button class="sideCalc-num" onclick="sideCalcInput('5')">5</button>
+      <button class="sideCalc-num" onclick="sideCalcInput('6')">6</button>
+      <button class="sideCalc-btn op" onclick="sideCalcInput('×')">×</button>
+      <button class="sideCalc-btn clear" onclick="sideCalcClear()">C</button>
+
+      <button class="sideCalc-num" onclick="sideCalcInput('1')">1</button>
+      <button class="sideCalc-num" onclick="sideCalcInput('2')">2</button>
+      <button class="sideCalc-num" onclick="sideCalcInput('3')">3</button>
+      <button class="sideCalc-btn op" onclick="sideCalcInput('-')">−</button>
+      <button class="sideCalc-btn eq" onclick="sideCalcResult()" style="grid-row:span 2;">=</button>
+
+      <button class="sideCalc-num" onclick="sideCalcInput('0')" style="grid-column:span 2;">0</button>
+      <button class="sideCalc-num" onclick="sideCalcInput('.')">.</button>
+      <button class="sideCalc-btn op" onclick="sideCalcInput('+')">+</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.sideCalc-btn, .sideCalc-num {
+  padding: 14px 4px;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.sideCalc-btn {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+.sideCalc-btn:active { background: rgba(255,255,255,0.3); transform: scale(0.95); }
+.sideCalc-btn.op { background: rgba(255,193,7,0.9); color: #000; }
+.sideCalc-btn.eq { background: rgba(255,255,255,0.95); color: #1E3A8A; font-size: 22px; }
+.sideCalc-btn.clear { background: rgba(229,57,53,0.9); color: #fff; }
+.sideCalc-num { background: rgba(255,255,255,0.95); color: #1E3A8A; font-size: 18px; }
+.sideCalc-num:active { background: rgba(255,255,255,0.7); transform: scale(0.95); }
+</style>
+
 <div id="toast" class="toast"></div>
 <script>
 // ============================================
-// إعدادات Supabase
+// Supabase
 // ============================================
 const SUPABASE_URL = 'https://rxxjkkxyvwurzleyelrq.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_mKfAk1wyPmjFyWYyGOgRsw_H-fDHYvg';
@@ -1193,7 +1375,7 @@ if (window.supabase) {
 }
 
 // ============================================
-// متغيرات عامة
+// المتغيرات العامة
 // ============================================
 let currentUser = null;
 let currentRole = 'student';
@@ -1203,8 +1385,6 @@ let currentStage = null;
 let currentGrade = null;
 let currentSubject = null;
 let currentTerm = null;
-let currentSection = null;
-
 const OWNER_CODE = '135790';
 
 // ============================================
@@ -1218,6 +1398,17 @@ function showScreen(screenId) {
     currentScreen = screenId;
     const content = target.querySelector('.content');
     if (content) content.scrollTop = 0;
+    // إظهار الحاسبة الجانبية في المواد الحسابية
+    const calcToggle = document.getElementById('calcToggle');
+    if (calcToggle) {
+      const mathSubjects = ['رياضيات', 'فيزياء', 'كيمياء', 'هندسة', 'حاسب آلي', 'علوم'];
+      if (mathSubjects.some(s => (currentSubject || '').includes(s))) {
+        calcToggle.style.display = 'flex';
+      } else {
+        calcToggle.style.display = 'none';
+        document.getElementById('sideCalculator').style.left = '-320px';
+      }
+    }
   }
 }
 
@@ -1240,7 +1431,6 @@ function navTo(dest) {
   if (dest === 'home') showScreen('homeScreen');
   else if (dest === 'education') openEducation();
   else if (dest === 'quran') openQuran();
-  else if (dest === 'tools') showScreen('homeScreen');
   else if (dest === 'profile') goToProfile();
 }
 
@@ -1251,14 +1441,13 @@ function selectRole(btn, role) {
   document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   currentRole = role;
-  const ownerGroup = document.getElementById('ownerCodeGroup');
-  if (ownerGroup) ownerGroup.style.display = (role === 'owner') ? 'block' : 'none';
+  document.getElementById('ownerCodeGroup').style.display = (role === 'owner') ? 'block' : 'none';
 }
 
 function login() {
   const username = document.getElementById('usernameInput').value.trim();
   const password = document.getElementById('passwordInput').value;
-  const ownerCode = document.getElementById('ownerCodeInput') ? document.getElementById('ownerCodeInput').value : '';
+  const ownerCode = document.getElementById('ownerCodeInput').value;
   if (!username || username.length < 3) { showToast('⚠️ أدخل اسم مستخدم'); return; }
   if (password.length < 4) { showToast('⚠️ كلمة المرور قصيرة'); return; }
   if (currentRole === 'owner' && ownerCode !== OWNER_CODE) { showToast('🔐 كود المالك خطأ'); return; }
@@ -1280,7 +1469,7 @@ function logout() {
 }
 
 // ============================================
-// بيانات المراحل
+// البيانات
 // ============================================
 const stagesData = {
   primary: { name: 'المرحلة الابتدائية', icon: '🎒', grades: ['الأول','الثاني','الثالث','الرابع','الخامس','السادس'] },
@@ -1292,6 +1481,8 @@ const generalSubjects = [
   { id: 'arabic', name: 'اللغة العربية', icon: '📖', color: '#C2185B' },
   { id: 'math', name: 'رياضيات', icon: '🔢', color: '#1976D2' },
   { id: 'science', name: 'علوم', icon: '🔬', color: '#388E3C' },
+  { id: 'physics', name: 'فيزياء', icon: '⚛️', color: '#7B1FA2' },
+  { id: 'chem', name: 'كيمياء', icon: '⚗️', color: '#D32F2F' },
   { id: 'english', name: 'إنجليزي', icon: '🇬🇧', color: '#303F9F' },
   { id: 'social', name: 'دراسات', icon: '🌍', color: '#0097A7' },
   { id: 'religion', name: 'تربية دينية', icon: '🕌', color: '#2E7D32' },
@@ -1310,14 +1501,10 @@ const azharSubjects = [
 ];
 
 const surahsData = [
-  {id:1,name:'الفاتحة',verses:7,type:'مكية'},
-  {id:2,name:'البقرة',verses:286,type:'مدنية'},
-  {id:18,name:'الكهف',verses:110,type:'مكية'},
-  {id:36,name:'يس',verses:83,type:'مكية'},
-  {id:55,name:'الرحمن',verses:78,type:'مدنية'},
-  {id:67,name:'الملك',verses:30,type:'مكية'},
-  {id:112,name:'الإخلاص',verses:4,type:'مكية'},
-  {id:113,name:'الفلق',verses:5,type:'مكية'},
+  {id:1,name:'الفاتحة',verses:7,type:'مكية'},{id:2,name:'البقرة',verses:286,type:'مدنية'},
+  {id:18,name:'الكهف',verses:110,type:'مكية'},{id:36,name:'يس',verses:83,type:'مكية'},
+  {id:55,name:'الرحمن',verses:78,type:'مدنية'},{id:67,name:'الملك',verses:30,type:'مكية'},
+  {id:112,name:'الإخلاص',verses:4,type:'مكية'},{id:113,name:'الفلق',verses:5,type:'مكية'},
   {id:114,name:'الناس',verses:6,type:'مكية'}
 ];
 
@@ -1329,7 +1516,7 @@ async function uploadFile(file, folder) {
   try {
     showToast('⏳ جاري الرفع...');
     const fileName = folder + '/' + Date.now() + '_' + file.name;
-    const { data, error } = await supabaseClient.storage.from('ta3lemy').upload(fileName, file);
+    const { error } = await supabaseClient.storage.from('ta3lemy').upload(fileName, file);
     if (error) throw error;
     const { data: urlData } = supabaseClient.storage.from('ta3lemy').getPublicUrl(fileName);
     showToast('✅ تم الرفع');
@@ -1384,10 +1571,7 @@ function openSubject(subjectId, subjectName) {
 
 function renderTerms() {
   const list = document.getElementById('termsList');
-  const terms = [
-    { num: 1, name: 'الترم الأول', icon: '📘' },
-    { num: 2, name: 'الترم الثاني', icon: '📙' }
-  ];
+  const terms = [{ num: 1, name: 'الترم الأول', icon: '📘' }, { num: 2, name: 'الترم الثاني', icon: '📙' }];
   list.innerHTML = terms.map(t => `
     <div class="term-card ${t.num === 2 ? 'term-2' : ''}">
       <div class="term-header">
@@ -1410,11 +1594,7 @@ function renderTerms() {
 
 async function openContent(sectionType, termNum, termName) {
   currentTerm = termNum;
-  currentSection = sectionType;
-  const titles = {
-    lessons: '📄 الدروس', exercises: '✏️ تدريبات', exams: '📝 امتحانات',
-    previous: '📋 سنوات سابقة', reviews: '📖 مراجعات', summaries: '📑 ملخصات', videos: '🎥 فيديوهات'
-  };
+  const titles = { lessons: '📄 الدروس', exercises: '✏️ تدريبات', exams: '📝 امتحانات', previous: '📋 سنوات سابقة', reviews: '📖 مراجعات', summaries: '📑 ملخصات', videos: '🎥 فيديوهات' };
   document.getElementById('contentTitle').textContent = titles[sectionType] || 'المحتوى';
   document.getElementById('contentHeaderTitle').textContent = (currentSubject || '') + ' - ' + termName;
   document.getElementById('contentHeaderSub').textContent = titles[sectionType];
@@ -1442,16 +1622,9 @@ async function openContent(sectionType, termNum, termName) {
 function viewContent(title, content, videoUrl, imageUrl) {
   document.getElementById('viewerTitle').textContent = title;
   let html = `<h2 style="color:#2E7D32;margin-bottom:16px;">${title}</h2>`;
-  if (imageUrl) html += `<img src="${imageUrl}" style="width:100%;border-radius:12px;margin-bottom:16px;">`;
-  if (content) html += `<div style="line-height:1.9;font-size:15px;">${content}</div>`;
-  if (videoUrl) {
-    if (videoUrl.includes('youtube') || videoUrl.includes('youtu.be')) {
-      const vid = videoUrl.split('v=')[1] || videoUrl.split('/').pop();
-      html += `<iframe style="width:100%;height:250px;margin-top:16px;border-radius:12px;" src="https://www.youtube.com/embed/${vid}" frameborder="0" allowfullscreen></iframe>`;
-    } else {
-      html += `<video controls style="width:100%;margin-top:16px;border-radius:12px;"><source src="${videoUrl}"></video>`;
-    }
-  }
+  if (imageUrl) html += `<img src="${imageUrl}">`;
+  if (content) html += `<div style="line-height:2;font-size:15px;">${content}</div>`;
+  if (videoUrl) html += `<video controls><source src="${videoUrl}"></video>`;
   document.getElementById('viewerBody').innerHTML = html;
   screenHistory.push(currentScreen);
   showScreen('viewerScreen');
@@ -1481,14 +1654,10 @@ function openAzharSubject(id, name) {
 // القرآن
 // ============================================
 function openQuran() {
-  loadSurahs();
-  screenHistory.push(currentScreen);
-  showScreen('quranScreen');
-}
-
-function loadSurahs() {
   const list = document.getElementById('surahsList');
   list.innerHTML = surahsData.map(s => `<div class="content-item" onclick="showToast('📖 سورة ${s.name}')"><div class="content-item-icon" style="background:linear-gradient(135deg,#00695C,#26A69A);color:#fff;font-weight:bold;">${s.id}</div><div class="content-item-info"><div class="content-item-title">${s.name}</div><div class="content-item-sub">${s.verses} آية • ${s.type}</div></div><div class="content-item-arrow">‹</div></div>`).join('');
+  screenHistory.push(currentScreen);
+  showScreen('quranScreen');
 }
 
 function filterSurahs(q) {
@@ -1498,14 +1667,52 @@ function filterSurahs(q) {
 }
 
 // ============================================
-// الحساب
+// الراديو
+// ============================================
+const radioStations = [
+  { name: 'إذاعة القرآن الكريم - مصر', url: 'https://stream.radiojar.com/8s5u5tpdtwzuv' },
+  { name: 'إذاعة القرآن الكريم - السعودية', url: 'https://Qurango.net/radio/tarateel' },
+  { name: 'إذاعة السنة النبوية', url: 'https://stream.radiojar.com/0tpy1h0kxtzuv' },
+  { name: 'إذاعة الأزهر', url: 'https://stream.radiojar.com/8s5u5tpdtwzuv' },
+  { name: 'إذاعة تفسير القرآن', url: 'https://Qurango.net/radio/tafseer' }
+];
+
+let radioAudio = null;
+let currentStation = null;
+
+function openRadio() {
+  const list = document.getElementById('radioList');
+  list.innerHTML = radioStations.map((s, i) => `<div class="content-item" onclick="playRadio(${i})"><div class="content-item-icon" style="background:linear-gradient(135deg,#D32F2F,#FF8F00);color:#fff;font-size:24px;">📻</div><div class="content-item-info"><div class="content-item-title">${s.name}</div><div class="content-item-sub">اضغط للتشغيل</div></div><div class="content-item-arrow">▶️</div></div>`).join('');
+  screenHistory.push(currentScreen);
+  showScreen('radioScreen');
+}
+
+function playRadio(index) {
+  const station = radioStations[index];
+  if (radioAudio) { radioAudio.pause(); radioAudio = null; }
+  radioAudio = new Audio(station.url);
+  radioAudio.play().catch(e => { showToast('❌ تعذر التشغيل'); });
+  currentStation = station;
+  document.getElementById('radioPlayer').style.display = 'block';
+  document.getElementById('radioStationName').textContent = station.name;
+  document.getElementById('radioNowPlaying').textContent = '🎵 جاري التشغيل...';
+  showToast('▶️ ' + station.name);
+}
+
+function stopRadio() {
+  if (radioAudio) { radioAudio.pause(); radioAudio = null; }
+  document.getElementById('radioPlayer').style.display = 'none';
+  showToast('⏹️ تم الإيقاف');
+}
+
+// ============================================
+// الحساب الشخصي
 // ============================================
 function goToProfile() {
   document.getElementById('profileName').textContent = currentUser ? currentUser.name : 'مستخدم';
   document.getElementById('profileRole').textContent = currentRole === 'student' ? 'طالب' : currentRole === 'teacher' ? 'معلم' : 'المالك';
   document.getElementById('profilePoints').textContent = '⭐ ' + (currentUser ? currentUser.points : 0) + ' نقطة';
-  const adminMenu = document.getElementById('adminMenu');
-  if (adminMenu) adminMenu.style.display = currentRole === 'owner' ? 'flex' : 'none';
+  document.getElementById('adminMenu').style.display = currentRole === 'owner' ? 'flex' : 'none';
   screenHistory.push(currentScreen);
   showScreen('profileScreen');
 }
@@ -1547,8 +1754,10 @@ function openAddLesson() {
 async function saveNewLesson() {
   const title = document.getElementById('newLessonTitle').value.trim();
   const content = document.getElementById('newLessonContent').value.trim();
-  const subject = document.getElementById('newLessonSubject').value.trim();
+  const stage = document.getElementById('newLessonStage').value;
   const grade = document.getElementById('newLessonGrade').value.trim();
+  const subject = document.getElementById('newLessonSubject').value.trim();
+  const type = document.getElementById('newLessonType').value;
   const term = parseInt(document.getElementById('newLessonTerm').value);
   const imageFile = document.getElementById('newLessonImageFile').files[0];
   const videoFile = document.getElementById('newLessonVideoFile').files[0];
@@ -1558,37 +1767,24 @@ async function saveNewLesson() {
   
   let imageUrl = null;
   let videoUrl = null;
-  
-  if (imageFile) {
-    showToast('⏳ جاري رفع الصورة...');
-    imageUrl = await uploadFile(imageFile, 'lessons/images');
-  }
-  if (videoFile) {
-    showToast('⏳ جاري رفع الفيديو...');
-    videoUrl = await uploadFile(videoFile, 'lessons/videos');
-  }
+  if (imageFile) imageUrl = await uploadFile(imageFile, 'lessons/images');
+  if (videoFile) videoUrl = await uploadFile(videoFile, 'lessons/videos');
   
   try {
     const { error } = await supabaseClient.from('lessons').insert([{
-      title, content, subject, grade, term,
-      image_url: imageUrl,
-      video_url: videoUrl,
-      type: 'lesson',
-      order: 1
+      title, content, subject, grade, stage, term, type,
+      image_url: imageUrl, video_url: videoUrl, order: 1
     }]);
     if (error) throw error;
     showToast('✅ تم حفظ الدرس');
     document.getElementById('newLessonTitle').value = '';
     document.getElementById('newLessonContent').value = '';
-    document.getElementById('newLessonSubject').value = '';
     document.getElementById('newLessonGrade').value = '';
+    document.getElementById('newLessonSubject').value = '';
     document.getElementById('newLessonImageFile').value = '';
     document.getElementById('newLessonVideoFile').value = '';
     setTimeout(() => goBack(), 1000);
-  } catch(e) {
-    console.error(e);
-    showToast('❌ فشل الحفظ');
-  }
+  } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
 }
 
 function openOwnerEditor() {
@@ -1600,19 +1796,11 @@ async function saveOwnerProfile() {
   const name = document.getElementById('ownerName').value.trim();
   const bio = document.getElementById('ownerBio').value.trim();
   const imageFile = document.getElementById('ownerImageFile').files[0];
-  
   if (!supabaseClient) { showToast('⚠️ Supabase غير متصل'); return; }
-  
   let imageUrl = null;
-  if (imageFile) {
-    showToast('⏳ جاري رفع الصورة...');
-    imageUrl = await uploadFile(imageFile, 'owner');
-  }
-  
+  if (imageFile) imageUrl = await uploadFile(imageFile, 'owner');
   try {
-    const { error } = await supabaseClient.from('owner_profile').insert([{
-      name, bio, image_url: imageUrl
-    }]);
+    const { error } = await supabaseClient.from('owner_profile').insert([{ name, bio, image_url: imageUrl }]);
     if (error) throw error;
     if (imageUrl) {
       document.getElementById('ownerAvatar').src = imageUrl;
@@ -1622,10 +1810,7 @@ async function saveOwnerProfile() {
     document.getElementById('ownerProfileBio').textContent = bio;
     showToast('✅ تم الحفظ');
     setTimeout(() => goBack(), 1000);
-  } catch(e) {
-    console.error(e);
-    showToast('❌ فشل الحفظ');
-  }
+  } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
 }
 
 // ============================================
@@ -1657,34 +1842,24 @@ async function addNewAd() {
   const adType = document.getElementById('adType').value;
   const duration = parseInt(document.getElementById('adDuration').value) || 10;
   const fileInput = document.getElementById('adFile');
-  
   if (!title) { showToast('⚠️ أدخل عنوان الإعلان'); return; }
   if (!fileInput.files || !fileInput.files[0]) { showToast('⚠️ اختر ملف'); return; }
   if (!supabaseClient) { showToast('⚠️ Supabase غير متصل'); return; }
-  
-  showToast('⏳ جاري الرفع...');
   const fileUrl = await uploadFile(fileInput.files[0], 'ads');
   if (!fileUrl) { showToast('❌ فشل الرفع'); return; }
-  
   try {
     const { error } = await supabaseClient.from('ads').insert([{
-      title,
-      ad_type: adType,
+      title, ad_type: adType,
       image_url: adType === 'image' ? fileUrl : null,
       video_url: adType === 'video' ? fileUrl : null,
-      duration,
-      position: 'home',
-      active: true
+      duration, position: 'home', active: true
     }]);
     if (error) throw error;
     showToast('✅ تم إضافة الإعلان');
     document.getElementById('adTitle').value = '';
     fileInput.value = '';
     loadAds();
-  } catch(e) {
-    console.error(e);
-    showToast('❌ فشل الإضافة');
-  }
+  } catch(e) { console.error(e); showToast('❌ فشل الإضافة'); }
 }
 
 async function deleteAd(id) {
@@ -1701,84 +1876,149 @@ async function deleteAd(id) {
 // الرسائل
 // ============================================
 function openMessages() {
-  const list = document.getElementById('messagesList');
-  list.innerHTML = `<div class="content-item"><div class="content-item-icon" style="background:#E8F5E9;font-size:24px;">👨‍🏫</div><div class="content-item-info"><div class="content-item-title">أ. محمد - رياضيات</div><div class="content-item-sub">كيف حالك؟</div></div></div>`;
+  document.getElementById('messagesList').innerHTML = `<div class="content-item"><div class="content-item-icon" style="background:#E8F5E9;font-size:24px;">👨‍🏫</div><div class="content-item-info"><div class="content-item-title">أ. محمد - رياضيات</div><div class="content-item-sub">كيف حالك؟</div></div></div>`;
   screenHistory.push(currentScreen);
   showScreen('messagesScreen');
 }
 
 // ============================================
-// الحاسبة
+// الحاسبة الجانبية
 // ============================================
-let calcCurrent = '';
-function calcInput(v) { calcCurrent += v; document.getElementById('calcScreen').textContent = calcCurrent || '0'; }
-function calcClear() { calcCurrent = ''; document.getElementById('calcScreen').textContent = '0'; document.getElementById('calcHistory').textContent = ''; }
-function calcDelete() { calcCurrent = calcCurrent.slice(0,-1); document.getElementById('calcScreen').textContent = calcCurrent || '0'; }
-function calcResult() {
+let sideCalcCurrent = '';
+
+function toggleSideCalculator() {
+  const calc = document.getElementById('sideCalculator');
+  if (calc.style.left === '0px') {
+    calc.style.left = '-320px';
+  } else {
+    calc.style.left = '0px';
+  }
+}
+
+function sideCalcInput(v) {
+  sideCalcCurrent += v;
+  document.getElementById('sideCalcScreen').textContent = sideCalcCurrent || '0';
+}
+
+function sideCalcDelete() {
+  sideCalcCurrent = sideCalcCurrent.slice(0, -1);
+  document.getElementById('sideCalcScreen').textContent = sideCalcCurrent || '0';
+}
+
+function sideCalcClear() {
+  sideCalcCurrent = '';
+  document.getElementById('sideCalcScreen').textContent = '0';
+  document.getElementById('sideCalcHistory').textContent = '';
+}
+
+function sideCalcResult() {
   try {
-    let e = calcCurrent.replace(/×/g,'*').replace(/÷/g,'/').replace(/π/g,Math.PI).replace(/\^/g,'**');
+    let e = sideCalcCurrent.replace(/×/g,'*').replace(/÷/g,'/').replace(/π/g,Math.PI).replace(/e/g,Math.E).replace(/\^/g,'**');
     const r = eval(e);
-    document.getElementById('calcHistory').textContent = calcCurrent + ' =';
-    document.getElementById('calcScreen').textContent = r;
-    calcCurrent = String(r);
-  } catch { showToast('⚠️ خطأ'); }
+    document.getElementById('sideCalcHistory').textContent = sideCalcCurrent + ' =';
+    document.getElementById('sideCalcScreen').textContent = r;
+    sideCalcCurrent = String(r);
+  } catch { showToast('⚠️ خطأ في العملية'); }
 }
-function calcFunc(fn) {
-  const c = parseFloat(calcCurrent) || 0;
+
+function sideCalcFunc(fn) {
+  const c = parseFloat(sideCalcCurrent) || 0;
   let r = 0;
-  if (fn==='sin') r = Math.sin(c);
-  else if (fn==='cos') r = Math.cos(c);
-  else if (fn==='tan') r = Math.tan(c);
-  else if (fn==='√') r = Math.sqrt(c);
-  else if (fn==='log') r = Math.log10(c);
-  else if (fn==='ln') r = Math.log(c);
-  document.getElementById('calcHistory').textContent = fn + '(' + c + ')';
-  document.getElementById('calcScreen').textContent = r.toFixed(4);
-  calcCurrent = String(r);
-}
-
-function openCalculator() {
-  screenHistory.push(currentScreen);
-  showScreen('calculatorScreen');
+  switch(fn) {
+    case 'sin': r = Math.sin(c); break;
+    case 'cos': r = Math.cos(c); break;
+    case 'tan': r = Math.tan(c); break;
+    case 'asin': r = Math.asin(c); break;
+    case 'acos': r = Math.acos(c); break;
+    case 'atan': r = Math.atan(c); break;
+    case 'log': r = Math.log10(c); break;
+    case 'ln': r = Math.log(c); break;
+    case 'sqrt': r = Math.sqrt(c); break;
+    case 'cbrt': r = Math.cbrt(c); break;
+    case 'sqr': r = c * c; break;
+    case 'cube': r = c * c * c; break;
+    case 'fact': 
+      r = 1;
+      for (let i = 2; i <= c; i++) r *= i;
+      break;
+  }
+  document.getElementById('sideCalcHistory').textContent = fn + '(' + c + ')';
+  document.getElementById('sideCalcScreen').textContent = r.toFixed(6).replace(/\.?0+$/, '');
+  sideCalcCurrent = String(r);
 }
 
 // ============================================
-// الرسم
+// لوحة الرسم
 // ============================================
+let fullCanvas, fullCtx, fullDrawing = false, fullColor = '#000';
+
 function openDrawing() {
   screenHistory.push(currentScreen);
   showScreen('drawingScreen');
   setTimeout(initFullCanvas, 200);
 }
 
-let fullCanvas, fullCtx, fullDrawing=false, fullColor='#000';
-
 function initFullCanvas() {
   fullCanvas = document.getElementById('fullDrawingCanvas');
   if (!fullCanvas) return;
-  const r = fullCanvas.getBoundingClientRect();
-  fullCanvas.width = r.width || 300;
-  fullCanvas.height = r.height || 400;
+  const rect = fullCanvas.parentElement.getBoundingClientRect();
+  fullCanvas.width = rect.width;
+  fullCanvas.height = rect.height;
   fullCtx = fullCanvas.getContext('2d');
-  fullCtx.lineCap='round'; fullCtx.lineJoin='round'; fullCtx.lineWidth=4;
-  fullCanvas.addEventListener('touchstart', fs, {passive:false});
-  fullCanvas.addEventListener('touchmove', fm, {passive:false});
-  fullCanvas.addEventListener('touchend', ()=>fullDrawing=false);
-  fullCanvas.addEventListener('mousedown', (e)=>{ fullDrawing=true; const r=fullCanvas.getBoundingClientRect(); fullCtx.beginPath(); fullCtx.moveTo(e.clientX-r.left, e.clientY-r.top); });
-  fullCanvas.addEventListener('mousemove', (e)=>{ if(!fullDrawing) return; const r=fullCanvas.getBoundingClientRect(); fullCtx.strokeStyle=fullColor; fullCtx.lineTo(e.clientX-r.left, e.clientY-r.top); fullCtx.stroke(); });
-  fullCanvas.addEventListener('mouseup', ()=>fullDrawing=false);
+  fullCtx.lineCap = 'round';
+  fullCtx.lineJoin = 'round';
+  fullCtx.lineWidth = 4;
+  fullCanvas.addEventListener('touchstart', fullStart, {passive:false});
+  fullCanvas.addEventListener('touchmove', fullMove, {passive:false});
+  fullCanvas.addEventListener('touchend', () => fullDrawing = false);
+  fullCanvas.addEventListener('mousedown', (e) => {
+    fullDrawing = true;
+    const r = fullCanvas.getBoundingClientRect();
+    fullCtx.beginPath();
+    fullCtx.moveTo(e.clientX - r.left, e.clientY - r.top);
+  });
+  fullCanvas.addEventListener('mousemove', (e) => {
+    if (!fullDrawing) return;
+    const r = fullCanvas.getBoundingClientRect();
+    fullCtx.strokeStyle = fullColor;
+    fullCtx.lineTo(e.clientX - r.left, e.clientY - r.top);
+    fullCtx.stroke();
+  });
+  fullCanvas.addEventListener('mouseup', () => fullDrawing = false);
   setTimeout(fullLoad, 500);
 }
 
-function fs(e) { e.preventDefault(); fullDrawing=true; const r=fullCanvas.getBoundingClientRect(); const t=e.touches[0]; fullCtx.beginPath(); fullCtx.moveTo(t.clientX-r.left, t.clientY-r.top); }
-function fm(e) { e.preventDefault(); if(!fullDrawing) return; const r=fullCanvas.getBoundingClientRect(); const t=e.touches[0]; fullCtx.strokeStyle=fullColor; fullCtx.lineTo(t.clientX-r.left, t.clientY-r.top); fullCtx.stroke(); }
-function fullChangeColor(c) { fullColor=c; showToast('🎨 لون'); }
+function fullStart(e) {
+  e.preventDefault();
+  fullDrawing = true;
+  const r = fullCanvas.getBoundingClientRect();
+  const t = e.touches[0];
+  fullCtx.beginPath();
+  fullCtx.moveTo(t.clientX - r.left, t.clientY - r.top);
+}
+
+function fullMove(e) {
+  e.preventDefault();
+  if (!fullDrawing) return;
+  const r = fullCanvas.getBoundingClientRect();
+  const t = e.touches[0];
+  fullCtx.strokeStyle = fullColor;
+  fullCtx.lineTo(t.clientX - r.left, t.clientY - r.top);
+  fullCtx.stroke();
+}
+
+function fullChangeColor(c) {
+  fullColor = c;
+  showToast('🎨 تم تغيير اللون');
+}
+
 function fullClear() {
   if (!confirm('مسح الرسم؟')) return;
   if (fullCtx) fullCtx.clearRect(0, 0, fullCanvas.width, fullCanvas.height);
   localStorage.removeItem('ta3lemy_drawing');
   showToast('🗑️ تم المسح');
 }
+
 function fullSave() {
   if (!fullCanvas) return;
   try {
@@ -1787,11 +2027,12 @@ function fullSave() {
     showToast('💾 تم الحفظ');
   } catch(e) { showToast('⚠️ فشل الحفظ'); }
 }
+
 function fullLoad() {
   const dataURL = localStorage.getItem('ta3lemy_drawing');
   if (!dataURL) return;
-  const img = new Image();
-  img.onload = () => { if (fullCtx) fullCtx.drawImage(img, 0, 0); };
+  const img = new Image
+ img.onload = () => { if (fullCtx) fullCtx.drawImage(img, 0, 0); };
   img.src = dataURL;
 }
 
@@ -1823,6 +2064,17 @@ async function loadOwnerInfo() {
     }
   } catch(e) { console.error('Error loading owner:', e); }
 }
+
+// ============================================
+// تسجيل Service Worker
+// ============================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(reg => console.log('✅ SW registered'))
+      .catch(err => console.log('❌ SW failed:', err));
+  });
+}
 </script>
 </body>
-</html>
+</html> 
