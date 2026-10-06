@@ -2244,8 +2244,52 @@ function fullLoad() {
 window.addEventListener('load', () => {
   setTimeout(() => showScreen('loginScreen'), 2500);
   loadOwnerInfo();
+ loadAdsOnHome(); 
 });
+  
+// ============================================
+// تحميل الإعلانات في الشاشة الرئيسية
+// ============================================
+var homeAds = [];
+var homeAdIndex = 0;
+var homeAdTimer = null;
 
+async function loadAdsOnHome() {
+  try {
+    if (!supabaseClient) return;
+    const { data, error } = await supabaseClient.from('ads').select('*').eq('active', true).order('created_at', { ascending: false });
+    if (error) throw error;
+    homeAds = data || [];
+    if (homeAds.length > 0) {
+      showHomeAd(0);
+    }
+  } catch(e) {
+    console.error('Error loading ads:', e);
+  }
+}
+
+function showHomeAd(index) {
+  if (!homeAds || homeAds.length === 0) return;
+  const ad = homeAds[index];
+  const adBox = document.getElementById('mainAd');
+  if (!adBox) return;
+  
+  const duration = (ad.duration || 10) * 1000;
+  
+  if (ad.ad_type === 'video' && ad.video_url) {
+    adBox.innerHTML = '<video autoplay muted loop style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><source src="' + ad.video_url + '" type="video/mp4"></video><div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title">' + (ad.title || '') + '</div></div>';
+  } else if (ad.image_url) {
+    adBox.innerHTML = '<img src="' + ad.image_url + '" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title" style="color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.7);">' + (ad.title || '') + '</div></div>';
+  }
+  
+  if (homeAdTimer) clearTimeout(homeAdTimer);
+  if (homeAds.length > 1) {
+    homeAdTimer = setTimeout(function() {
+      homeAdIndex = (homeAdIndex + 1) % homeAds.length;
+      showHomeAd(homeAdIndex);
+    }, duration);
+  }
+}
 async function loadOwnerInfo() {
   try {
     if (!supabaseClient) return;
@@ -2266,7 +2310,49 @@ async function loadOwnerInfo() {
     }
   } catch(e) { console.error('Error loading owner:', e); }
 }
+// ============================================
+// تحميل الإعلانات في الشاشة الرئيسية
+// ============================================
+let homeAds = [];
+let homeAdIndex = 0;
+let homeAdTimer = null;
 
+async function loadAdsOnHome() {
+  try {
+    if (!supabaseClient) return;
+    const { data, error } = await supabaseClient.from('ads').select('*').eq('active', true).order('created_at', { ascending: false });
+    if (error) throw error;
+    homeAds = data || [];
+    if (homeAds.length > 0) {
+      showHomeAd(0);
+    }
+  } catch(e) {
+    console.error('Error loading ads:', e);
+  }
+}
+
+function showHomeAd(index) {
+  if (!homeAds || homeAds.length === 0) return;
+  const ad = homeAds[index];
+  const adBox = document.getElementById('mainAd');
+  if (!adBox) return;
+  
+  const duration = (ad.duration || 10) * 1000;
+  
+  if (ad.ad_type === 'video' && ad.video_url) {
+    adBox.innerHTML = '<video autoplay muted loop style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><source src="' + ad.video_url + '" type="video/mp4"></video><div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title">' + (ad.title || '') + '</div></div>';
+  } else if (ad.image_url) {
+    adBox.innerHTML = '<img src="' + ad.image_url + '" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title" style="color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.7);">' + (ad.title || '') + '</div></div>';
+  }
+  
+  if (homeAdTimer) clearTimeout(homeAdTimer);
+  if (homeAds.length > 1) {
+    homeAdTimer = setTimeout(() => {
+      homeAdIndex = (homeAdIndex + 1) % homeAds.length;
+      showHomeAd(homeAdIndex);
+    }, duration);
+  }
+}
 // ============================================
 // تسجيل Service Worker
 // ============================================
