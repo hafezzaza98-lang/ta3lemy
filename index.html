@@ -1001,20 +1001,70 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
     <div class="logo"><span>✏️ لوحة الرسم</span></div>
     <div style="width:42px;"></div>
   </div>
-  <div class="content" style="padding:8px;display:flex;flex-direction:column;">
-    <div class="drawing-canvas-full" style="flex:1;">
-      <canvas id="fullDrawingCanvas"></canvas>
+
+  <div class="content" style="padding:0;display:flex;flex-direction:column;height:calc(100vh - 70px);">
+    
+    <!-- شريط الأدوات العلوي -->
+    <div style="background:#fff;padding:8px;display:flex;gap:6px;overflow-x:auto;border-bottom:2px solid #E8F5E9;flex-shrink:0;">
+      <button onclick="drawingUndo()" id="undoBtn" style="background:#E3F2FD;color:#1976D2;border:none;padding:8px 12px;border-radius:10px;font-family:inherit;font-weight:bold;font-size:13px;cursor:pointer;white-space:nowrap;">↶ تراجع</button>
+      <button onclick="drawingRedo()" id="redoBtn" style="background:#E3F2FD;color:#1976D2;border:none;padding:8px 12px;border-radius:10px;font-family:inherit;font-weight:bold;font-size:13px;cursor:pointer;white-space:nowrap;">↷ إعادة</button>
+      <button onclick="drawingSave()" style="background:#E8F5E9;color:#2E7D32;border:none;padding:8px 12px;border-radius:10px;font-family:inherit;font-weight:bold;font-size:13px;cursor:pointer;white-space:nowrap;">💾 حفظ</button>
+      <button onclick="drawingPrint()" style="background:#F3E5F5;color:#7B1FA2;border:none;padding:8px 12px;border-radius:10px;font-family:inherit;font-weight:bold;font-size:13px;cursor:pointer;white-space:nowrap;">🖨️ طباعة</button>
+      <button onclick="drawingShare()" style="background:#FFF3E0;color:#F57C00;border:none;padding:8px 12px;border-radius:10px;font-family:inherit;font-weight:bold;font-size:13px;cursor:pointer;white-space:nowrap;">📤 مشاركة</button>
+      <button onclick="drawingClearAll()" style="background:#FFEBEE;color:#E53935;border:none;padding:8px 12px;border-radius:10px;font-family:inherit;font-weight:bold;font-size:13px;cursor:pointer;white-space:nowrap;">🗑️ مسح الكل</button>
     </div>
-    <div class="drawing-palette">
-      <button class="color-dot" style="background:#000;" onclick="fullChangeColor('#000')"></button>
-      <button class="color-dot" style="background:#2E7D32;" onclick="fullChangeColor('#2E7D32')"></button>
-      <button class="color-dot" style="background:#1976D2;" onclick="fullChangeColor('#1976D2')"></button>
-      <button class="color-dot" style="background:#E53935;" onclick="fullChangeColor('#E53935')"></button>
-      <button class="color-dot" style="background:#FB8C00;" onclick="fullChangeColor('#FB8C00')"></button>
-      <button class="color-dot" style="background:#7B1FA2;" onclick="fullChangeColor('#7B1FA2')"></button>
-      <button class="save-btn" onclick="fullSave()" style="background:#2E7D32;color:#fff;border:none;padding:10px 14px;border-radius:12px;font-family:inherit;font-weight:bold;cursor:pointer;font-size:13px;">💾 حفظ</button>
-      <button class="clear-btn" onclick="fullClear()">🗑️</button>
+
+    <!-- شريط الألوان الكبير -->
+    <div style="background:#fff;padding:10px 8px;display:flex;gap:8px;overflow-x:auto;border-bottom:2px solid #E8F5E9;flex-shrink:0;align-items:center;">
+      
+      <!-- الإستيكة -->
+      <button onclick="drawingSetEraser()" id="eraserBtn" style="width:42px;height:42px;border-radius:50%;background:#F5F5F5;border:3px solid #E0E0E0;font-size:20px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🧽</button>
+      
+      <div style="width:2px;height:30px;background:#E0E0E0;flex-shrink:0;"></div>
+      
+      <!-- 12 لون -->
+      <button onclick="drawingSetColor('#000000')" style="width:36px;height:36px;border-radius:50%;background:#000000;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
+      <button onclick="drawingSetColor('#FFFFFF')" style="width:36px;height:36px;border-radius:50%;background:#FFFFFF;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
+      <button onclick="drawingSetColor('#E53935')" style="width:36px;height:36px;border-radius:50%;background:#E53935;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
+      <button onclick="drawingSetColor('#FB8C00')" style="width:36px;height:36px;border-radius:50%;background:#FB8C00;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
+      <button onclick="drawingSetColor('#FDD835')" style="width:36px;height:36px;border-radius:50%;background:#FDD835;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
+      <button onclick="drawingSetColor('#43A047')" style="width:36px;height:36px;border-radius:50%;background:#43A047;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
+      <button onclick="drawingSetColor('#00ACC1')" style="width:36px;height:36px;border-radius:50%;background:#00ACC1;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
+      <button onclick="drawingSetColor('#1E88E5')" style="width:36px;height:36px;border-radius:50%;background:#1E88E5;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
+      <button onclick="drawingSetColor('#5E35B1')" style="width:36px;height:36px;border-radius:50%;background:#5E35B1;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
+      <button onclick="drawingSetColor('#EC407A')" style="width:36px;height:36px;border-radius:50%;background:#EC407A;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
+      <button onclick="drawingSetColor('#8D6E63')" style="width:36px;height:36px;border-radius:50%;background:#8D6E63;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
+      <button onclick="drawingSetColor('#546E7A')" style="width:36px;height:36px;border-radius:50%;background:#546E7A;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
+      
+      <div style="width:2px;height:30px;background:#E0E0E0;flex-shrink:0;"></div>
+      
+      <!-- أحجام الفرشاة -->
+      <button onclick="drawingSetSize(2)" id="size1Btn" style="width:38px;height:38px;border-radius:12px;background:#F5F5F5;border:2px solid #E0E0E0;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+        <div style="width:6px;height:6px;background:#333;border-radius:50%;"></div>
+      </button>
+      <button onclick="drawingSetSize(5)" id="size2Btn" style="width:38px;height:38px;border-radius:12px;background:#E8F5E9;border:2px solid #4CAF50;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+        <div style="width:12px;height:12px;background:#333;border-radius:50%;"></div>
+      </button>
+      <button onclick="drawingSetSize(12)" id="size3Btn" style="width:38px;height:38px;border-radius:12px;background:#F5F5F5;border:2px solid #E0E0E0;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+        <div style="width:20px;height:20px;background:#333;border-radius:50%;"></div>
+      </button>
+      
     </div>
+
+    <!-- مؤشر اللون الحالي -->
+    <div style="background:#FAF7EE;padding:6px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:12px;color:#666;font-family:inherit;flex-shrink:0;">
+      <span>اللون الحالي:</span>
+      <div id="currentColorIndicator" style="width:24px;height:24px;border-radius:50%;background:#000;border:2px solid #fff;box-shadow:0 0 0 1px #ddd;"></div>
+      <span id="currentModeText" style="font-weight:bold;">✏️ قلم</span>
+    </div>
+
+    <!-- الـ Canvas -->
+    <div style="flex:1;position:relative;background:#fff;overflow:hidden;">
+      <canvas id="fullDrawingCanvas" style="display:block;width:100%;height:100%;touch-action:none;cursor:crosshair;"></canvas>
+    </div>
+
+  </div>
+</div>
   </div>
 </div>
 
@@ -2007,7 +2057,7 @@ function fullMove(e) {
   fullCtx.stroke();
 }
 
-function fullChangeColor(c) {
+function drawingScreen(c) {
   fullColor = c;
   showToast('🎨 تم تغيير اللون');
 }
