@@ -1996,93 +1996,246 @@ function sideCalcFunc(fn) {
   document.getElementById('sideCalcScreen').textContent = r.toFixed(6).replace(/\.?0+$/, '');
   sideCalcCurrent = String(r);
 }
-
 // ============================================
-// لوحة الرسم
+// لوحة الرسم الاحترافية
 // ============================================
-let fullCanvas, fullCtx, fullDrawing = false, fullColor = '#000';
+let fullCanvas, fullCtx;
+let isDrawing = false;
+let currentColor = '#000000';
+let currentSize = 5;
+let isEraser = false;
+let drawingHistory = [];
+let historyIndex = -1;
 
 function openDrawing() {
   screenHistory.push(currentScreen);
   showScreen('drawingScreen');
-  setTimeout(initFullCanvas, 200);
+  setTimeout(initFullCanvas, 300);
 }
 
 function initFullCanvas() {
   fullCanvas = document.getElementById('fullDrawingCanvas');
   if (!fullCanvas) return;
-  const rect = fullCanvas.parentElement.getBoundingClientRect();
+  const rect = fullCanvas.getBoundingClientRect();
   fullCanvas.width = rect.width;
   fullCanvas.height = rect.height;
   fullCtx = fullCanvas.getContext('2d');
   fullCtx.lineCap = 'round';
   fullCtx.lineJoin = 'round';
-  fullCtx.lineWidth = 4;
-  fullCanvas.addEventListener('touchstart', fullStart, {passive:false});
-  fullCanvas.addEventListener('touchmove', fullMove, {passive:false});
-  fullCanvas.addEventListener('touchend', () => fullDrawing = false);
-  fullCanvas.addEventListener('mousedown', (e) => {
-    fullDrawing = true;
-    const r = fullCanvas.getBoundingClientRect();
-    fullCtx.beginPath();
-    fullCtx.moveTo(e.clientX - r.left, e.clientY - r.top);
-  });
-  fullCanvas.addEventListener('mousemove', (e) => {
-    if (!fullDrawing) return;
-    const r = fullCanvas.getBoundingClientRect();
-    fullCtx.strokeStyle = fullColor;
-    fullCtx.lineTo(e.clientX - r.left, e.clientY - r.top);
-    fullCtx.stroke();
-  });
-  fullCanvas.addEventListener('mouseup', () => fullDrawing = false);
+  fullCtx.fillStyle = '#FFFFFF';
+  fullCtx.fillRect(0, 0, fullCanvas.width, fullCanvas.height);
+  fullCtx.strokeStyle = currentColor;
+  fullCtx.lineWidth = currentSize;
+
+  // إعادة تعيين الحالة
+  isDrawing = false;
+  isEraser = false;
+  drawingHistory = [];
+  historyIndex = -1;
+  saveHistoryState();
+
+  // أحداث الماوس
+  fullCanvas.addEventListener('mousedown', startDrawing);
+  fullCanvas.addEventListener('mousemove', drawLine);
+  fullCanvas.addEventListener('mouseup', stopDrawing);
+  fullCanvas.addEventListener('mouseleave', stopDrawing);
+
+  // أحداث اللمس
+  fullCanvas.addEventListener('touchstart', startDrawing, {passive: false});
+  fullCanvas.addEventListener('touchmove', drawLine, {passive: false});
+  fullCanvas.addEventListener('touchend', stopDrawing);
+
+  // تحميل الرسم المحفوظ
   setTimeout(fullLoad, 500);
 }
 
-function fullStart(e) {
+function startDrawing(e) {
   e.preventDefault();
-  fullDrawing = true;
-  const r = fullCanvas.getBoundingClientRect();
-  const t = e.touches[0];
+  isDrawing = true;
+  const pos = getPosition(e);
   fullCtx.beginPath();
-  fullCtx.moveTo(t.clientX - r.left, t.clientY - r.top);
+  fullCtx.moveTo(pos.x, pos.y);
+  fullCtx.strokeStyle = isEraser ? '#FFFFFF' : currentColor;
+  fullCtx.lineWidth = isEraser ? (currentSize * 3) : currentSize;
 }
 
-function fullMove(e) {
+function drawLine(e) {
   e.preventDefault();
-  if (!fullDrawing) return;
-  const r = fullCanvas.getBoundingClientRect();
-  const t = e.touches[0];
-  fullCtx.strokeStyle = fullColor;
-  fullCtx.lineTo(t.clientX - r.left, t.clientY - r.top);
+  if (!isDrawing) return;
+  const pos = getPosition(e);
+  fullCtx.strokeStyle = isEraser ? '#FFFFFF' : currentColor;
+  fullCtx.lineWidth = isEraser ? (currentSize * 3) : currentSize;
+  fullCtx.lineTo(pos.x, pos.y);
   fullCtx.stroke();
 }
 
-function drawingScreen(c) {
-  fullColor = c;
+function stopDrawing() {
+  if (isDrawing) {
+    isDrawing = false;
+    saveHistoryState();
+  }
+}
+
+function getPosition(e) {
+  const rect = fullCanvas.getBoundingClientRect();
+  let clientX, clientY;
+  if (e.touches && e.touches[0]) {
+    clientX = e.touches[0].clientX;
+    clientY = e.touches[0].clientY;
+  } else {
+    clientX = e.clientX;
+    clientY = e.clientY;
+  }
+  return { x: clientX - rect.left, y: clientY - rect.top };
+}
+
+function drawingSetColor(color) {
+  currentColor = color;
+  isEraser = false;
+  fullCtx.strokeStyle = color;
+  const indicator = document.getElementById('currentColorIndicator');
+  if (indicator) indicator.style.background = color;
+  const modeText = document.getElementById('currentModeText');
+  if (modeText) modeText.textContent = '✏️ قلم';
+  const eraserBtn = document.getElementById('eraserBtn');
+  if (eraserBtn) {
+    eraserBtn.style.background = '#F5F5F5';
+    eraserBtn.style.borderColor = '#E0E0E0';
+  }
   showToast('🎨 تم تغيير اللون');
 }
 
-function fullClear() {
-  if (!confirm('مسح الرسم؟')) return;
-  if (fullCtx) fullCtx.clearRect(0, 0, fullCanvas.width, fullCanvas.height);
+function drawingSetEraser() {
+  isEraser = true;
+  fullCtx.strokeStyle = '#FFFFFF';
+  const indicator = document.getElementById('currentColorIndicator');
+  if (indicator) indicator.style.background = '#FFFFFF';
+  const modeText = document.getElementById('currentModeText');
+  if (modeText) modeText.textContent = '🧽 ممحاة';
+  const eraserBtn = document.getElementById('eraserBtn');
+  if (eraserBtn) {
+    eraserBtn.style.background = '#E8F5E9';
+    eraserBtn.style.borderColor = '#4CAF50';
+  }
+  showToast('🧽 وضع الممحاة');
+}
+
+function drawingSetSize(size) {
+  currentSize = size;
+  fullCtx.lineWidth = size;
+  ['size1Btn', 'size2Btn', 'size3Btn'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) {
+      btn.style.background = '#F5F5F5';
+      btn.style.borderColor = '#E0E0E0';
+    }
+  });
+  const activeBtn = size === 2 ? 'size1Btn' : size === 5 ? 'size2Btn' : 'size3Btn';
+  const btn = document.getElementById(activeBtn);
+  if (btn) {
+    btn.style.background = '#E8F5E9';
+    btn.style.borderColor = '#4CAF50';
+  }
+  showToast('📏 حجم الفرشاة: ' + size);
+}
+
+function saveHistoryState() {
+  drawingHistory = drawingHistory.slice(0, historyIndex + 1);
+  drawingHistory.push(fullCanvas.toDataURL());
+  historyIndex = drawingHistory.length - 1;
+  if (drawingHistory.length > 30) {
+    drawingHistory.shift();
+    historyIndex--;
+  }
+  updateHistoryButtons();
+}
+
+function updateHistoryButtons() {
+  const undoBtn = document.getElementById('undoBtn');
+  const redoBtn = document.getElementById('redoBtn');
+  if (undoBtn) undoBtn.style.opacity = historyIndex > 0 ? '1' : '0.4';
+  if (redoBtn) redoBtn.style.opacity = historyIndex < drawingHistory.length - 1 ? '1' : '0.4';
+}
+
+function drawingUndo() {
+  if (historyIndex <= 0) { showToast('⚠️ لا يوجد تراجع'); return; }
+  historyIndex--;
+  loadHistoryState();
+  showToast('↶ تراجع');
+}
+
+function drawingRedo() {
+  if (historyIndex >= drawingHistory.length - 1) { showToast('⚠️ لا يوجد إعادة'); return; }
+  historyIndex++;
+  loadHistoryState();
+  showToast('↷ إعادة');
+}
+
+function loadHistoryState() {
+  const img = new Image();
+  img.onload = () => {
+    fullCtx.clearRect(0, 0, fullCanvas.width, fullCanvas.height);
+    fullCtx.drawImage(img, 0, 0);
+  };
+  img.src = drawingHistory[historyIndex];
+  updateHistoryButtons();
+}
+
+function drawingClearAll() {
+  if (!confirm('مسح كل الرسم؟')) return;
+  fullCtx.fillStyle = '#FFFFFF';
+  fullCtx.fillRect(0, 0, fullCanvas.width, fullCanvas.height);
   localStorage.removeItem('ta3lemy_drawing');
+  saveHistoryState();
   showToast('🗑️ تم المسح');
 }
 
-function fullSave() {
-  if (!fullCanvas) return;
+function drawingSave() {
   try {
     const dataURL = fullCanvas.toDataURL('image/png');
     localStorage.setItem('ta3lemy_drawing', dataURL);
     showToast('💾 تم الحفظ');
-  } catch(e) { showToast('⚠️ فشل الحفظ'); }
+  } catch(e) {
+    showToast('⚠️ فشل الحفظ');
+  }
+}
+
+function drawingPrint() {
+  const dataURL = fullCanvas.toDataURL('image/png');
+  const win = window.open('', '_blank');
+  win.document.write('<html><head><title>طباعة الرسم</title></head><body style="margin:0;display:flex;align-items:center;justify-content:center;"><img src="' + dataURL + '" style="max-width:100%;" onload="window.print();window.close();"></body></html>');
+  win.document.close();
+}
+
+function drawingShare() {
+  fullCanvas.toBlob(async (blob) => {
+    const file = new File([blob], 'drawing.png', {type: 'image/png'});
+    if (navigator.share && navigator.canShare({files: [file]})) {
+      try {
+        await navigator.share({ files: [file], title: 'رسمي', text: 'رسم من منصة حافظ' });
+        showToast('📤 تم المشاركة');
+      } catch(e) {
+        showToast('📤 تم الإلغاء');
+      }
+    } else {
+      const dataURL = fullCanvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = 'drawing-' + Date.now() + '.png';
+      link.href = dataURL;
+      link.click();
+      showToast('📥 تم التحميل');
+    }
+  }, 'image/png');
 }
 
 function fullLoad() {
   const dataURL = localStorage.getItem('ta3lemy_drawing');
   if (!dataURL) return;
-  const img = new Image
- img.onload = () => { if (fullCtx) fullCtx.drawImage(img, 0, 0); };
+  const img = new Image();
+  img.onload = () => {
+    fullCtx.drawImage(img, 0, 0);
+    saveHistoryState();
+  };
   img.src = dataURL;
 }
 
