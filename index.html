@@ -2001,12 +2001,11 @@ function sideCalcFunc(fn) {
 // ============================================
 let fullCanvas, fullCtx;
 let isDrawing = false;
-let currentColor = '#000000';
-let currentSize = 5;
-let isEraser = false;
-let drawingHistory = [];
-let historyIndex = -1;
-
+var currentColor = '#000000';
+var currentSize = 5;
+var isEraser = false;
+var drawingHistory = [];
+var historyIndex = -1;
 function openDrawing() {
   screenHistory.push(currentScreen);
   showScreen('drawingScreen');
