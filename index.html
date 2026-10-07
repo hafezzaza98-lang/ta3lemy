@@ -1878,50 +1878,54 @@ function openAdsManager() {
   showScreen('adsManagerScreen');
 }
 
-async function loadAds() {
+function loadAds() {
   const list = document.getElementById('adsList');
   if (!list) return;
   try {
-    if (!supabaseClient) { list.innerHTML = ''; return; }
-    const { data, error } = await supabaseClient.from('ads').select('*').order('created_at', { ascending: false });
-    if (error) throw error;
-    if (!data || data.length === 0) {
+    var adsData = JSON.parse(localStorage.getItem('ta3lemy_ads') || '[]');
+    if (!adsData || adsData.length === 0) {
       list.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">لا توجد إعلانات</div>';
       return;
     }
-    list.innerHTML = data.map(ad => `<div style="background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:24px;">📢</div><div style="flex:1;"><div style="font-weight:bold;font-size:14px;">${ad.title}</div><div style="font-size:12px;color:#999;">${ad.duration} ثانية • ${ad.ad_type}</div></div><button onclick="deleteAd(${ad.id})" style="background:#FFEBEE;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">🗑️</button></div>`).join('');
+    list.innerHTML = adsData.map(ad => '<div style="background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:24px;">📢</div><div style="flex:1;"><div style="font-weight:bold;font-size:14px;">' + (ad.title || '') + '</div><div style="font-size:12px;color:#999;">' + ad.duration + ' ثانية • ' + ad.ad_type + '</div></div><button onclick="deleteAd(\'' + ad.id + '\')" style="background:#FFEBEE;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">🗑️</button></div>').join('');
   } catch(e) { console.error(e); }
 }
-
+async function addNewAd() {
+  const title = document.getElementById('adTitle').value.trim();
+  const adType = document.getElementById('adType').value;
 async function addNewAd() {
   const title = document.getElementById('adTitle').value.trim();
   const adType = document.getElementById('adType').value;
   const duration = parseInt(document.getElementById('adDuration').value) || 10;
   const fileInput = document.getElementById('adFile');
+  
   if (!title) { showToast('⚠️ أدخل عنوان الإعلان'); return; }
   if (!fileInput.files || !fileInput.files[0]) { showToast('⚠️ اختر ملف'); return; }
-  if (!supabaseClient) { showToast('⚠️ Supabase غير متصل'); return; }
+  
   const fileUrl = await uploadFile(fileInput.files[0], 'ads');
   if (!fileUrl) { showToast('❌ فشل الرفع'); return; }
+  
   try {
-    const { error } = await supabaseClient.from('ads').insert([{
-      title, ad_type: adType,
+    var adsData = JSON.parse(localStorage.getItem('ta3lemy_ads') || '[]');
+    adsData.push({
+      id: Date.now().toString(),
+      title: title,
+      ad_type: adType,
       image_url: adType === 'image' ? fileUrl : null,
       video_url: adType === 'video' ? fileUrl : null,
-      duration, position: 'home', active: true
-    }]);
-    if (error) throw error;
+      duration: duration,
+      position: 'home',
+      active: true,
+      created_at: new Date().toISOString()
+    });
+    localStorage.setItem('ta3lemy_ads', JSON.stringify(adsData));
     showToast('✅ تم إضافة الإعلان');
     document.getElementById('adTitle').value = '';
     fileInput.value = '';
     loadAds();
-  } catch(e) { console.error(e); showToast('❌ فشل الإضافة'); }
-}
-
-async function deleteAd(id) {
-  if (!confirm('حذف الإعلان؟')) return;
-  try {
-    const { error } = await supabaseClient.from('ads').delete().eq('id', id);
+    loadAdsOnHome();
+  } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
+}    const { error } = await supabaseClient.from('ads').delete().eq('id', id);
     if (error) throw error;
     loadAds();
     showToast('🗑️ تم الحذف');
@@ -2320,19 +2324,28 @@ async function loadOwnerInfo() {
 // تحميل الإعلانات في الشاشة الرئيسية
 // ============================================
 
-async function loadAdsOnHome() {
+function deleteAd(id) {
+  if (!confirm('حذف الإعلان؟')) return;
   try {
-    if (!supabaseClient) return;
-    const { data, error } = await supabaseClient.from('ads').select('*').eq('active', true).order('created_at', { ascending: false });
-    if (error) throw error;
-    homeAds = data || [];
+    var adsData = JSON.parse(localStorage.getItem('ta3lemy_ads') || '[]');
+    adsData = adsData.filter(a => a.id !== id);
+    localStorage.setItem('ta3lemy_ads', JSON.stringify(adsData));
+    loadAds();
+    loadAdsOnHome();
+    showToast('🗑️ تم الحذف');
+  } catch(e) { console.error(e); }
+}
+
+function loadAdsOnHome() {
+  try {
+    var adsData = JSON.parse(localStorage.getItem('ta3lemy_ads') || '[]');
+    homeAds = adsData.filter(a => a.active !== false);
     if (homeAds.length > 0) {
+      homeAdIndex = 0;
       showHomeAd(0);
     }
-  } catch(e) {
-    console.error('Error loading ads:', e);
-  }
-}
+  } catch(e) { console.error(e); }
+}}
 
 function showHomeAd(index) {
   if (!homeAds || homeAds.length === 0) return;
