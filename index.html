@@ -682,7 +682,26 @@ body.dark-mode .bottom-nav { background: #1E1E1E; border-color: #333; }
 body.dark-mode .nav-item { color: #B0B0B0; }
 body.dark-mode .nav-item.active { background: #2A2A2A; color: var(--primary-light); }
 body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
- <div id="splashScreen" class="screen active">
+
+/* ============ الحاسبة الجانبية ============ */
+.sideCalc-btn, .sideCalc-num {
+  padding: 14px 4px;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.sideCalc-btn { background: rgba(255,255,255,0.15); color: #fff; }
+.sideCalc-btn:active { background: rgba(255,255,255,0.3); transform: scale(0.95); }
+.sideCalc-btn.op { background: rgba(255,193,7,0.9); color: #000; }
+.sideCalc-btn.eq { background: rgba(255,255,255,0.95); color: #1E3A8A; font-size: 22px; }
+.sideCalc-btn.clear { background: rgba(229,57,53,0.9); color: #fff; }
+.sideCalc-num { background: rgba(255,255,255,0.95); color: #1E3A8A; font-size: 18px; }
+.sideCalc-num:active { background: rgba(255,255,255,0.7); transform: scale(0.95); }
+<div id="splashScreen" class="screen active">
   <div class="splash-content">
     <div class="splash-logo">🎓</div>
     <div class="splash-title">منصة حافظ التعليمية</div>
@@ -717,7 +736,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   <button class="btn-primary" onclick="login()">تسجيل الدخول</button>
 </div>
 
-<!-- ========== الشاشة الرئيسية ========== -->
+<!-- ========== الرئيسية ========== -->
 <div id="homeScreen" class="screen">
   <div class="top-bar">
     <div class="logo">
@@ -916,7 +935,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
     <div class="lesson-body" id="viewerBody"></div>
   </div>
 </div>
- <!-- ========== شاشة الأزهر ========== -->
+<!-- ========== شاشة الأزهر ========== -->
 <div id="azharScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#C9A227,#E6C75E);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -959,7 +978,6 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
       <div id="radioStationName" style="font-size:13px;opacity:0.9;margin-bottom:16px;">--</div>
       <button class="btn-primary" style="background:#fff;color:#D32F2F;max-width:200px;margin:0 auto;" onclick="stopRadio()">⏹️ إيقاف</button>
     </div>
-    <div class="section-title">📻 إذاعات متاحة</div>
     <div id="radioList"></div>
   </div>
 </div>
@@ -1121,6 +1139,12 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
       <span style="color:#999;font-size:24px;">‹</span>
     </div>
 
+    <div class="menu-item" onclick="openMyStationManager()">
+      <span style="font-size:26px;">🎙️</span>
+      <span style="flex:1;font-weight:700;">إدارة محطتي الخاصة</span>
+      <span style="color:#999;font-size:24px;">‹</span>
+    </div>
+
     <div class="menu-item" onclick="openOwnerEditor()">
       <span style="font-size:26px;">👨‍🏫</span>
       <span style="flex:1;font-weight:700;">تعديل معلومات المالك</span>
@@ -1128,7 +1152,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
     </div>
   </div>
 </div>
-  <!-- ========== شاشة إضافة درس ========== -->
+<!-- ========== شاشة إضافة درس ========== -->
 <div id="addLessonScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1264,8 +1288,23 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
 
     <div class="section-title">📋 الإعلانات الحالية</div>
     <div id="adsList"></div>
-    
-    <div class="section-title" style="margin-top:30px;">🎙️ محطتي الخاصة</div>
+  </div>
+</div>
+
+<!-- ========== شاشة إدارة المحطة (منفصلة) ========== -->
+<div id="myStationManagerScreen" class="screen">
+  <div class="top-bar" style="background:linear-gradient(135deg,#7B1FA2,#9C27B0);">
+    <button class="icon-btn" onclick="goBack()">→</button>
+    <div class="logo"><span>🎙️ محطتي الخاصة</span></div>
+    <div style="width:42px;"></div>
+  </div>
+  <div class="content">
+    <div class="content-header" style="background:linear-gradient(135deg,#7B1FA2,#9C27B0);">
+      <div class="content-header-title">🎙️ محطتي الخاصة</div>
+      <div class="content-header-sub">ارفع ملفات صوتية — تشتغل في التطبيق</div>
+    </div>
+
+    <div class="section-title">➕ إضافة ملف صوتي</div>
 
     <div class="form-group">
       <label class="form-label">عنوان الملف الصوتي</label>
@@ -1277,7 +1316,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
       <input type="file" class="form-input" id="myStationFile" accept="audio/*" style="padding:10px;">
     </div>
 
-    <button class="btn-primary" onclick="addMyStationAudio()">➕ إضافة للمحطة</button>
+    <button class="btn-primary" onclick="addMyStationAudio()" style="background:linear-gradient(135deg,#7B1FA2,#9C27B0);">➕ إضافة للمحطة</button>
 
     <div class="section-title">🎵 ملفات المحطة</div>
     <div id="myStationList"></div>
@@ -1340,26 +1379,6 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<style>
-.sideCalc-btn, .sideCalc-num {
-  padding: 14px 4px;
-  border: none;
-  border-radius: 12px;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.sideCalc-btn { background: rgba(255,255,255,0.15); color: #fff; }
-.sideCalc-btn:active { background: rgba(255,255,255,0.3); transform: scale(0.95); }
-.sideCalc-btn.op { background: rgba(255,193,7,0.9); color: #000; }
-.sideCalc-btn.eq { background: rgba(255,255,255,0.95); color: #1E3A8A; font-size: 22px; }
-.sideCalc-btn.clear { background: rgba(229,57,53,0.9); color: #fff; }
-.sideCalc-num { background: rgba(255,255,255,0.95); color: #1E3A8A; font-size: 18px; }
-.sideCalc-num:active { background: rgba(255,255,255,0.7); transform: scale(0.95); }
-</style>
-
 <div id="toast" class="toast"></div>
 <script>
 // ============================================
@@ -1377,7 +1396,7 @@ var currentSection = null;
 const OWNER_CODE = '135790';
 
 // ============================================
-// التنقل بين الشاشات
+// التنقل
 // ============================================
 function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1443,9 +1462,7 @@ function login() {
   if (password.length < 4) { showToast('⚠️ كلمة المرور قصيرة'); return; }
   if (currentRole === 'owner' && ownerCode !== OWNER_CODE) { showToast('🔐 كود المالك خطأ'); return; }
   currentUser = { name: username, role: currentRole, points: 1250 };
-  try {
-    localStorage.setItem('ta3lemy_user', JSON.stringify(currentUser));
-  } catch(e) {}
+  try { localStorage.setItem('ta3lemy_user', JSON.stringify(currentUser)); } catch(e) {}
   showToast('✅ تم تسجيل الدخول');
   setTimeout(() => showScreen('homeScreen'), 800);
 }
@@ -1464,7 +1481,7 @@ function logout() {
 }
 
 // ============================================
-// بيانات المراحل
+// البيانات
 // ============================================
 const stagesData = {
   primary: { name: 'المرحلة الابتدائية', icon: '🎒', grades: ['الأول','الثاني','الثالث','الرابع','الخامس','السادس'] },
@@ -1503,6 +1520,34 @@ const surahsData = [
   {id:78,name:'النبأ',verses:40,type:'مكية'},{id:112,name:'الإخلاص',verses:4,type:'مكية'},
   {id:113,name:'الفلق',verses:5,type:'مكية'},{id:114,name:'الناس',verses:6,type:'مكية'}
 ];
+
+// ============================================
+// رفع الملفات إلى Cloudinary
+// ============================================
+async function uploadFile(file, folder) {
+  if (!file) return null;
+  try {
+    showToast('⏳ جاري الرفع...');
+    const CLOUD_NAME = 'soostesp';
+    const UPLOAD_PRESET = 'ta3lemy';
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', UPLOAD_PRESET);
+    if (folder) formData.append('folder', folder);
+    const response = await fetch('https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/auto/upload', {
+      method: 'POST',
+      body: formData
+    });
+    if (!response.ok) throw new Error('Upload failed');
+    const data = await response.json();
+    showToast('✅ تم الرفع');
+    return data.secure_url;
+  } catch (e) {
+    console.error(e);
+    showToast('❌ فشل الرفع');
+    return null;
+  }
+}
 
 // ============================================
 // المناهج
@@ -1564,25 +1609,15 @@ function openContent(sectionType, termNum, termName) {
   const list = document.getElementById('contentList');
   screenHistory.push(currentScreen);
   showScreen('contentScreen');
-  
   try {
     var allLessons = JSON.parse(localStorage.getItem('ta3lemy_lessons') || '[]');
-    var filtered = allLessons.filter(l => 
-      l.subject === currentSubject &&
-      l.term === termNum &&
-      l.type === sectionType &&
-      l.grade === currentGrade
-    );
-    
+    var filtered = allLessons.filter(l => l.subject === currentSubject && l.term === termNum && l.type === sectionType && l.grade === currentGrade);
     if (!filtered || filtered.length === 0) {
-      list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;"><div style="font-size:50px;">📭</div><p style="margin-top:12px;">لا يوجد محتوى بعد</p><p style="font-size:12px;margin-top:8px;">سيتم إضافة المحتوى قريباً</p></div>';
+      list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;"><div style="font-size:50px;">📭</div><p style="margin-top:12px;">لا يوجد محتوى بعد</p></div>';
     } else {
       list.innerHTML = filtered.map(item => '<div class="content-item" onclick="viewContent(\'' + (item.title||'').replace(/'/g,"\\'") + '\', \'' + (item.content||'').replace(/'/g,"\\'") + '\', \'' + (item.video_url||'') + '\', \'' + (item.image_url||'') + '\')"><div class="content-item-icon">📄</div><div class="content-item-info"><div class="content-item-title">' + (item.title || 'بدون عنوان') + '</div><div class="content-item-sub">' + (item.content ? item.content.substring(0, 50) + '...' : '') + '</div></div><div class="content-item-arrow">‹</div></div>').join('');
     }
-  } catch(e) {
-    console.error(e);
-    list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">حدث خطأ</div>';
-  }
+  } catch(e) { console.error(e); list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">حدث خطأ</div>'; }
 }
 
 function viewContent(title, content, videoUrl, imageUrl) {
@@ -1659,6 +1694,7 @@ function openRadio() {
   screenHistory.push(currentScreen);
   showScreen('radioScreen');
 }
+
 function playRadio(index) {
   const station = radioStations[index];
   if (radioAudio) { radioAudio.pause(); radioAudio = null; }
@@ -1674,6 +1710,72 @@ function stopRadio() {
   if (radioAudio) { radioAudio.pause(); radioAudio = null; }
   document.getElementById('radioPlayer').style.display = 'none';
   showToast('⏹️ تم الإيقاف');
+}
+
+// ============================================
+// محطتي الخاصة
+// ============================================
+function openMyStationManager() {
+  loadMyStation();
+  screenHistory.push(currentScreen);
+  showScreen('myStationManagerScreen');
+}
+
+async function addMyStationAudio() {
+  const title = document.getElementById('myStationTitle').value.trim();
+  const fileInput = document.getElementById('myStationFile');
+  if (!title) { showToast('⚠️ أدخل عنوان الملف'); return; }
+  if (!fileInput.files || !fileInput.files[0]) { showToast('⚠️ اختر ملف صوتي'); return; }
+  const fileUrl = await uploadFile(fileInput.files[0], 'mystation');
+  if (!fileUrl) { showToast('❌ فشل الرفع'); return; }
+  try {
+    var list = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
+    list.push({ id: Date.now().toString(), title: title, url: fileUrl, created_at: new Date().toISOString() });
+    localStorage.setItem('ta3lemy_station', JSON.stringify(list));
+    showToast('✅ تم إضافة الملف للمحطة');
+    document.getElementById('myStationTitle').value = '';
+    fileInput.value = '';
+    loadMyStation();
+  } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
+}
+
+function loadMyStation() {
+  const list = document.getElementById('myStationList');
+  if (!list) return;
+  try {
+    var audios = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
+    if (audios.length === 0) {
+      list.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">لا توجد ملفات بعد</div>';
+      return;
+    }
+    list.innerHTML = audios.map(a => '<div style="background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:24px;">🎵</div><div style="flex:1;"><div style="font-weight:bold;font-size:14px;">' + a.title + '</div><div style="font-size:12px;color:#999;">ملف صوتي</div></div><button onclick="deleteMyStationAudio(\'' + a.id + '\')" style="background:#FFEBEE;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">🗑️</button></div>').join('');
+  } catch(e) { console.error(e); }
+}
+
+function deleteMyStationAudio(id) {
+  if (!confirm('حذف الملف؟')) return;
+  try {
+    var audios = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
+    audios = audios.filter(a => a.id !== id);
+    localStorage.setItem('ta3lemy_station', JSON.stringify(audios));
+    loadMyStation();
+    showToast('🗑️ تم الحذف');
+  } catch(e) { console.error(e); }
+}
+
+function playMyStationAudio(id) {
+  try {
+    var audios = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
+    var audio = audios.find(a => a.id === id);
+    if (!audio) return;
+    if (radioAudio) { radioAudio.pause(); radioAudio = null; }
+    radioAudio = new Audio(audio.url);
+    radioAudio.play().catch(e => showToast('❌ تعذر التشغيل'));
+    document.getElementById('radioPlayer').style.display = 'block';
+    document.getElementById('radioStationName').textContent = audio.title;
+    document.getElementById('radioNowPlaying').textContent = '🎵 جاري التشغيل...';
+    showToast('▶️ ' + audio.title);
+  } catch(e) { console.error(e); }
 }
 
 // ============================================
@@ -1700,39 +1802,10 @@ function toggleDark() {
 }
 
 // ============================================
-// رفع الملفات إلى Cloudinary
-// ============================================
-async function uploadFile(file, folder) {
-  if (!file) return null;
-  try {
-    showToast('⏳ جاري الرفع...');
-    const CLOUD_NAME = 'soostesp';
-    const UPLOAD_PRESET = 'ta3lemy';
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', UPLOAD_PRESET);
-    if (folder) formData.append('folder', folder);
-    const response = await fetch('https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/auto/upload', {
-      method: 'POST',
-      body: formData
-    });
-    if (!response.ok) throw new Error('Upload failed');
-    const data = await response.json();
-    showToast('✅ تم الرفع');
-    return data.secure_url;
-  } catch (e) {
-    console.error(e);
-    showToast('❌ فشل الرفع');
-    return null;
-  }
-}
-
-// ============================================
-// إدارة الإعلانات (localStorage)
+// الإعلانات
 // ============================================
 function openAdsManager() {
   loadAds();
-  loadMyStation();
   screenHistory.push(currentScreen);
   showScreen('adsManagerScreen');
 }
@@ -1794,7 +1867,7 @@ function deleteAd(id) {
 }
 
 // ============================================
-// الإعلانات في الشاشة الرئيسية
+// الإعلانات في الرئيسية
 // ============================================
 var homeAds = [];
 var homeAdIndex = 0;
@@ -1817,11 +1890,14 @@ function showHomeAd(index) {
   const adBox = document.getElementById('mainAd');
   if (!adBox) return;
   const duration = (ad.duration || 10) * 1000;
+  var html = '';
   if (ad.ad_type === 'video' && ad.video_url) {
-    adBox.innerHTML = '<video autoplay muted loop style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><source src="' + ad.video_url + '" type="video/mp4"></video><div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title" style="color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.7);">' + (ad.title || '') + '</div></div>';
+    html = '<video autoplay muted loop style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><source src="' + ad.video_url + '" type="video/mp4"></video>';
   } else if (ad.image_url) {
-    adBox.innerHTML = '<img src="' + ad.image_url + '" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title" style="color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.7);">' + (ad.title || '') + '</div></div>';
+    html = '<img src="' + ad.image_url + '" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">';
   }
+  html += '<div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title" style="color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.7);">' + (ad.title || '') + '</div></div>';
+  adBox.innerHTML = html;
   if (homeAdTimer) clearTimeout(homeAdTimer);
   if (homeAds.length > 1) {
     homeAdTimer = setTimeout(function() {
@@ -1866,14 +1942,11 @@ async function saveNewLesson() {
   const term = parseInt(document.getElementById('newLessonTerm').value);
   const imageFile = document.getElementById('newLessonImageFile').files[0];
   const videoFile = document.getElementById('newLessonVideoFile').files[0];
-  
   if (!title) { showToast('⚠️ أدخل عنوان الدرس'); return; }
-  
   let imageUrl = null;
   let videoUrl = null;
   if (imageFile) imageUrl = await uploadFile(imageFile, 'lessons/images');
   if (videoFile) videoUrl = await uploadFile(videoFile, 'lessons/videos');
-  
   try {
     var lessons = JSON.parse(localStorage.getItem('ta3lemy_lessons') || '[]');
     lessons.push({
@@ -1923,65 +1996,6 @@ async function saveOwnerProfile() {
     showToast('✅ تم الحفظ');
     setTimeout(() => goBack(), 1000);
   } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
-}
-// ============================================
-// محطتي الخاصة
-// ============================================
-async function addMyStationAudio() {
-  const title = document.getElementById('myStationTitle').value.trim();
-  const fileInput = document.getElementById('myStationFile');
-  if (!title) { showToast('⚠️ أدخل عنوان الملف'); return; }
-  if (!fileInput.files || !fileInput.files[0]) { showToast('⚠️ اختر ملف صوتي'); return; }
-  const fileUrl = await uploadFile(fileInput.files[0], 'mystation');
-  if (!fileUrl) { showToast('❌ فشل الرفع'); return; }
-  try {
-    var list = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
-    list.push({ id: Date.now().toString(), title: title, url: fileUrl, created_at: new Date().toISOString() });
-    localStorage.setItem('ta3lemy_station', JSON.stringify(list));
-    showToast('✅ تم إضافة الملف للمحطة');
-    document.getElementById('myStationTitle').value = '';
-    fileInput.value = '';
-    loadMyStation();
-  } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
-}
-
-function loadMyStation() {
-  const list = document.getElementById('myStationList');
-  if (!list) return;
-  try {
-    var audios = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
-    if (audios.length === 0) {
-      list.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">لا توجد ملفات بعد</div>';
-      return;
-    }
-    list.innerHTML = audios.map(a => '<div style="background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:24px;">🎵</div><div style="flex:1;"><div style="font-weight:bold;font-size:14px;">' + a.title + '</div><div style="font-size:12px;color:#999;">ملف صوتي</div></div><button onclick="deleteMyStationAudio(\'' + a.id + '\')" style="background:#FFEBEE;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">🗑️</button></div>').join('');
-  } catch(e) { console.error(e); }
-}
-
-function deleteMyStationAudio(id) {
-  if (!confirm('حذف الملف؟')) return;
-  try {
-    var audios = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
-    audios = audios.filter(a => a.id !== id);
-    localStorage.setItem('ta3lemy_station', JSON.stringify(audios));
-    loadMyStation();
-    showToast('🗑️ تم الحذف');
-  } catch(e) { console.error(e); }
-}
-
-function playMyStationAudio(id) {
-  try {
-    var audios = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
-    var audio = audios.find(a => a.id === id);
-    if (!audio) return;
-    if (radioAudio) { radioAudio.pause(); radioAudio = null; }
-    radioAudio = new Audio(audio.url);
-    radioAudio.play().catch(e => showToast('❌ تعذر التشغيل'));
-    document.getElementById('radioPlayer').style.display = 'block';
-    document.getElementById('radioStationName').textContent = audio.title;
-    document.getElementById('radioNowPlaying').textContent = '🎵 جاري التشغيل...';
-    showToast('▶️ ' + audio.title);
-  } catch(e) { console.error(e); }
 }
 
 // ============================================
@@ -2319,7 +2333,7 @@ window.addEventListener('load', () => {
 });
 
 // ============================================
-// تسجيل Service Worker
+// Service Worker
 // ============================================
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
