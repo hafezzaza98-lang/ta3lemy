@@ -1264,6 +1264,23 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
 
     <div class="section-title">📋 الإعلانات الحالية</div>
     <div id="adsList"></div>
+    
+    <div class="section-title" style="margin-top:30px;">🎙️ محطتي الخاصة</div>
+
+    <div class="form-group">
+      <label class="form-label">عنوان الملف الصوتي</label>
+      <input type="text" class="form-input" id="myStationTitle" placeholder="مثال: درس اليوم">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">📤 اختر ملف صوتي (MP3 / WAV)</label>
+      <input type="file" class="form-input" id="myStationFile" accept="audio/*" style="padding:10px;">
+    </div>
+
+    <button class="btn-primary" onclick="addMyStationAudio()">➕ إضافة للمحطة</button>
+
+    <div class="section-title">🎵 ملفات المحطة</div>
+    <div id="myStationList"></div>
   </div>
 </div>
 
@@ -1631,11 +1648,17 @@ var radioAudio = null;
 
 function openRadio() {
   const list = document.getElementById('radioList');
-  list.innerHTML = radioStations.map((s, i) => '<div class="content-item" onclick="playRadio(' + i + ')"><div class="content-item-icon" style="background:linear-gradient(135deg,#D32F2F,#FF8F00);color:#fff;font-size:24px;">📻</div><div class="content-item-info"><div class="content-item-title">' + s.name + '</div><div class="content-item-sub">اضغط للتشغيل</div></div><div class="content-item-arrow">▶️</div></div>').join('');
+  var stationHtml = '';
+  try {
+    var audios = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
+    if (audios.length > 0) {
+      stationHtml = '<div class="section-title">🎙️ محطتي الخاصة</div>' + audios.map(a => '<div class="content-item" onclick="playMyStationAudio(\'' + a.id + '\')"><div class="content-item-icon" style="background:linear-gradient(135deg,#7B1FA2,#9C27B0);color:#fff;font-size:24px;">🎵</div><div class="content-item-info"><div class="content-item-title">' + a.title + '</div><div class="content-item-sub">من محطتي</div></div><div class="content-item-arrow">▶️</div></div>').join('') + '<div class="section-title">📻 الإذاعات العامة</div>';
+    }
+  } catch(e) {}
+  list.innerHTML = stationHtml + radioStations.map((s, i) => '<div class="content-item" onclick="playRadio(' + i + ')"><div class="content-item-icon" style="background:linear-gradient(135deg,#D32F2F,#FF8F00);color:#fff;font-size:24px;">📻</div><div class="content-item-info"><div class="content-item-title">' + s.name + '</div><div class="content-item-sub">اضغط للتشغيل</div></div><div class="content-item-arrow">▶️</div></div>').join('');
   screenHistory.push(currentScreen);
   showScreen('radioScreen');
 }
-
 function playRadio(index) {
   const station = radioStations[index];
   if (radioAudio) { radioAudio.pause(); radioAudio = null; }
@@ -1709,6 +1732,7 @@ async function uploadFile(file, folder) {
 // ============================================
 function openAdsManager() {
   loadAds();
+  loadMyStation();
   screenHistory.push(currentScreen);
   showScreen('adsManagerScreen');
 }
@@ -1899,6 +1923,65 @@ async function saveOwnerProfile() {
     showToast('✅ تم الحفظ');
     setTimeout(() => goBack(), 1000);
   } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
+}
+// ============================================
+// محطتي الخاصة
+// ============================================
+async function addMyStationAudio() {
+  const title = document.getElementById('myStationTitle').value.trim();
+  const fileInput = document.getElementById('myStationFile');
+  if (!title) { showToast('⚠️ أدخل عنوان الملف'); return; }
+  if (!fileInput.files || !fileInput.files[0]) { showToast('⚠️ اختر ملف صوتي'); return; }
+  const fileUrl = await uploadFile(fileInput.files[0], 'mystation');
+  if (!fileUrl) { showToast('❌ فشل الرفع'); return; }
+  try {
+    var list = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
+    list.push({ id: Date.now().toString(), title: title, url: fileUrl, created_at: new Date().toISOString() });
+    localStorage.setItem('ta3lemy_station', JSON.stringify(list));
+    showToast('✅ تم إضافة الملف للمحطة');
+    document.getElementById('myStationTitle').value = '';
+    fileInput.value = '';
+    loadMyStation();
+  } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
+}
+
+function loadMyStation() {
+  const list = document.getElementById('myStationList');
+  if (!list) return;
+  try {
+    var audios = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
+    if (audios.length === 0) {
+      list.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">لا توجد ملفات بعد</div>';
+      return;
+    }
+    list.innerHTML = audios.map(a => '<div style="background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:24px;">🎵</div><div style="flex:1;"><div style="font-weight:bold;font-size:14px;">' + a.title + '</div><div style="font-size:12px;color:#999;">ملف صوتي</div></div><button onclick="deleteMyStationAudio(\'' + a.id + '\')" style="background:#FFEBEE;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">🗑️</button></div>').join('');
+  } catch(e) { console.error(e); }
+}
+
+function deleteMyStationAudio(id) {
+  if (!confirm('حذف الملف؟')) return;
+  try {
+    var audios = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
+    audios = audios.filter(a => a.id !== id);
+    localStorage.setItem('ta3lemy_station', JSON.stringify(audios));
+    loadMyStation();
+    showToast('🗑️ تم الحذف');
+  } catch(e) { console.error(e); }
+}
+
+function playMyStationAudio(id) {
+  try {
+    var audios = JSON.parse(localStorage.getItem('ta3lemy_station') || '[]');
+    var audio = audios.find(a => a.id === id);
+    if (!audio) return;
+    if (radioAudio) { radioAudio.pause(); radioAudio = null; }
+    radioAudio = new Audio(audio.url);
+    radioAudio.play().catch(e => showToast('❌ تعذر التشغيل'));
+    document.getElementById('radioPlayer').style.display = 'block';
+    document.getElementById('radioStationName').textContent = audio.title;
+    document.getElementById('radioNowPlaying').textContent = '🎵 جاري التشغيل...';
+    showToast('▶️ ' + audio.title);
+  } catch(e) { console.error(e); }
 }
 
 // ============================================
