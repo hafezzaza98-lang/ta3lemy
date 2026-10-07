@@ -7,7 +7,6 @@
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#2E7D32">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
   --primary: #2E7D32;
@@ -43,7 +42,7 @@ html, body {
 .screen { display: none; flex-direction: column; min-height: 100vh; }
 .screen.active { display: flex; }
 
-/* ====== الرأس العلوي ====== */
+/* ============ الرأس العلوي ============ */
 .top-bar {
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: var(--white);
@@ -65,8 +64,7 @@ html, body {
   font-weight: bold;
 }
 .owner-avatar {
-  width: 42px;
-  height: 42px;
+  width: 42px; height: 42px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--white);
@@ -78,8 +76,7 @@ html, body {
   background: rgba(255,255,255,0.2);
   border: none;
   color: var(--white);
-  width: 42px;
-  height: 42px;
+  width: 42px; height: 42px;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -90,12 +87,10 @@ html, body {
 }
 .icon-btn:active { background: rgba(255,255,255,0.35); }
 
-/* ====== الشريط السفلي الواضح ====== */
+/* ============ الشريط السفلي ============ */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   background: var(--white);
   display: flex;
   justify-content: space-around;
@@ -135,10 +130,10 @@ html, body {
   filter: drop-shadow(0 2px 4px rgba(46,125,50,0.4));
 }
 
-/* ====== المحتوى ====== */
+/* ============ المحتوى ============ */
 .content { flex: 1; padding: 16px; padding-bottom: 100px; overflow-y: auto; }
 
-/* ====== Splash ====== */
+/* ============ Splash ============ */
 #splashScreen {
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   align-items: center;
@@ -146,8 +141,7 @@ html, body {
 }
 .splash-content { text-align: center; color: var(--white); }
 .splash-logo {
-  width: 130px;
-  height: 130px;
+  width: 130px; height: 130px;
   background: var(--white);
   border-radius: 35px;
   display: flex;
@@ -165,8 +159,7 @@ html, body {
 .splash-title { font-size: 28px; font-weight: bold; margin-bottom: 8px; }
 .splash-subtitle { font-size: 15px; opacity: 0.95; margin-bottom: 32px; }
 .loader {
-  width: 45px;
-  height: 45px;
+  width: 45px; height: 45px;
   border: 4px solid rgba(255,255,255,0.3);
   border-top-color: var(--white);
   border-radius: 50%;
@@ -175,11 +168,10 @@ html, body {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ====== Login ====== */
+/* ============ Login ============ */
 #loginScreen { background: var(--cream); padding: 24px; justify-content: center; }
 .login-logo {
-  width: 110px;
-  height: 110px;
+  width: 110px; height: 110px;
   background: var(--primary-pale);
   border-radius: 30px;
   display: flex;
@@ -212,13 +204,7 @@ html, body {
   box-shadow: var(--shadow);
 }
 .form-group { margin-bottom: 16px; }
-.form-label {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--dark-gray);
-  margin-bottom: 6px;
-  display: block;
-}
+.form-label { font-size: 13px; font-weight: 700; color: var(--dark-gray); margin-bottom: 6px; display: block; }
 .form-input {
   width: 100%;
   padding: 14px 16px;
@@ -251,9 +237,6 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   transition: transform 0.2s;
 }
 .btn-primary:active { transform: scale(0.98); }
-.btn-blue {
-  background: linear-gradient(135deg, var(--blue), var(--blue-light));
-}
 .link-btn {
   background: none;
   border: none;
@@ -268,7 +251,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   text-decoration: underline;
 }
 
-/* ====== Toast ====== */
+/* ============ Toast ============ */
 .toast {
   position: fixed;
   bottom: 110px;
@@ -288,11 +271,11 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   text-align: center;
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-/* ====== البحث ====== */
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+/* ============ البحث ============ */
 .search-box {
   background: var(--white);
   border-radius: 16px;
@@ -319,7 +302,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   color: var(--black);
 }
 
-/* ====== العناوين ====== */
+/* ============ العناوين ============ */
 .section-title {
   font-size: 18px;
   font-weight: bold;
@@ -330,11 +313,11 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   gap: 8px;
 }
 
-/* ====== الإعلان الكبير ====== */
+/* ============ الإعلان الكبير ============ */
 .ad-banner {
   background: linear-gradient(135deg, #FF6B6B, #FF8E53);
   border-radius: 20px;
-  padding: 60px 40px;
+  padding: 60px 24px;
   color: var(--white);
   cursor: pointer;
   display: flex;
@@ -353,18 +336,17 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   height: 100%;
   object-fit: cover;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
 }
 .ad-banner-content {
   position: relative;
   z-index: 1;
   text-align: center;
 }
-.ad-banner-title { font-32px: 22px; font-weight: bold; margin-bottom: 4px; }
-.ad-banner-sub { font-18px: 14px; opacity: 0.95; }
+.ad-banner-title { font-size: 32px; font-weight: bold; margin-bottom: 6px; }
+.ad-banner-sub { font-size: 18px; opacity: 0.95; }
 
-/* ====== شريط الحكمة ====== */
+/* ============ شريط الحكمة ============ */
 .wisdom-bar {
   background: linear-gradient(90deg, #7B1FA2, #9C27B0, #7B1FA2);
   border-radius: 12px;
@@ -389,7 +371,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   to { transform: translateX(100%); }
 }
 
-/* ====== بطاقات المراحل ====== */
+/* ============ بطاقات المراحل ============ */
 .cards-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -408,7 +390,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 .big-card-icon { font-size: 38px; margin-bottom: 8px; }
 .big-card-label { font-size: 14px; font-weight: bold; }
 
-/* ====== أزهر وقرآن ====== */
+/* ============ أزهر وقرآن ============ */
 .azhar-card, .quran-card {
   border-radius: 18px;
   padding: 24px;
@@ -429,7 +411,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 .azhar-sub, .quran-sub { font-size: 13px; opacity: 0.95; }
 .azhar-arrow, .quran-arrow { font-size: 28px; font-weight: bold; }
 
-/* ====== الأدوات ====== */
+/* ============ الأدوات ============ */
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -460,7 +442,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 }
 .tool-label { font-size: 12px; font-weight: 700; color: var(--dark-gray); }
 
-/* ====== الإحصائيات ====== */
+/* ============ الإحصائيات ============ */
 .stats-card {
   background: var(--white);
   border-radius: 18px;
@@ -474,7 +456,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 .stat-label { font-size: 12px; color: var(--gray); font-weight: 600; }
 .stat-divider { width: 1px; height: 45px; background: #eee; }
 
-/* ====== قوائم المراحل ====== */
+/* ============ قوائم المراحل ============ */
 .stage-item, .azhar-subject-item {
   background: var(--white);
   border-radius: 16px;
@@ -507,7 +489,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 .stage-sub { font-size: 12px; color: var(--gray); }
 .stage-arrow { font-size: 26px; color: var(--gray); font-weight: bold; }
 
-/* ====== المواد ====== */
+/* ============ المواد ============ */
 .subjects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -534,7 +516,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 }
 .subject-name { font-size: 14px; font-weight: 700; color: var(--dark-gray); }
 
-/* ====== الترمين ====== */
+/* ============ الترمين ============ */
 .term-container {
   display: flex;
   flex-direction: column;
@@ -592,7 +574,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   transform: scale(0.97);
 }
 
-/* ====== رأس المحتوى ====== */
+/* ============ رأس المحتوى ============ */
 .content-header {
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: var(--white);
@@ -604,7 +586,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 .content-header-title { font-size: 20px; font-weight: bold; margin-bottom: 6px; }
 .content-header-sub { font-size: 13px; opacity: 0.95; }
 
-/* ====== بطاقة المحتوى ====== */
+/* ============ بطاقة المحتوى ============ */
 .content-item {
   background: var(--white);
   border-radius: 16px;
@@ -642,7 +624,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 .content-item-sub { font-size: 12px; color: var(--gray); }
 .content-item-arrow { font-size: 22px; color: var(--gray); }
 
-/* ====== الدرس ====== */
+/* ============ الدرس ============ */
 .lesson-body {
   background: var(--white);
   border-radius: 18px;
@@ -656,15 +638,8 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   border-radius: 12px;
   margin-top: 16px;
 }
-.lesson-body iframe {
-  width: 100%;
-  height: 300px;
-  border-radius: 12px;
-  margin-top: 16px;
-  border: none;
-}
 
-/* ====== القوائم ====== */
+/* ============ القوائم ============ */
 .menu-item {
   background: var(--white);
   border-radius: 16px;
@@ -683,7 +658,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   border-color: var(--primary-soft);
 }
 
-/* ====== الوضع الليلي ====== */
+/* ============ الوضع الليلي ============ */
 body.dark-mode {
   background: #121212;
   color: #E0E0E0;
@@ -707,11 +682,7 @@ body.dark-mode .bottom-nav { background: #1E1E1E; border-color: #333; }
 body.dark-mode .nav-item { color: #B0B0B0; }
 body.dark-mode .nav-item.active { background: #2A2A2A; color: var(--primary-light); }
 body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
-</style>
-</head>
-<body>
-
-<div id="splashScreen" class="screen active">
+ <div id="splashScreen" class="screen active">
   <div class="splash-content">
     <div class="splash-logo">🎓</div>
     <div class="splash-title">منصة حافظ التعليمية</div>
@@ -746,7 +717,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   <button class="btn-primary" onclick="login()">تسجيل الدخول</button>
 </div>
 
-<!-- ====== الشاشة الرئيسية ====== -->
+<!-- ========== الشاشة الرئيسية ========== -->
 <div id="homeScreen" class="screen">
   <div class="top-bar">
     <div class="logo">
@@ -865,7 +836,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== شاشة المراحل ====== -->
+<!-- ========== شاشة المراحل ========== -->
 <div id="educationScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -878,7 +849,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== شاشة الصفوف ====== -->
+<!-- ========== شاشة الصفوف ========== -->
 <div id="gradesScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -890,7 +861,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== شاشة المواد ====== -->
+<!-- ========== شاشة المواد ========== -->
 <div id="subjectsScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -902,7 +873,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== شاشة الترمين ====== -->
+<!-- ========== شاشة الترمين ========== -->
 <div id="termsScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -918,7 +889,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== شاشة المحتوى ====== -->
+<!-- ========== شاشة المحتوى ========== -->
 <div id="contentScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -934,7 +905,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== شاشة العرض ====== -->
+<!-- ========== شاشة العرض ========== -->
 <div id="viewerScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -945,8 +916,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
     <div class="lesson-body" id="viewerBody"></div>
   </div>
 </div>
-
-<!-- ====== شاشة الأزهر ====== -->
+ <!-- ========== شاشة الأزهر ========== -->
 <div id="azharScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#C9A227,#E6C75E);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -959,7 +929,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== شاشة القرآن ====== -->
+<!-- ========== شاشة القرآن ========== -->
 <div id="quranScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#00695C,#26A69A);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -975,7 +945,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== شاشة الراديو ====== -->
+<!-- ========== شاشة الراديو ========== -->
 <div id="radioScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#D32F2F,#FF8F00);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -984,7 +954,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
   <div class="content">
     <div id="radioPlayer" style="display:none;background:linear-gradient(135deg,#D32F2F,#FF8F00);border-radius:20px;padding:24px;text-align:center;color:#fff;margin-bottom:16px;box-shadow:0 6px 20px rgba(211,47,47,0.3);">
-      <div style="font-size:60px;margin-bottom:12px;" id="radioIconPlaying">📻</div>
+      <div style="font-size:60px;margin-bottom:12px;">📻</div>
       <div id="radioNowPlaying" style="font-size:18px;font-weight:bold;margin-bottom:6px;">جاري التشغيل</div>
       <div id="radioStationName" style="font-size:13px;opacity:0.9;margin-bottom:16px;">--</div>
       <button class="btn-primary" style="background:#fff;color:#D32F2F;max-width:200px;margin:0 auto;" onclick="stopRadio()">⏹️ إيقاف</button>
@@ -994,17 +964,14 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== شاشة الرسم ====== -->
+<!-- ========== شاشة الرسم ========== -->
 <div id="drawingScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
     <div class="logo"><span>✏️ لوحة الرسم</span></div>
     <div style="width:42px;"></div>
   </div>
-
   <div class="content" style="padding:0;display:flex;flex-direction:column;height:calc(100vh - 70px);">
-    
-    <!-- شريط الأدوات العلوي -->
     <div style="background:#fff;padding:8px;display:flex;gap:6px;overflow-x:auto;border-bottom:2px solid #E8F5E9;flex-shrink:0;">
       <button onclick="drawingUndo()" id="undoBtn" style="background:#E3F2FD;color:#1976D2;border:none;padding:8px 12px;border-radius:10px;font-family:inherit;font-weight:bold;font-size:13px;cursor:pointer;white-space:nowrap;">↶ تراجع</button>
       <button onclick="drawingRedo()" id="redoBtn" style="background:#E3F2FD;color:#1976D2;border:none;padding:8px 12px;border-radius:10px;font-family:inherit;font-weight:bold;font-size:13px;cursor:pointer;white-space:nowrap;">↷ إعادة</button>
@@ -1014,15 +981,9 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
       <button onclick="drawingClearAll()" style="background:#FFEBEE;color:#E53935;border:none;padding:8px 12px;border-radius:10px;font-family:inherit;font-weight:bold;font-size:13px;cursor:pointer;white-space:nowrap;">🗑️ مسح الكل</button>
     </div>
 
-    <!-- شريط الألوان الكبير -->
     <div style="background:#fff;padding:10px 8px;display:flex;gap:8px;overflow-x:auto;border-bottom:2px solid #E8F5E9;flex-shrink:0;align-items:center;">
-      
-      <!-- الإستيكة -->
       <button onclick="drawingSetEraser()" id="eraserBtn" style="width:42px;height:42px;border-radius:50%;background:#F5F5F5;border:3px solid #E0E0E0;font-size:20px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🧽</button>
-      
       <div style="width:2px;height:30px;background:#E0E0E0;flex-shrink:0;"></div>
-      
-      <!-- 12 لون -->
       <button onclick="drawingSetColor('#000000')" style="width:36px;height:36px;border-radius:50%;background:#000000;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
       <button onclick="drawingSetColor('#FFFFFF')" style="width:36px;height:36px;border-radius:50%;background:#FFFFFF;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
       <button onclick="drawingSetColor('#E53935')" style="width:36px;height:36px;border-radius:50%;background:#E53935;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
@@ -1035,40 +996,25 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
       <button onclick="drawingSetColor('#EC407A')" style="width:36px;height:36px;border-radius:50%;background:#EC407A;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
       <button onclick="drawingSetColor('#8D6E63')" style="width:36px;height:36px;border-radius:50%;background:#8D6E63;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
       <button onclick="drawingSetColor('#546E7A')" style="width:36px;height:36px;border-radius:50%;background:#546E7A;border:3px solid #fff;box-shadow:0 0 0 1px #ddd;cursor:pointer;flex-shrink:0;"></button>
-      
       <div style="width:2px;height:30px;background:#E0E0E0;flex-shrink:0;"></div>
-      
-      <!-- أحجام الفرشاة -->
-      <button onclick="drawingSetSize(2)" id="size1Btn" style="width:38px;height:38px;border-radius:12px;background:#F5F5F5;border:2px solid #E0E0E0;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
-        <div style="width:6px;height:6px;background:#333;border-radius:50%;"></div>
-      </button>
-      <button onclick="drawingSetSize(5)" id="size2Btn" style="width:38px;height:38px;border-radius:12px;background:#E8F5E9;border:2px solid #4CAF50;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
-        <div style="width:12px;height:12px;background:#333;border-radius:50%;"></div>
-      </button>
-      <button onclick="drawingSetSize(12)" id="size3Btn" style="width:38px;height:38px;border-radius:12px;background:#F5F5F5;border:2px solid #E0E0E0;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
-        <div style="width:20px;height:20px;background:#333;border-radius:50%;"></div>
-      </button>
-      
+      <button onclick="drawingSetSize(2)" id="size1Btn" style="width:38px;height:38px;border-radius:12px;background:#F5F5F5;border:2px solid #E0E0E0;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><div style="width:6px;height:6px;background:#333;border-radius:50%;"></div></button>
+      <button onclick="drawingSetSize(5)" id="size2Btn" style="width:38px;height:38px;border-radius:12px;background:#E8F5E9;border:2px solid #4CAF50;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><div style="width:12px;height:12px;background:#333;border-radius:50%;"></div></button>
+      <button onclick="drawingSetSize(12)" id="size3Btn" style="width:38px;height:38px;border-radius:12px;background:#F5F5F5;border:2px solid #E0E0E0;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><div style="width:20px;height:20px;background:#333;border-radius:50%;"></div></button>
     </div>
 
-    <!-- مؤشر اللون الحالي -->
     <div style="background:#FAF7EE;padding:6px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:12px;color:#666;font-family:inherit;flex-shrink:0;">
       <span>اللون الحالي:</span>
       <div id="currentColorIndicator" style="width:24px;height:24px;border-radius:50%;background:#000;border:2px solid #fff;box-shadow:0 0 0 1px #ddd;"></div>
       <span id="currentModeText" style="font-weight:bold;">✏️ قلم</span>
     </div>
 
-    <!-- الـ Canvas -->
     <div style="flex:1;position:relative;background:#fff;overflow:hidden;">
       <canvas id="fullDrawingCanvas" style="display:block;width:100%;height:100%;touch-action:none;cursor:crosshair;"></canvas>
     </div>
-
-  </div>
-</div>
   </div>
 </div>
 
-<!-- ====== شاشة الرسائل ====== -->
+<!-- ========== شاشة الرسائل ========== -->
 <div id="messagesScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1079,7 +1025,8 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
     <div id="messagesList"></div>
   </div>
 </div>
- <!-- ====== شاشة الحساب ====== -->
+
+<!-- ========== شاشة الحساب ========== -->
 <div id="profileScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1122,7 +1069,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== شاشة المالك ====== -->
+<!-- ========== شاشة المالك ========== -->
 <div id="ownerProfileScreen" class="screen">
   <div class="top-bar">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1132,13 +1079,11 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   <div class="content" style="text-align:center;">
     <img id="ownerProfileImage" class="owner-avatar" style="width:160px;height:160px;margin:20px auto;display:block;" src="https://ui-avatars.com/api/?name=حافظ&background=2E7D32&color=fff&size=200" alt="المالك">
     <div id="ownerProfileName" style="font-size:26px;font-weight:bold;color:var(--primary);margin-top:14px;">الأستاذ حافظ</div>
-    <div id="ownerProfileBio" style="font-size:15px;color:var(--gray);margin-top:18px;line-height:2;padding:0 24px;">
-      مؤسس منصة حافظ التعليمية
-    </div>
+    <div id="ownerProfileBio" style="font-size:15px;color:var(--gray);margin-top:18px;line-height:2;padding:0 24px;">مؤسس منصة حافظ التعليمية</div>
   </div>
 </div>
 
-<!-- ====== لوحة المالك ====== -->
+<!-- ========== لوحة المالك ========== -->
 <div id="adminScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1183,8 +1128,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
     </div>
   </div>
 </div>
-
-<!-- ====== شاشة إضافة درس ====== -->
+  <!-- ========== شاشة إضافة درس ========== -->
 <div id="addLessonScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1256,7 +1200,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== شاشة تعديل المالك ====== -->
+<!-- ========== شاشة تعديل المالك ========== -->
 <div id="ownerEditorScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1283,7 +1227,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== شاشة إدارة الإعلانات ====== -->
+<!-- ========== شاشة إدارة الإعلانات ========== -->
 <div id="adsManagerScreen" class="screen">
   <div class="top-bar" style="background:linear-gradient(135deg,#B71C1C,#E53935);">
     <button class="icon-btn" onclick="goBack()">→</button>
@@ -1323,7 +1267,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   </div>
 </div>
 
-<!-- ====== الحاسبة الجانبية العائمة ====== -->
+<!-- ========== الحاسبة الجانبية ========== -->
 <button id="calcToggle" onclick="toggleSideCalculator()" style="position:fixed;bottom:110px;left:16px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#2E7D32,#1976D2);color:#fff;border:none;font-size:24px;cursor:pointer;box-shadow:0 4px 16px rgba(46,125,50,0.4);z-index:900;display:none;align-items:center;justify-content:center;">🧮</button>
 
 <div id="sideCalculator" style="position:fixed;top:0;left:-320px;width:320px;max-width:90vw;height:100vh;background:linear-gradient(180deg,#1E3A8A,#2E7D32);z-index:1500;transition:left 0.3s ease;overflow-y:auto;box-shadow:8px 0 30px rgba(0,0,0,0.3);">
@@ -1331,56 +1275,47 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
     <div style="font-size:18px;font-weight:bold;">🧮 الحاسبة العلمية</div>
     <button onclick="toggleSideCalculator()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;">✕</button>
   </div>
-
   <div style="padding:16px;">
     <div style="background:rgba(255,255,255,0.95);border-radius:14px;padding:16px;margin-bottom:14px;direction:ltr;">
       <div id="sideCalcHistory" style="color:#666;font-size:13px;min-height:18px;text-align:right;"></div>
       <div id="sideCalcScreen" style="font-size:28px;font-weight:bold;color:#212121;word-break:break-all;text-align:right;">0</div>
     </div>
-
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;">
       <button class="sideCalc-btn" onclick="sideCalcFunc('sin')">sin</button>
       <button class="sideCalc-btn" onclick="sideCalcFunc('cos')">cos</button>
       <button class="sideCalc-btn" onclick="sideCalcFunc('tan')">tan</button>
       <button class="sideCalc-btn" onclick="sideCalcInput('(')">(</button>
       <button class="sideCalc-btn" onclick="sideCalcInput(')')">)</button>
-
       <button class="sideCalc-btn" onclick="sideCalcFunc('asin')">sin⁻¹</button>
       <button class="sideCalc-btn" onclick="sideCalcFunc('acos')">cos⁻¹</button>
       <button class="sideCalc-btn" onclick="sideCalcFunc('atan')">tan⁻¹</button>
       <button class="sideCalc-btn" onclick="sideCalcInput('π')">π</button>
       <button class="sideCalc-btn" onclick="sideCalcInput('e')">e</button>
-
       <button class="sideCalc-btn" onclick="sideCalcFunc('log')">log</button>
       <button class="sideCalc-btn" onclick="sideCalcFunc('ln')">ln</button>
       <button class="sideCalc-btn" onclick="sideCalcFunc('sqrt')">√</button>
       <button class="sideCalc-btn" onclick="sideCalcFunc('cbrt')">∛</button>
       <button class="sideCalc-btn" onclick="sideCalcInput('^')">x^y</button>
-
       <button class="sideCalc-btn" onclick="sideCalcFunc('sqr')">x²</button>
       <button class="sideCalc-btn" onclick="sideCalcFunc('cube')">x³</button>
       <button class="sideCalc-btn" onclick="sideCalcInput('%')">%</button>
       <button class="sideCalc-btn" onclick="sideCalcFunc('fact')">n!</button>
       <button class="sideCalc-btn" onclick="sideCalcInput('1/')">1/x</button>
-
       <button class="sideCalc-num" onclick="sideCalcInput('7')">7</button>
       <button class="sideCalc-num" onclick="sideCalcInput('8')">8</button>
       <button class="sideCalc-num" onclick="sideCalcInput('9')">9</button>
       <button class="sideCalc-btn op" onclick="sideCalcInput('÷')">÷</button>
       <button class="sideCalc-btn clear" onclick="sideCalcDelete()">⌫</button>
-
       <button class="sideCalc-num" onclick="sideCalcInput('4')">4</button>
       <button class="sideCalc-num" onclick="sideCalcInput('5')">5</button>
       <button class="sideCalc-num" onclick="sideCalcInput('6')">6</button>
       <button class="sideCalc-btn op" onclick="sideCalcInput('×')">×</button>
       <button class="sideCalc-btn clear" onclick="sideCalcClear()">C</button>
-
       <button class="sideCalc-num" onclick="sideCalcInput('1')">1</button>
       <button class="sideCalc-num" onclick="sideCalcInput('2')">2</button>
       <button class="sideCalc-num" onclick="sideCalcInput('3')">3</button>
       <button class="sideCalc-btn op" onclick="sideCalcInput('-')">−</button>
       <button class="sideCalc-btn eq" onclick="sideCalcResult()" style="grid-row:span 2;">=</button>
-
       <button class="sideCalc-num" onclick="sideCalcInput('0')" style="grid-column:span 2;">0</button>
       <button class="sideCalc-num" onclick="sideCalcInput('.')">.</button>
       <button class="sideCalc-btn op" onclick="sideCalcInput('+')">+</button>
@@ -1399,10 +1334,7 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
   cursor: pointer;
   transition: all 0.15s;
 }
-.sideCalc-btn {
-  background: rgba(255,255,255,0.15);
-  color: #fff;
-}
+.sideCalc-btn { background: rgba(255,255,255,0.15); color: #fff; }
 .sideCalc-btn:active { background: rgba(255,255,255,0.3); transform: scale(0.95); }
 .sideCalc-btn.op { background: rgba(255,193,7,0.9); color: #000; }
 .sideCalc-btn.eq { background: rgba(255,255,255,0.95); color: #1E3A8A; font-size: 22px; }
@@ -1414,31 +1346,21 @@ body.dark-mode .section-chip { background: #2A2A2A; color: #E0E0E0; }
 <div id="toast" class="toast"></div>
 <script>
 // ============================================
-// Supabase
-// ============================================
-const SUPABASE_URL = 'https://rxxjkkxyvwurzleyelrq.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_mKfAk1wyPmjFyWYyGOgRsw_H-fDHYvg';
-
-let supabaseClient = null;
-if (window.supabase) {
-  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-}
-
-// ============================================
 // المتغيرات العامة
 // ============================================
-let currentUser = null;
-let currentRole = 'student';
-let currentScreen = 'splashScreen';
-let screenHistory = [];
-let currentStage = null;
-let currentGrade = null;
-let currentSubject = null;
-let currentTerm = null;
+var currentUser = null;
+var currentRole = 'student';
+var currentScreen = 'splashScreen';
+var screenHistory = [];
+var currentStage = null;
+var currentGrade = null;
+var currentSubject = null;
+var currentTerm = null;
+var currentSection = null;
 const OWNER_CODE = '135790';
 
 // ============================================
-// التنقل
+// التنقل بين الشاشات
 // ============================================
 function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1448,7 +1370,6 @@ function showScreen(screenId) {
     currentScreen = screenId;
     const content = target.querySelector('.content');
     if (content) content.scrollTop = 0;
-    // إظهار الحاسبة الجانبية في المواد الحسابية
     const calcToggle = document.getElementById('calcToggle');
     if (calcToggle) {
       const mathSubjects = ['رياضيات', 'فيزياء', 'كيمياء', 'هندسة', 'حاسب آلي', 'علوم'];
@@ -1456,7 +1377,8 @@ function showScreen(screenId) {
         calcToggle.style.display = 'flex';
       } else {
         calcToggle.style.display = 'none';
-        document.getElementById('sideCalculator').style.left = '-320px';
+        const sc = document.getElementById('sideCalculator');
+        if (sc) sc.style.left = '-320px';
       }
     }
   }
@@ -1491,17 +1413,22 @@ function selectRole(btn, role) {
   document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   currentRole = role;
-  document.getElementById('ownerCodeGroup').style.display = (role === 'owner') ? 'block' : 'none';
+  const ownerGroup = document.getElementById('ownerCodeGroup');
+  if (ownerGroup) ownerGroup.style.display = (role === 'owner') ? 'block' : 'none';
 }
 
 function login() {
   const username = document.getElementById('usernameInput').value.trim();
   const password = document.getElementById('passwordInput').value;
-  const ownerCode = document.getElementById('ownerCodeInput').value;
+  const ownerCodeInput = document.getElementById('ownerCodeInput');
+  const ownerCode = ownerCodeInput ? ownerCodeInput.value : '';
   if (!username || username.length < 3) { showToast('⚠️ أدخل اسم مستخدم'); return; }
   if (password.length < 4) { showToast('⚠️ كلمة المرور قصيرة'); return; }
   if (currentRole === 'owner' && ownerCode !== OWNER_CODE) { showToast('🔐 كود المالك خطأ'); return; }
   currentUser = { name: username, role: currentRole, points: 1250 };
+  try {
+    localStorage.setItem('ta3lemy_user', JSON.stringify(currentUser));
+  } catch(e) {}
   showToast('✅ تم تسجيل الدخول');
   setTimeout(() => showScreen('homeScreen'), 800);
 }
@@ -1511,6 +1438,7 @@ function logout() {
     currentUser = null;
     currentRole = 'student';
     screenHistory = [];
+    try { localStorage.removeItem('ta3lemy_user'); } catch(e) {}
     document.getElementById('usernameInput').value = '';
     document.getElementById('passwordInput').value = '';
     showScreen('loginScreen');
@@ -1519,7 +1447,7 @@ function logout() {
 }
 
 // ============================================
-// البيانات
+// بيانات المراحل
 // ============================================
 const stagesData = {
   primary: { name: 'المرحلة الابتدائية', icon: '🎒', grades: ['الأول','الثاني','الثالث','الرابع','الخامس','السادس'] },
@@ -1552,14 +1480,204 @@ const azharSubjects = [
 
 const surahsData = [
   {id:1,name:'الفاتحة',verses:7,type:'مكية'},{id:2,name:'البقرة',verses:286,type:'مدنية'},
+  {id:3,name:'آل عمران',verses:200,type:'مدنية'},{id:4,name:'النساء',verses:176,type:'مدنية'},
   {id:18,name:'الكهف',verses:110,type:'مكية'},{id:36,name:'يس',verses:83,type:'مكية'},
   {id:55,name:'الرحمن',verses:78,type:'مدنية'},{id:67,name:'الملك',verses:30,type:'مكية'},
-  {id:112,name:'الإخلاص',verses:4,type:'مكية'},{id:113,name:'الفلق',verses:5,type:'مكية'},
-  {id:114,name:'الناس',verses:6,type:'مكية'}
+  {id:78,name:'النبأ',verses:40,type:'مكية'},{id:112,name:'الإخلاص',verses:4,type:'مكية'},
+  {id:113,name:'الفلق',verses:5,type:'مكية'},{id:114,name:'الناس',verses:6,type:'مكية'}
 ];
 
 // ============================================
-// رفع الملفات
+// المناهج
+// ============================================
+function openEducation() {
+  const list = document.getElementById('stagesList');
+  list.innerHTML = Object.keys(stagesData).map(key => {
+    const s = stagesData[key];
+    return '<div class="stage-item" onclick="openStage(\'' + key + '\')"><div class="stage-icon">' + s.icon + '</div><div class="stage-info"><div class="stage-name">' + s.name + '</div><div class="stage-sub">' + s.grades.length + ' صفوف</div></div><div class="stage-arrow">‹</div></div>';
+  }).join('');
+  screenHistory.push(currentScreen);
+  showScreen('educationScreen');
+}
+
+function openStage(stageId) {
+  currentStage = stageId;
+  const stage = stagesData[stageId];
+  document.getElementById('gradesTitle').textContent = stage.name;
+  const list = document.getElementById('gradesList');
+  list.innerHTML = stage.grades.map(g => '<div class="stage-item" onclick="openGrade(\'' + stageId + '\', \'' + g + '\')"><div class="stage-icon" style="background:#E8F5E9;">🎓</div><div class="stage-info"><div class="stage-name">الصف ' + g + '</div><div class="stage-sub">اضغط لعرض المواد</div></div><div class="stage-arrow">‹</div></div>').join('');
+  screenHistory.push(currentScreen);
+  showScreen('gradesScreen');
+}
+
+function openGrade(stageId, gradeName) {
+  currentGrade = gradeName;
+  document.getElementById('subjectsTitle').textContent = 'الصف ' + gradeName;
+  const list = document.getElementById('subjectsList');
+  list.innerHTML = generalSubjects.map(s => '<div class="subject-card" onclick="openSubject(\'' + s.id + '\', \'' + s.name + '\')"><div class="subject-icon" style="background:' + s.color + '20;color:' + s.color + ';">' + s.icon + '</div><div class="subject-name">' + s.name + '</div></div>').join('');
+  screenHistory.push(currentScreen);
+  showScreen('subjectsScreen');
+}
+
+function openSubject(subjectId, subjectName) {
+  currentSubject = subjectName;
+  document.getElementById('termsTitle').textContent = subjectName;
+  document.getElementById('termsHeader').textContent = subjectName + ' - ' + (currentGrade || '');
+  renderTerms();
+  screenHistory.push(currentScreen);
+  showScreen('termsScreen');
+}
+
+function renderTerms() {
+  const list = document.getElementById('termsList');
+  const terms = [{ num: 1, name: 'الترم الأول', icon: '📘' }, { num: 2, name: 'الترم الثاني', icon: '📙' }];
+  list.innerHTML = terms.map(t => '<div class="term-card ' + (t.num === 2 ? 'term-2' : '') + '"><div class="term-header"><div class="term-icon">' + t.icon + '</div><div class="term-title">' + t.name + '</div><div class="term-count">منهج كامل</div></div><div class="term-sections"><div class="section-chip" onclick="openContent(\'lessons\', ' + t.num + ', \'' + t.name + '\')">📄 الدروس</div><div class="section-chip" onclick="openContent(\'exercises\', ' + t.num + ', \'' + t.name + '\')">✏️ تدريبات</div><div class="section-chip" onclick="openContent(\'exams\', ' + t.num + ', \'' + t.name + '\')">📝 امتحانات</div><div class="section-chip" onclick="openContent(\'previous\', ' + t.num + ', \'' + t.name + '\')">📋 سنوات سابقة</div><div class="section-chip" onclick="openContent(\'reviews\', ' + t.num + ', \'' + t.name + '\')">📖 مراجعات</div><div class="section-chip" onclick="openContent(\'summaries\', ' + t.num + ', \'' + t.name + '\')">📑 ملخصات</div><div class="section-chip" onclick="openContent(\'videos\', ' + t.num + ', \'' + t.name + '\')">🎥 فيديوهات</div></div></div>').join('');
+}
+
+// ============================================
+// فتح المحتوى
+// ============================================
+function openContent(sectionType, termNum, termName) {
+  currentTerm = termNum;
+  currentSection = sectionType;
+  const titles = { lessons: '📄 الدروس', exercises: '✏️ تدريبات', exams: '📝 امتحانات', previous: '📋 سنوات سابقة', reviews: '📖 مراجعات', summaries: '📑 ملخصات', videos: '🎥 فيديوهات' };
+  document.getElementById('contentTitle').textContent = titles[sectionType] || 'المحتوى';
+  document.getElementById('contentHeaderTitle').textContent = (currentSubject || '') + ' - ' + termName;
+  document.getElementById('contentHeaderSub').textContent = titles[sectionType];
+  const list = document.getElementById('contentList');
+  screenHistory.push(currentScreen);
+  showScreen('contentScreen');
+  
+  try {
+    var allLessons = JSON.parse(localStorage.getItem('ta3lemy_lessons') || '[]');
+    var filtered = allLessons.filter(l => 
+      l.subject === currentSubject &&
+      l.term === termNum &&
+      l.type === sectionType &&
+      l.grade === currentGrade
+    );
+    
+    if (!filtered || filtered.length === 0) {
+      list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;"><div style="font-size:50px;">📭</div><p style="margin-top:12px;">لا يوجد محتوى بعد</p><p style="font-size:12px;margin-top:8px;">سيتم إضافة المحتوى قريباً</p></div>';
+    } else {
+      list.innerHTML = filtered.map(item => '<div class="content-item" onclick="viewContent(\'' + (item.title||'').replace(/'/g,"\\'") + '\', \'' + (item.content||'').replace(/'/g,"\\'") + '\', \'' + (item.video_url||'') + '\', \'' + (item.image_url||'') + '\')"><div class="content-item-icon">📄</div><div class="content-item-info"><div class="content-item-title">' + (item.title || 'بدون عنوان') + '</div><div class="content-item-sub">' + (item.content ? item.content.substring(0, 50) + '...' : '') + '</div></div><div class="content-item-arrow">‹</div></div>').join('');
+    }
+  } catch(e) {
+    console.error(e);
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">حدث خطأ</div>';
+  }
+}
+
+function viewContent(title, content, videoUrl, imageUrl) {
+  document.getElementById('viewerTitle').textContent = title;
+  let html = '<h2 style="color:#2E7D32;margin-bottom:16px;">' + title + '</h2>';
+  if (imageUrl) html += '<img src="' + imageUrl + '">';
+  if (content) html += '<div style="line-height:2;font-size:15px;">' + content + '</div>';
+  if (videoUrl) html += '<video controls><source src="' + videoUrl + '"></video>';
+  document.getElementById('viewerBody').innerHTML = html;
+  screenHistory.push(currentScreen);
+  showScreen('viewerScreen');
+}
+
+// ============================================
+// الأزهر
+// ============================================
+function openAzhar() {
+  const list = document.getElementById('azharList');
+  list.innerHTML = azharSubjects.map(s => '<div class="azhar-subject-item" onclick="openAzharSubject(\'' + s.id + '\', \'' + s.name + '\')"><div style="font-size:30px;">' + s.icon + '</div><div class="stage-info"><div class="stage-name">' + s.name + '</div></div><div class="stage-arrow" style="color:#C9A227;">‹</div></div>').join('');
+  screenHistory.push(currentScreen);
+  showScreen('azharScreen');
+}
+
+function openAzharSubject(id, name) {
+  currentSubject = name;
+  currentGrade = 'أزهري';
+  document.getElementById('termsTitle').textContent = name;
+  document.getElementById('termsHeader').textContent = name;
+  renderTerms();
+  screenHistory.push(currentScreen);
+  showScreen('termsScreen');
+}
+
+// ============================================
+// القرآن
+// ============================================
+function openQuran() {
+  const list = document.getElementById('surahsList');
+  list.innerHTML = surahsData.map(s => '<div class="content-item" onclick="showToast(\'📖 سورة ' + s.name + '\')"><div class="content-item-icon" style="background:linear-gradient(135deg,#00695C,#26A69A);color:#fff;font-weight:bold;">' + s.id + '</div><div class="content-item-info"><div class="content-item-title">' + s.name + '</div><div class="content-item-sub">' + s.verses + ' آية • ' + s.type + '</div></div><div class="content-item-arrow">‹</div></div>').join('');
+  screenHistory.push(currentScreen);
+  showScreen('quranScreen');
+}
+
+function filterSurahs(q) {
+  const list = document.getElementById('surahsList');
+  const f = surahsData.filter(s => s.name.includes(q));
+  list.innerHTML = f.map(s => '<div class="content-item" onclick="showToast(\'📖 سورة ' + s.name + '\')"><div class="content-item-icon" style="background:linear-gradient(135deg,#00695C,#26A69A);color:#fff;font-weight:bold;">' + s.id + '</div><div class="content-item-info"><div class="content-item-title">' + s.name + '</div></div></div>').join('');
+}
+</script>
+// ============================================
+// الراديو
+// ============================================
+const radioStations = [
+  { name: 'إذاعة القرآن الكريم - مصر', url: 'https://n0d.radiojar.com/8s5u5tpdtwzuv' },
+  { name: 'إذاعة القرآن الكريم - السعودية', url: 'https://Qurango.net/radio/tarateel' },
+  { name: 'إذاعة السنة النبوية', url: 'https://n0d.radiojar.com/0tpy1h0kxtzuv' },
+  { name: 'إذاعة الأزهر', url: 'https://n0d.radiojar.com/8s5u5tpdtwzuv' },
+  { name: 'إذاعة تفسير القرآن', url: 'https://Qurango.net/radio/tafseer' },
+  { name: 'إذاعة القرآن الكريم - الكويت', url: 'https://Qurango.net/radio/mishary_alafasy' }
+];
+
+var radioAudio = null;
+
+function openRadio() {
+  const list = document.getElementById('radioList');
+  list.innerHTML = radioStations.map((s, i) => '<div class="content-item" onclick="playRadio(' + i + ')"><div class="content-item-icon" style="background:linear-gradient(135deg,#D32F2F,#FF8F00);color:#fff;font-size:24px;">📻</div><div class="content-item-info"><div class="content-item-title">' + s.name + '</div><div class="content-item-sub">اضغط للتشغيل</div></div><div class="content-item-arrow">▶️</div></div>').join('');
+  screenHistory.push(currentScreen);
+  showScreen('radioScreen');
+}
+
+function playRadio(index) {
+  const station = radioStations[index];
+  if (radioAudio) { radioAudio.pause(); radioAudio = null; }
+  radioAudio = new Audio(station.url);
+  radioAudio.play().catch(e => { showToast('❌ تعذر التشغيل'); });
+  document.getElementById('radioPlayer').style.display = 'block';
+  document.getElementById('radioStationName').textContent = station.name;
+  document.getElementById('radioNowPlaying').textContent = '🎵 جاري التشغيل...';
+  showToast('▶️ ' + station.name);
+}
+
+function stopRadio() {
+  if (radioAudio) { radioAudio.pause(); radioAudio = null; }
+  document.getElementById('radioPlayer').style.display = 'none';
+  showToast('⏹️ تم الإيقاف');
+}
+
+// ============================================
+// الحساب الشخصي
+// ============================================
+function goToProfile() {
+  document.getElementById('profileName').textContent = currentUser ? currentUser.name : 'مستخدم';
+  document.getElementById('profileRole').textContent = currentRole === 'student' ? 'طالب' : currentRole === 'teacher' ? 'معلم' : 'المالك';
+  document.getElementById('profilePoints').textContent = '⭐ ' + (currentUser ? currentUser.points : 0) + ' نقطة';
+  const adminMenu = document.getElementById('adminMenu');
+  if (adminMenu) adminMenu.style.display = currentRole === 'owner' ? 'flex' : 'none';
+  screenHistory.push(currentScreen);
+  showScreen('profileScreen');
+}
+
+function openOwnerProfile() {
+  screenHistory.push(currentScreen);
+  showScreen('ownerProfileScreen');
+}
+
+function toggleDark() {
+  document.body.classList.toggle('dark-mode');
+  showToast(document.body.classList.contains('dark-mode') ? '🌙 وضع ليلي' : '☀️ وضع نهاري');
+}
+
+// ============================================
+// رفع الملفات إلى Cloudinary
 // ============================================
 async function uploadFile(file, folder) {
   if (!file) return null;
@@ -1584,293 +1702,10 @@ async function uploadFile(file, folder) {
     showToast('❌ فشل الرفع');
     return null;
   }
-}// ============================================
-// المناهج
-// ============================================
-function openEducation() {
-  const list = document.getElementById('stagesList');
-  list.innerHTML = Object.keys(stagesData).map(key => {
-    const s = stagesData[key];
-    return `<div class="stage-item" onclick="openStage('${key}')"><div class="stage-icon">${s.icon}</div><div class="stage-info"><div class="stage-name">${s.name}</div><div class="stage-sub">${s.grades.length} صفوف</div></div><div class="stage-arrow">‹</div></div>`;
-  }).join('');
-  screenHistory.push(currentScreen);
-  showScreen('educationScreen');
-}
-
-function openStage(stageId) {
-  currentStage = stageId;
-  const stage = stagesData[stageId];
-  document.getElementById('gradesTitle').textContent = stage.name;
-  const list = document.getElementById('gradesList');
-  list.innerHTML = stage.grades.map(g => `<div class="stage-item" onclick="openGrade('${stageId}', '${g}')"><div class="stage-icon" style="background:#E8F5E9;">🎓</div><div class="stage-info"><div class="stage-name">الصف ${g}</div><div class="stage-sub">اضغط لعرض المواد</div></div><div class="stage-arrow">‹</div></div>`).join('');
-  screenHistory.push(currentScreen);
-  showScreen('gradesScreen');
-}
-
-function openGrade(stageId, gradeName) {
-  currentGrade = gradeName;
-  document.getElementById('subjectsTitle').textContent = 'الصف ' + gradeName;
-  const list = document.getElementById('subjectsList');
-  list.innerHTML = generalSubjects.map(s => `<div class="subject-card" onclick="openSubject('${s.id}', '${s.name}')"><div class="subject-icon" style="background:${s.color}20;color:${s.color};">${s.icon}</div><div class="subject-name">${s.name}</div></div>`).join('');
-  screenHistory.push(currentScreen);
-  showScreen('subjectsScreen');
-}
-
-function openSubject(subjectId, subjectName) {
-  currentSubject = subjectName;
-  document.getElementById('termsTitle').textContent = subjectName;
-  document.getElementById('termsHeader').textContent = subjectName + ' - ' + (currentGrade || '');
-  renderTerms();
-  screenHistory.push(currentScreen);
-  showScreen('termsScreen');
-}
-
-function renderTerms() {
-  const list = document.getElementById('termsList');
-  const terms = [{ num: 1, name: 'الترم الأول', icon: '📘' }, { num: 2, name: 'الترم الثاني', icon: '📙' }];
-  list.innerHTML = terms.map(t => `
-    <div class="term-card ${t.num === 2 ? 'term-2' : ''}">
-      <div class="term-header">
-        <div class="term-icon">${t.icon}</div>
-        <div class="term-title">${t.name}</div>
-        <div class="term-count">منهج كامل</div>
-      </div>
-      <div class="term-sections">
-        <div class="section-chip" onclick="openContent('lessons', ${t.num}, '${t.name}')">📄 الدروس</div>
-        <div class="section-chip" onclick="openContent('exercises', ${t.num}, '${t.name}')">✏️ تدريبات</div>
-        <div class="section-chip" onclick="openContent('exams', ${t.num}, '${t.name}')">📝 امتحانات</div>
-        <div class="section-chip" onclick="openContent('previous', ${t.num}, '${t.name}')">📋 سنوات سابقة</div>
-        <div class="section-chip" onclick="openContent('reviews', ${t.num}, '${t.name}')">📖 مراجعات</div>
-        <div class="section-chip" onclick="openContent('summaries', ${t.num}, '${t.name}')">📑 ملخصات</div>
-        <div class="section-chip" onclick="openContent('videos', ${t.num}, '${t.name}')">🎥 فيديوهات</div>
-      </div>
-    </div>
-  `).join('');
-}
-
-async function openContent(sectionType, termNum, termName) {
-  currentTerm = termNum;
-  const titles = { lessons: '📄 الدروس', exercises: '✏️ تدريبات', exams: '📝 امتحانات', previous: '📋 سنوات سابقة', reviews: '📖 مراجعات', summaries: '📑 ملخصات', videos: '🎥 فيديوهات' };
-  document.getElementById('contentTitle').textContent = titles[sectionType] || 'المحتوى';
-  document.getElementById('contentHeaderTitle').textContent = (currentSubject || '') + ' - ' + termName;
-  document.getElementById('contentHeaderSub').textContent = titles[sectionType];
-  const list = document.getElementById('contentList');
-  list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;"><div style="font-size:30px;">⏳</div><p>جاري التحميل...</p></div>';
-  screenHistory.push(currentScreen);
-  showScreen('contentScreen');
-  try {
-    if (!supabaseClient) { list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">لا توجد بيانات</div>'; return; }
-    let query = supabaseClient.from('lessons').select('*').eq('term', termNum);
-    if (currentSubject) query = query.eq('subject', currentSubject);
-    const { data, error } = await query.order('order', { ascending: true });
-    if (error) throw error;
-    if (!data || data.length === 0) {
-      list.innerHTML = `<div style="text-align:center;padding:40px;color:#999;"><div style="font-size:50px;">📭</div><p style="margin-top:12px;">لا يوجد محتوى بعد</p><p style="font-size:12px;margin-top:8px;">سيتم إضافة المحتوى قريباً</p></div>`;
-    } else {
-      list.innerHTML = data.map(item => `<div class="content-item" onclick="viewContent('${(item.title||'').replace(/'/g,"\\'")}', '${(item.content||'').replace(/'/g,"\\'")}', '${item.video_url||''}', '${item.image_url||''}')"><div class="content-item-icon">📄</div><div class="content-item-info"><div class="content-item-title">${item.title || 'بدون عنوان'}</div><div class="content-item-sub">${item.content ? item.content.substring(0, 50) + '...' : ''}</div></div><div class="content-item-arrow">‹</div></div>`).join('');
-    }
-  } catch (err) {
-    console.error(err);
-    list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">حدث خطأ</div>';
-  }
-}
-
-function viewContent(title, content, videoUrl, imageUrl) {
-  document.getElementById('viewerTitle').textContent = title;
-  let html = `<h2 style="color:#2E7D32;margin-bottom:16px;">${title}</h2>`;
-  if (imageUrl) html += `<img src="${imageUrl}">`;
-  if (content) html += `<div style="line-height:2;font-size:15px;">${content}</div>`;
-  if (videoUrl) html += `<video controls><source src="${videoUrl}"></video>`;
-  document.getElementById('viewerBody').innerHTML = html;
-  screenHistory.push(currentScreen);
-  showScreen('viewerScreen');
 }
 
 // ============================================
-// الأزهر
-// ============================================
-function openAzhar() {
-  const list = document.getElementById('azharList');
-  list.innerHTML = azharSubjects.map(s => `<div class="azhar-subject-item" onclick="openAzharSubject('${s.id}', '${s.name}')"><div style="font-size:30px;">${s.icon}</div><div class="stage-info"><div class="stage-name">${s.name}</div></div><div class="stage-arrow" style="color:#C9A227;">‹</div></div>`).join('');
-  screenHistory.push(currentScreen);
-  showScreen('azharScreen');
-}
-
-function openAzharSubject(id, name) {
-  currentSubject = name;
-  currentGrade = 'أزهري';
-  document.getElementById('termsTitle').textContent = name;
-  document.getElementById('termsHeader').textContent = name;
-  renderTerms();
-  screenHistory.push(currentScreen);
-  showScreen('termsScreen');
-}
-
-// ============================================
-// القرآن
-// ============================================
-function openQuran() {
-  const list = document.getElementById('surahsList');
-  list.innerHTML = surahsData.map(s => `<div class="content-item" onclick="showToast('📖 سورة ${s.name}')"><div class="content-item-icon" style="background:linear-gradient(135deg,#00695C,#26A69A);color:#fff;font-weight:bold;">${s.id}</div><div class="content-item-info"><div class="content-item-title">${s.name}</div><div class="content-item-sub">${s.verses} آية • ${s.type}</div></div><div class="content-item-arrow">‹</div></div>`).join('');
-  screenHistory.push(currentScreen);
-  showScreen('quranScreen');
-}
-
-function filterSurahs(q) {
-  const list = document.getElementById('surahsList');
-  const f = surahsData.filter(s => s.name.includes(q));
-  list.innerHTML = f.map(s => `<div class="content-item" onclick="showToast('📖 سورة ${s.name}')"><div class="content-item-icon" style="background:linear-gradient(135deg,#00695C,#26A69A);color:#fff;font-weight:bold;">${s.id}</div><div class="content-item-info"><div class="content-item-title">${s.name}</div></div></div>`).join('');
-}
-
-// ============================================
-// الراديو
-// ============================================
-const radioStations = [
-  { name: 'إذاعة القرآن الكريم - مصر', url: 'https://stream.radiojar.com/8s5u5tpdtwzuv' },
-  { name: 'إذاعة القرآن الكريم - السعودية', url: 'https://Qurango.net/radio/tarateel' },
-  { name: 'إذاعة السنة النبوية', url: 'https://stream.radiojar.com/0tpy1h0kxtzuv' },
-  { name: 'إذاعة الأزهر', url: 'https://stream.radiojar.com/8s5u5tpdtwzuv' },
-  { name: 'إذاعة تفسير القرآن', url: 'https://Qurango.net/radio/tafseer' }
-];
-
-let radioAudio = null;
-let currentStation = null;
-
-function openRadio() {
-  const list = document.getElementById('radioList');
-  list.innerHTML = radioStations.map((s, i) => `<div class="content-item" onclick="playRadio(${i})"><div class="content-item-icon" style="background:linear-gradient(135deg,#D32F2F,#FF8F00);color:#fff;font-size:24px;">📻</div><div class="content-item-info"><div class="content-item-title">${s.name}</div><div class="content-item-sub">اضغط للتشغيل</div></div><div class="content-item-arrow">▶️</div></div>`).join('');
-  screenHistory.push(currentScreen);
-  showScreen('radioScreen');
-}
-
-function playRadio(index) {
-  const station = radioStations[index];
-  if (radioAudio) { radioAudio.pause(); radioAudio = null; }
-  radioAudio = new Audio(station.url);
-  radioAudio.play().catch(e => { showToast('❌ تعذر التشغيل'); });
-  currentStation = station;
-  document.getElementById('radioPlayer').style.display = 'block';
-  document.getElementById('radioStationName').textContent = station.name;
-  document.getElementById('radioNowPlaying').textContent = '🎵 جاري التشغيل...';
-  showToast('▶️ ' + station.name);
-}
-
-function stopRadio() {
-  if (radioAudio) { radioAudio.pause(); radioAudio = null; }
-  document.getElementById('radioPlayer').style.display = 'none';
-  showToast('⏹️ تم الإيقاف');
-}
-
-// ============================================
-// الحساب الشخصي
-// ============================================
-function goToProfile() {
-  document.getElementById('profileName').textContent = currentUser ? currentUser.name : 'مستخدم';
-  document.getElementById('profileRole').textContent = currentRole === 'student' ? 'طالب' : currentRole === 'teacher' ? 'معلم' : 'المالك';
-  document.getElementById('profilePoints').textContent = '⭐ ' + (currentUser ? currentUser.points : 0) + ' نقطة';
-  document.getElementById('adminMenu').style.display = currentRole === 'owner' ? 'flex' : 'none';
-  screenHistory.push(currentScreen);
-  showScreen('profileScreen');
-}
-
-function openOwnerProfile() {
-  screenHistory.push(currentScreen);
-  showScreen('ownerProfileScreen');
-}
-
-function toggleDark() {
-  document.body.classList.toggle('dark-mode');
-  showToast(document.body.classList.contains('dark-mode') ? '🌙 وضع ليلي' : '☀️ وضع نهاري');
-}
-
-// ============================================
-// لوحة المالك
-// ============================================
-function openAdmin() {
-  loadAdminStats();
-  screenHistory.push(currentScreen);
-  showScreen('adminScreen');
-}
-
-async function loadAdminStats() {
-  try {
-    if (!supabaseClient) return;
-    const { count: lessonsCount } = await supabaseClient.from('lessons').select('*', { count: 'exact', head: true });
-    const { count: adsCount } = await supabaseClient.from('ads').select('*', { count: 'exact', head: true });
-    document.getElementById('statLessons').textContent = lessonsCount || 0;
-    document.getElementById('statAds').textContent = adsCount || 0;
-  } catch(e) { console.error(e); }
-}
-
-function openAddLesson() {
-  screenHistory.push(currentScreen);
-  showScreen('addLessonScreen');
-}
-
-async function saveNewLesson() {
-  const title = document.getElementById('newLessonTitle').value.trim();
-  const content = document.getElementById('newLessonContent').value.trim();
-  const stage = document.getElementById('newLessonStage').value;
-  const grade = document.getElementById('newLessonGrade').value.trim();
-  const subject = document.getElementById('newLessonSubject').value.trim();
-  const type = document.getElementById('newLessonType').value;
-  const term = parseInt(document.getElementById('newLessonTerm').value);
-  const imageFile = document.getElementById('newLessonImageFile').files[0];
-  const videoFile = document.getElementById('newLessonVideoFile').files[0];
-  
-  if (!title) { showToast('⚠️ أدخل عنوان الدرس'); return; }
-  if (!supabaseClient) { showToast('⚠️ Supabase غير متصل'); return; }
-  
-  let imageUrl = null;
-  let videoUrl = null;
-  if (imageFile) imageUrl = await uploadFile(imageFile, 'lessons/images');
-  if (videoFile) videoUrl = await uploadFile(videoFile, 'lessons/videos');
-  
-  try {
-    const { error } = await supabaseClient.from('lessons').insert([{
-      title, content, subject, grade, stage, term, type,
-      image_url: imageUrl, video_url: videoUrl, order: 1
-    }]);
-    if (error) throw error;
-    showToast('✅ تم حفظ الدرس');
-    document.getElementById('newLessonTitle').value = '';
-    document.getElementById('newLessonContent').value = '';
-    document.getElementById('newLessonGrade').value = '';
-    document.getElementById('newLessonSubject').value = '';
-    document.getElementById('newLessonImageFile').value = '';
-    document.getElementById('newLessonVideoFile').value = '';
-    setTimeout(() => goBack(), 1000);
-  } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
-}
-
-function openOwnerEditor() {
-  screenHistory.push(currentScreen);
-  showScreen('ownerEditorScreen');
-}
-
-async function saveOwnerProfile() {
-  const name = document.getElementById('ownerName').value.trim();
-  const bio = document.getElementById('ownerBio').value.trim();
-  const imageFile = document.getElementById('ownerImageFile').files[0];
-  if (!supabaseClient) { showToast('⚠️ Supabase غير متصل'); return; }
-  let imageUrl = null;
-  if (imageFile) imageUrl = await uploadFile(imageFile, 'owner');
-  try {
-    const { error } = await supabaseClient.from('owner_profile').insert([{ name, bio, image_url: imageUrl }]);
-    if (error) throw error;
-    if (imageUrl) {
-      document.getElementById('ownerAvatar').src = imageUrl;
-      document.getElementById('ownerProfileImage').src = imageUrl;
-    }
-    document.getElementById('ownerProfileName').textContent = name;
-    document.getElementById('ownerProfileBio').textContent = bio;
-    showToast('✅ تم الحفظ');
-    setTimeout(() => goBack(), 1000);
-  } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
-}
-
-// ============================================
-// الإعلانات
+// إدارة الإعلانات (localStorage)
 // ============================================
 function openAdsManager() {
   loadAds();
@@ -1890,21 +1725,16 @@ function loadAds() {
     list.innerHTML = adsData.map(ad => '<div style="background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:24px;">📢</div><div style="flex:1;"><div style="font-weight:bold;font-size:14px;">' + (ad.title || '') + '</div><div style="font-size:12px;color:#999;">' + ad.duration + ' ثانية • ' + ad.ad_type + '</div></div><button onclick="deleteAd(\'' + ad.id + '\')" style="background:#FFEBEE;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">🗑️</button></div>').join('');
   } catch(e) { console.error(e); }
 }
-async function addNewAd() {
-  const title = document.getElementById('adTitle').value.trim();
-  const adType = document.getElementById('adType').value;
+
 async function addNewAd() {
   const title = document.getElementById('adTitle').value.trim();
   const adType = document.getElementById('adType').value;
   const duration = parseInt(document.getElementById('adDuration').value) || 10;
   const fileInput = document.getElementById('adFile');
-  
   if (!title) { showToast('⚠️ أدخل عنوان الإعلان'); return; }
   if (!fileInput.files || !fileInput.files[0]) { showToast('⚠️ اختر ملف'); return; }
-  
   const fileUrl = await uploadFile(fileInput.files[0], 'ads');
   if (!fileUrl) { showToast('❌ فشل الرفع'); return; }
-  
   try {
     var adsData = JSON.parse(localStorage.getItem('ta3lemy_ads') || '[]');
     adsData.push({
@@ -1925,29 +1755,168 @@ async function addNewAd() {
     loadAds();
     loadAdsOnHome();
   } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
-}    const { error } = await supabaseClient.from('ads').delete().eq('id', id);
-    if (error) throw error;
+}
+
+function deleteAd(id) {
+  if (!confirm('حذف الإعلان؟')) return;
+  try {
+    var adsData = JSON.parse(localStorage.getItem('ta3lemy_ads') || '[]');
+    adsData = adsData.filter(a => a.id !== id);
+    localStorage.setItem('ta3lemy_ads', JSON.stringify(adsData));
     loadAds();
+    loadAdsOnHome();
     showToast('🗑️ تم الحذف');
   } catch(e) { console.error(e); }
+}
+
+// ============================================
+// الإعلانات في الشاشة الرئيسية
+// ============================================
+var homeAds = [];
+var homeAdIndex = 0;
+var homeAdTimer = null;
+
+function loadAdsOnHome() {
+  try {
+    var adsData = JSON.parse(localStorage.getItem('ta3lemy_ads') || '[]');
+    homeAds = adsData.filter(a => a.active !== false);
+    if (homeAds.length > 0) {
+      homeAdIndex = 0;
+      showHomeAd(0);
+    }
+  } catch(e) { console.error(e); }
+}
+
+function showHomeAd(index) {
+  if (!homeAds || homeAds.length === 0) return;
+  const ad = homeAds[index];
+  const adBox = document.getElementById('mainAd');
+  if (!adBox) return;
+  const duration = (ad.duration || 10) * 1000;
+  if (ad.ad_type === 'video' && ad.video_url) {
+    adBox.innerHTML = '<video autoplay muted loop style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><source src="' + ad.video_url + '" type="video/mp4"></video><div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title" style="color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.7);">' + (ad.title || '') + '</div></div>';
+  } else if (ad.image_url) {
+    adBox.innerHTML = '<img src="' + ad.image_url + '" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title" style="color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.7);">' + (ad.title || '') + '</div></div>';
+  }
+  if (homeAdTimer) clearTimeout(homeAdTimer);
+  if (homeAds.length > 1) {
+    homeAdTimer = setTimeout(function() {
+      homeAdIndex = (homeAdIndex + 1) % homeAds.length;
+      showHomeAd(homeAdIndex);
+    }, duration);
+  }
+}
+
+// ============================================
+// لوحة المالك
+// ============================================
+function openAdmin() {
+  loadAdminStats();
+  screenHistory.push(currentScreen);
+  showScreen('adminScreen');
+}
+
+function loadAdminStats() {
+  try {
+    var lessons = JSON.parse(localStorage.getItem('ta3lemy_lessons') || '[]');
+    var ads = JSON.parse(localStorage.getItem('ta3lemy_ads') || '[]');
+    var users = JSON.parse(localStorage.getItem('ta3lemy_users') || '[]');
+    document.getElementById('statLessons').textContent = lessons.length;
+    document.getElementById('statAds').textContent = ads.length;
+    document.getElementById('statUsers').textContent = users.length;
+  } catch(e) { console.error(e); }
+}
+
+function openAddLesson() {
+  screenHistory.push(currentScreen);
+  showScreen('addLessonScreen');
+}
+
+async function saveNewLesson() {
+  const title = document.getElementById('newLessonTitle').value.trim();
+  const content = document.getElementById('newLessonContent').value.trim();
+  const stage = document.getElementById('newLessonStage').value;
+  const grade = document.getElementById('newLessonGrade').value.trim();
+  const subject = document.getElementById('newLessonSubject').value.trim();
+  const type = document.getElementById('newLessonType').value;
+  const term = parseInt(document.getElementById('newLessonTerm').value);
+  const imageFile = document.getElementById('newLessonImageFile').files[0];
+  const videoFile = document.getElementById('newLessonVideoFile').files[0];
+  
+  if (!title) { showToast('⚠️ أدخل عنوان الدرس'); return; }
+  
+  let imageUrl = null;
+  let videoUrl = null;
+  if (imageFile) imageUrl = await uploadFile(imageFile, 'lessons/images');
+  if (videoFile) videoUrl = await uploadFile(videoFile, 'lessons/videos');
+  
+  try {
+    var lessons = JSON.parse(localStorage.getItem('ta3lemy_lessons') || '[]');
+    lessons.push({
+      id: Date.now().toString(),
+      title: title, content: content, subject: subject,
+      grade: grade, stage: stage, term: term, type: type,
+      image_url: imageUrl, video_url: videoUrl,
+      order: lessons.length + 1,
+      created_at: new Date().toISOString()
+    });
+    localStorage.setItem('ta3lemy_lessons', JSON.stringify(lessons));
+    showToast('✅ تم حفظ الدرس');
+    document.getElementById('newLessonTitle').value = '';
+    document.getElementById('newLessonContent').value = '';
+    document.getElementById('newLessonGrade').value = '';
+    document.getElementById('newLessonSubject').value = '';
+    document.getElementById('newLessonImageFile').value = '';
+    document.getElementById('newLessonVideoFile').value = '';
+    setTimeout(() => goBack(), 1000);
+  } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
+}
+
+function openOwnerEditor() {
+  screenHistory.push(currentScreen);
+  showScreen('ownerEditorScreen');
+}
+
+async function saveOwnerProfile() {
+  const name = document.getElementById('ownerName').value.trim();
+  const bio = document.getElementById('ownerBio').value.trim();
+  const imageFile = document.getElementById('ownerImageFile').files[0];
+  let imageUrl = null;
+  if (imageFile) imageUrl = await uploadFile(imageFile, 'owner');
+  try {
+    var profile = { name: name, bio: bio, image_url: imageUrl };
+    if (!imageUrl) {
+      var existing = JSON.parse(localStorage.getItem('ta3lemy_owner') || '{}');
+      if (existing.image_url) profile.image_url = existing.image_url;
+    }
+    localStorage.setItem('ta3lemy_owner', JSON.stringify(profile));
+    if (profile.image_url) {
+      document.getElementById('ownerAvatar').src = profile.image_url;
+      document.getElementById('ownerProfileImage').src = profile.image_url;
+    }
+    document.getElementById('ownerProfileName').textContent = name;
+    document.getElementById('ownerProfileBio').textContent = bio;
+    showToast('✅ تم الحفظ');
+    setTimeout(() => goBack(), 1000);
+  } catch(e) { console.error(e); showToast('❌ فشل الحفظ'); }
 }
 
 // ============================================
 // الرسائل
 // ============================================
 function openMessages() {
-  document.getElementById('messagesList').innerHTML = `<div class="content-item"><div class="content-item-icon" style="background:#E8F5E9;font-size:24px;">👨‍🏫</div><div class="content-item-info"><div class="content-item-title">أ. محمد - رياضيات</div><div class="content-item-sub">كيف حالك؟</div></div></div>`;
+  document.getElementById('messagesList').innerHTML = '<div class="content-item"><div class="content-item-icon" style="background:#E8F5E9;font-size:24px;">👨‍🏫</div><div class="content-item-info"><div class="content-item-title">أ. محمد - رياضيات</div><div class="content-item-sub">كيف حالك؟</div></div></div>';
   screenHistory.push(currentScreen);
   showScreen('messagesScreen');
 }
-
 // ============================================
 // الحاسبة الجانبية
 // ============================================
-let sideCalcCurrent = '';
+var sideCalcCurrent = '';
 
 function toggleSideCalculator() {
   const calc = document.getElementById('sideCalculator');
+  if (!calc) return;
   if (calc.style.left === '0px') {
     calc.style.left = '-320px';
   } else {
@@ -1997,25 +1966,24 @@ function sideCalcFunc(fn) {
     case 'cbrt': r = Math.cbrt(c); break;
     case 'sqr': r = c * c; break;
     case 'cube': r = c * c * c; break;
-    case 'fact': 
-      r = 1;
-      for (let i = 2; i <= c; i++) r *= i;
-      break;
+    case 'fact': r = 1; for (let i = 2; i <= c; i++) r *= i; break;
   }
   document.getElementById('sideCalcHistory').textContent = fn + '(' + c + ')';
   document.getElementById('sideCalcScreen').textContent = r.toFixed(6).replace(/\.?0+$/, '');
   sideCalcCurrent = String(r);
 }
+
 // ============================================
-// لوحة الرسم الاحترافية
+// لوحة الرسم
 // ============================================
-let fullCanvas, fullCtx;
-let isDrawing = false;
+var fullCanvas, fullCtx;
+var isDrawing = false;
 var currentColor = '#000000';
 var currentSize = 5;
 var isEraser = false;
 var drawingHistory = [];
 var historyIndex = -1;
+
 function openDrawing() {
   screenHistory.push(currentScreen);
   showScreen('drawingScreen');
@@ -2035,27 +2003,32 @@ function initFullCanvas() {
   fullCtx.fillRect(0, 0, fullCanvas.width, fullCanvas.height);
   fullCtx.strokeStyle = currentColor;
   fullCtx.lineWidth = currentSize;
-
-  // إعادة تعيين الحالة
   isDrawing = false;
   isEraser = false;
   drawingHistory = [];
   historyIndex = -1;
   saveHistoryState();
-
-  // أحداث الماوس
   fullCanvas.addEventListener('mousedown', startDrawing);
   fullCanvas.addEventListener('mousemove', drawLine);
   fullCanvas.addEventListener('mouseup', stopDrawing);
   fullCanvas.addEventListener('mouseleave', stopDrawing);
-
-  // أحداث اللمس
   fullCanvas.addEventListener('touchstart', startDrawing, {passive: false});
   fullCanvas.addEventListener('touchmove', drawLine, {passive: false});
   fullCanvas.addEventListener('touchend', stopDrawing);
-
-  // تحميل الرسم المحفوظ
   setTimeout(fullLoad, 500);
+}
+
+function getPosition(e) {
+  const rect = fullCanvas.getBoundingClientRect();
+  let clientX, clientY;
+  if (e.touches && e.touches[0]) {
+    clientX = e.touches[0].clientX;
+    clientY = e.touches[0].clientY;
+  } else {
+    clientX = e.clientX;
+    clientY = e.clientY;
+  }
+  return { x: clientX - rect.left, y: clientY - rect.top };
 }
 
 function startDrawing(e) {
@@ -2085,23 +2058,10 @@ function stopDrawing() {
   }
 }
 
-function getPosition(e) {
-  const rect = fullCanvas.getBoundingClientRect();
-  let clientX, clientY;
-  if (e.touches && e.touches[0]) {
-    clientX = e.touches[0].clientX;
-    clientY = e.touches[0].clientY;
-  } else {
-    clientX = e.clientX;
-    clientY = e.clientY;
-  }
-  return { x: clientX - rect.left, y: clientY - rect.top };
-}
-
 function drawingSetColor(color) {
   currentColor = color;
   isEraser = false;
-  fullCtx.strokeStyle = color;
+  if (fullCtx) fullCtx.strokeStyle = color;
   const indicator = document.getElementById('currentColorIndicator');
   if (indicator) indicator.style.background = color;
   const modeText = document.getElementById('currentModeText');
@@ -2116,7 +2076,7 @@ function drawingSetColor(color) {
 
 function drawingSetEraser() {
   isEraser = true;
-  fullCtx.strokeStyle = '#FFFFFF';
+  if (fullCtx) fullCtx.strokeStyle = '#FFFFFF';
   const indicator = document.getElementById('currentColorIndicator');
   if (indicator) indicator.style.background = '#FFFFFF';
   const modeText = document.getElementById('currentModeText');
@@ -2131,7 +2091,7 @@ function drawingSetEraser() {
 
 function drawingSetSize(size) {
   currentSize = size;
-  fullCtx.lineWidth = size;
+  if (fullCtx) fullCtx.lineWidth = size;
   ['size1Btn', 'size2Btn', 'size3Btn'].forEach(id => {
     const btn = document.getElementById(id);
     if (btn) {
@@ -2149,6 +2109,7 @@ function drawingSetSize(size) {
 }
 
 function saveHistoryState() {
+  if (!fullCanvas) return;
   drawingHistory = drawingHistory.slice(0, historyIndex + 1);
   drawingHistory.push(fullCanvas.toDataURL());
   historyIndex = drawingHistory.length - 1;
@@ -2204,9 +2165,7 @@ function drawingSave() {
     const dataURL = fullCanvas.toDataURL('image/png');
     localStorage.setItem('ta3lemy_drawing', dataURL);
     showToast('💾 تم الحفظ');
-  } catch(e) {
-    showToast('⚠️ فشل الحفظ');
-  }
+  } catch(e) { showToast('⚠️ فشل الحفظ'); }
 }
 
 function drawingPrint() {
@@ -2223,9 +2182,7 @@ function drawingShare() {
       try {
         await navigator.share({ files: [file], title: 'رسمي', text: 'رسم من منصة حافظ' });
         showToast('📤 تم المشاركة');
-      } catch(e) {
-        showToast('📤 تم الإلغاء');
-      }
+      } catch(e) { showToast('📤 تم الإلغاء'); }
     } else {
       const dataURL = fullCanvas.toDataURL('image/png');
       const link = document.createElement('a');
@@ -2249,126 +2206,35 @@ function fullLoad() {
 }
 
 // ============================================
+// تحميل بيانات المالك
+// ============================================
+function loadOwnerInfo() {
+  try {
+    var data = JSON.parse(localStorage.getItem('ta3lemy_owner') || '{}');
+    if (data.image_url) {
+      document.getElementById('ownerAvatar').src = data.image_url;
+      document.getElementById('ownerProfileImage').src = data.image_url;
+    }
+    if (data.name) {
+      document.getElementById('ownerProfileName').textContent = data.name;
+      document.getElementById('ownerName').value = data.name;
+    }
+    if (data.bio) {
+      document.getElementById('ownerProfileBio').textContent = data.bio;
+      document.getElementById('ownerBio').value = data.bio;
+    }
+  } catch(e) { console.error('Error loading owner:', e); }
+}
+
+// ============================================
 // بدء التطبيق
 // ============================================
 window.addEventListener('load', () => {
   setTimeout(() => showScreen('loginScreen'), 2500);
   loadOwnerInfo();
- loadAdsOnHome(); 
+  loadAdsOnHome();
 });
-  
-// ============================================
-// تحميل الإعلانات في الشاشة الرئيسية
-// ============================================
-var homeAds = [];
-var homeAdIndex = 0;
-var homeAdTimer = null;
 
-async function loadAdsOnHome() {
-  try {
-    if (!supabaseClient) return;
-    const { data, error } = await supabaseClient.from('ads').select('*').eq('active', true).order('created_at', { ascending: false });
-    if (error) throw error;
-    homeAds = data || [];
-    if (homeAds.length > 0) {
-      showHomeAd(0);
-    }
-  } catch(e) {
-    console.error('Error loading ads:', e);
-  }
-}
-
-function showHomeAd(index) {
-  if (!homeAds || homeAds.length === 0) return;
-  const ad = homeAds[index];
-  const adBox = document.getElementById('mainAd');
-  if (!adBox) return;
-  
-  const duration = (ad.duration || 10) * 1000;
-  
-  if (ad.ad_type === 'video' && ad.video_url) {
-    adBox.innerHTML = '<video autoplay muted loop style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><source src="' + ad.video_url + '" type="video/mp4"></video><div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title">' + (ad.title || '') + '</div></div>';
-  } else if (ad.image_url) {
-    adBox.innerHTML = '<img src="' + ad.image_url + '" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title" style="color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.7);">' + (ad.title || '') + '</div></div>';
-  }
-  
-  if (homeAdTimer) clearTimeout(homeAdTimer);
-  if (homeAds.length > 1) {
-    homeAdTimer = setTimeout(function() {
-      homeAdIndex = (homeAdIndex + 1) % homeAds.length;
-      showHomeAd(homeAdIndex);
-    }, duration);
-  }
-}
-async function loadOwnerInfo() {
-  try {
-    if (!supabaseClient) return;
-    const { data } = await supabaseClient.from('owner_profile').select('*').order('id', { ascending: false }).limit(1);
-    if (data && data[0]) {
-      if (data[0].image_url) {
-        document.getElementById('ownerAvatar').src = data[0].image_url;
-        document.getElementById('ownerProfileImage').src = data[0].image_url;
-      }
-      if (data[0].name) {
-        document.getElementById('ownerProfileName').textContent = data[0].name;
-        document.getElementById('ownerName').value = data[0].name;
-      }
-      if (data[0].bio) {
-        document.getElementById('ownerProfileBio').textContent = data[0].bio;
-        document.getElementById('ownerBio').value = data[0].bio;
-      }
-    }
-  } catch(e) { console.error('Error loading owner:', e); }
-}
-// ============================================
-// تحميل الإعلانات في الشاشة الرئيسية
-// ============================================
-
-function deleteAd(id) {
-  if (!confirm('حذف الإعلان؟')) return;
-  try {
-    var adsData = JSON.parse(localStorage.getItem('ta3lemy_ads') || '[]');
-    adsData = adsData.filter(a => a.id !== id);
-    localStorage.setItem('ta3lemy_ads', JSON.stringify(adsData));
-    loadAds();
-    loadAdsOnHome();
-    showToast('🗑️ تم الحذف');
-  } catch(e) { console.error(e); }
-}
-
-function loadAdsOnHome() {
-  try {
-    var adsData = JSON.parse(localStorage.getItem('ta3lemy_ads') || '[]');
-    homeAds = adsData.filter(a => a.active !== false);
-    if (homeAds.length > 0) {
-      homeAdIndex = 0;
-      showHomeAd(0);
-    }
-  } catch(e) { console.error(e); }
-}}
-
-function showHomeAd(index) {
-  if (!homeAds || homeAds.length === 0) return;
-  const ad = homeAds[index];
-  const adBox = document.getElementById('mainAd');
-  if (!adBox) return;
-  
-  const duration = (ad.duration || 10) * 1000;
-  
-  if (ad.ad_type === 'video' && ad.video_url) {
-    adBox.innerHTML = '<video autoplay muted loop style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><source src="' + ad.video_url + '" type="video/mp4"></video><div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title">' + (ad.title || '') + '</div></div>';
-  } else if (ad.image_url) {
-    adBox.innerHTML = '<img src="' + ad.image_url + '" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"><div class="ad-banner-content" style="position:relative;z-index:1;"><div class="ad-banner-title" style="color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.7);">' + (ad.title || '') + '</div></div>';
-  }
-  
-  if (homeAdTimer) clearTimeout(homeAdTimer);
-  if (homeAds.length > 1) {
-    homeAdTimer = setTimeout(() => {
-      homeAdIndex = (homeAdIndex + 1) % homeAds.length;
-      showHomeAd(homeAdIndex);
-    }, duration);
-  }
-}
 // ============================================
 // تسجيل Service Worker
 // ============================================
@@ -2381,4 +2247,4 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 </body>
-</html> 
+</html>
