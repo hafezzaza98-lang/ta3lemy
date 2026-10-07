@@ -1830,6 +1830,14 @@ function showHomeAd(index) {
     }, duration);
   }
 }
+  if (homeAdTimer) clearTimeout(homeAdTimer);
+  if (homeAds.length > 1) {
+    homeAdTimer = setTimeout(function() {
+      homeAdIndex = (homeAdIndex + 1) % homeAds.length;
+      showHomeAd(homeAdIndex);
+    }, duration);
+  }
+}
 
 // ============================================
 // لوحة المالك
