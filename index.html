@@ -1562,23 +1562,29 @@ const surahsData = [
 // رفع الملفات
 // ============================================
 async function uploadFile(file, folder) {
-  if (!file || !supabaseClient) return null;
+  if (!file) return null;
   try {
     showToast('⏳ جاري الرفع...');
-    const fileName = folder + '/' + Date.now() + '_' + file.name;
-    const { error } = await supabaseClient.storage.from('ta3lemy').upload(fileName, file);
-    if (error) throw error;
-    const { data: urlData } = supabaseClient.storage.from('ta3lemy').getPublicUrl(fileName);
+    const CLOUD_NAME = 'c-bc7bce04dbc6ef086c2415a68ace89';
+    const UPLOAD_PRESET = 'ta3lemy';
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', UPLOAD_PRESET);
+    if (folder) formData.append('folder', folder);
+    const response = await fetch('https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/auto/upload', {
+      method: 'POST',
+      body: formData
+    });
+    if (!response.ok) throw new Error('Upload failed');
+    const data = await response.json();
     showToast('✅ تم الرفع');
-    return urlData.publicUrl;
+    return data.secure_url;
   } catch (e) {
     console.error(e);
     showToast('❌ فشل الرفع');
     return null;
   }
-}
-
-// ============================================
+}// ============================================
 // المناهج
 // ============================================
 function openEducation() {
